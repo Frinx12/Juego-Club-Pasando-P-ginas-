@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Alas de Sangre - Lector Millonario</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+    body {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(to right, #3a0ca3, #4361ee, #3a0ca3);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .container {
+      width: 65%;
+      background: #1c1c3c;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    h1 {
+      color: #ffb703;
+      font-size: 28px;
+    }
+    .book-image {
+      width: 160px;
+      height: 230px;
+      margin: 20px auto 30px;
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #ffb703;
+      border-radius: 10px;
+    }
+    .question {
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+    .options button {
+      display: block;
+      width: 85%;
+      margin: 12px auto;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: #4361ee;
+      color: #fff;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .options button.correct {
+      background-color: #80ed99 !important;
+      animation: pulseGreen 0.4s;
+    }
+    .options button.incorrect {
+      background-color: #ef233c !important;
+      animation: shake 0.4s;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+      100% { transform: translateX(0); }
+    }
+    .reset-btn, .back-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+    }
+    .reset-btn {
+      background-color: #d90429;
+    }
+    .back-btn {
+      background-color: #0077b6;
+    }
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 12px;
+      background-color: #ffb703;
+      transition: height 0.3s;
+      border-radius: 0 6px 6px 0;
+    }
+    .scale.left {
+      left: -16px;
+      transform-origin: bottom;
+    }
+    .scale.right {
+      right: -16px;
+      transform-origin: bottom;
+    }
+    .contador {
+      margin-top: 18px;
+      font-size: 18px;
+      color: #ffb703;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft"></div>
+    <div class="scale right" id="scaleRight"></div>
+
+    <h1>Alas de Sangre - Lector Millonario</h1>
+    <div class="book-image" style="background-image: url('imagenes/alas\ de\ sangre.webp');">
+      <!-- Imagen del libro (personalizable) -->
+    </div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+      {
+        pregunta: "¿Quién es la protagonista principal de 'Alas de Sangre'?",
+        opciones: {
+          A: "Violet Sorrengail",
+          B: "Tairn Nyaxia",
+          C: "Mira Sorengail",
+          D: "Sloane Mairen"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué tipo de criatura mágica es Tairn?",
+        opciones: {
+          A: "Fénix",
+          B: "Dragón",
+          C: "Grifo",
+          D: "Basilisco"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el nombre del instituto donde entrenan a los jinetes de dragón?",
+        opciones: {
+          A: "Citadel de Basgiath",
+          B: "Torre del Alba",
+          C: "Fortaleza Velaris",
+          D: "Academia Draconia"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Quién es el interés romántico de Violet?",
+        opciones: {
+          A: "Dain Aetos",
+          B: "Rhiannon",
+          C: "Xaden Riorson",
+          D: "Liam Mairen"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Qué elemento controla el dragón Tairn?",
+        opciones: {
+          A: "Hielo",
+          B: "Aire",
+          C: "Electricidad",
+          D: "Fuego"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Qué clase pertenece a Xaden Riorson?",
+        opciones: {
+          A: "Aire",
+          B: "Fuego",
+          C: "Sombras",
+          D: "Tierra"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Cómo se llama el dragón compañero de Xaden?",
+        opciones: {
+          A: "Andarna",
+          B: "Sgaeyl",
+          C: "Tairn",
+          D: "Fenrir"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué relación tiene Mira con Violet?",
+        opciones: {
+          A: "Madre",
+          B: "Amiga",
+          C: "Hermana",
+          D: "Tía"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Qué elemento controla Andarna?",
+        opciones: {
+          A: "Tiempo",
+          B: "Luz",
+          C: "Hielo",
+          D: "Oscuridad"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Cuál es el mayor riesgo para los cadetes durante el primer año?",
+        opciones: {
+          A: "Las clases",
+          B: "La selección de dragones",
+          C: "Los duelos",
+          D: "Los exámenes"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué habilidad especial desarrolla Violet con el tiempo?",
+        opciones: {
+          A: "Curación",
+          B: "Manejo de fuego",
+          C: "Absorción de poder",
+          D: "Control mental"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Qué caracteriza a los hijos de líderes rebeldes en la academia?",
+        opciones: {
+          A: "No son admitidos",
+          B: "Tienen marcas negras",
+          C: "Son instructores",
+          D: "Pertenecen a escuadrones especiales"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el nombre del escuadrón de Violet?",
+        opciones: {
+          A: "Escuadrón Cuervo",
+          B: "Escuadrón Alas Negras",
+          C: "Escuadrón Cuatro",
+          D: "Escuadrón Tormenta"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Qué se requiere para vincularse con un dragón?",
+        opciones: {
+          A: "Sangre noble",
+          B: "Entrenamiento intenso",
+          C: "Compatibilidad y respeto",
+          D: "Permiso del comandante"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Quién intenta sabotear a Violet al inicio?",
+        opciones: {
+          A: "Xaden",
+          B: "Dain",
+          C: "Jack Barlowe",
+          D: "Rhiannon"
+        },
+        correcta: "C"
+      },
+      {
+  pregunta: "¿Cuál es el nombre del escuadrón al que pertenece Violet?",
+  opciones: {
+    A: "Escuadrón Tormenta",
+    B: "Escuadrón Cuatro",
+    C: "Escuadrón Alas Negras",
+    D: "Escuadrón Cuervo"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Quién es la madre de Violet?",
+  opciones: {
+    A: "Mira Sorengail",
+    B: "Rhiannon",
+    C: "Liora Mairen",
+    D: "Elara Nyaxia"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué elemento representa a Xaden?",
+  opciones: {
+    A: "Fuego",
+    B: "Sombras",
+    C: "Aire",
+    D: "Agua"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué poder especial tiene Andarna?",
+  opciones: {
+    A: "Control del tiempo",
+    B: "Manipulación de fuego",
+    C: "Invisibilidad",
+    D: "Control de mente"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cómo se llama el dragón negro vinculado a Xaden?",
+  opciones: {
+    A: "Sgaeyl",
+    B: "Tairn",
+    C: "Fenrir",
+    D: "Andarna"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Quién es el líder rebelde que busca derrocar al Imperio?",
+  opciones: {
+    A: "Dain Aetos",
+    B: "Jack Barlowe",
+    C: "Liam Mairen",
+    D: "Xaden Riorson"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué habilidad desarrolla Violet con el tiempo?",
+  opciones: {
+    A: "Curación",
+    B: "Absorción de poder",
+    C: "Control del viento",
+    D: "Telepatía"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es la capital del Imperio en la saga?",
+  opciones: {
+    A: "Basgiath",
+    B: "Velaris",
+    C: "Torrath",
+    D: "Kaidan"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué animal mitológico es Sloane Mairen?",
+  opciones: {
+    A: "Dragón",
+    B: "Fénix",
+    C: "Grifo",
+    D: "Basilisco"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué representa la marca negra en los cadetes?",
+  opciones: {
+    A: "Rebeldía",
+    B: "Poder especial",
+    C: "Pertenencia al Imperio",
+    D: "Herencia mágica"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Quién es el maestro de combate en la academia?",
+  opciones: {
+    A: "Capitán Barlowe",
+    B: "General Melgren",
+    C: "Comandante Sorengail",
+    D: "Dain Aetos"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cuál es el nombre del dragón de Violet?",
+  opciones: {
+    A: "Andarna",
+    B: "Sgaeyl",
+    C: "Tairn",
+    D: "Fenrir"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué simboliza el vínculo entre jinete y dragón?",
+  opciones: {
+    A: "Poder absoluto",
+    B: "Confianza y respeto",
+    C: "Control y dominación",
+    D: "Alianza política"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué acontecimiento desencadena la guerra en la saga?",
+  opciones: {
+    A: "Ruptura del vínculo dragón-jinete",
+    B: "Asesinato del comandante",
+    C: "Rebelión de los cadetes",
+    D: "Robo de un artefacto sagrado"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué habilidad tiene el dragón Tairn?",
+  opciones: {
+    A: "Lanzar fuego azul",
+    B: "Controlar el hielo",
+    C: "Manipular relámpagos",
+    D: "Crear ilusiones"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Quién es el mejor amigo de Violet en la academia?",
+  opciones: {
+    A: "Jack Barlowe",
+    B: "Mira Sorengail",
+    C: "Dain Aetos",
+    D: "Sloane Mairen"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué prueba deben pasar los cadetes para ser jinetes oficiales?",
+  opciones: {
+    A: "Prueba de vuelo",
+    B: "Duelo con dragones",
+    C: "Prueba del vínculo",
+    D: "Reto de supervivencia"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué relación tienen Violet y Mira?",
+  opciones: {
+    A: "Hermanas",
+    B: "Primas",
+    C: "Amigas de la infancia",
+    D: "Enemigas"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué rol tiene Rhiannon en la historia?",
+  opciones: {
+    A: "Mentora de Violet",
+    B: "Comandante enemiga",
+    C: "Hermana perdida",
+    D: "Espía"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es el propósito principal de los jinetes de dragón?",
+  opciones: {
+    A: "Protección del imperio",
+    B: "Exploración de territorios",
+    C: "Destrucción de rebeldes",
+    D: "Custodia de secretos mágicos"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué significa la marca dorada en el escudo de Violet?",
+  opciones: {
+    A: "Nobleza",
+    B: "Valor",
+    C: "Esperanza",
+    D: "Lealtad"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué evento cambia la percepción de Violet sobre el Imperio?",
+  opciones: {
+    A: "Encuentro con rebeldes",
+    B: "Muerte de un amigo",
+    C: "Descubrimiento de secretos oscuros",
+    D: "Derrota en batalla"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué arma prefiere usar Violet en combate?",
+  opciones: {
+    A: "Espada larga",
+    B: "Arco y flechas",
+    C: "Lanza de fuego",
+    D: "Dagas dobles"
+  },
+  correcta: "D"
+},
+{
+  pregunta: "¿Qué habilidad tiene Jack Barlowe?",
+  opciones: {
+    A: "Control de hielo",
+    B: "Magia negra",
+    C: "Tácticas militares",
+    D: "Telepatía"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué significa el símbolo del dragón en el imperio?",
+  opciones: {
+    A: "Poder y autoridad",
+    B: "Sabiduría y paz",
+    C: "Protección divina",
+    D: "Misterio y magia"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Quién es la figura paterna de Violet?",
+  opciones: {
+    A: "General Melgren",
+    B: "Lord Sorengail",
+    C: "Dain Aetos",
+    D: "Capitán Barlowe"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué ciudad es la base rebelde principal?",
+  opciones: {
+    A: "Velaris",
+    B: "Torrath",
+    C: "Kaidan",
+    D: "Basgiath"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Cuál es el rasgo característico de los dragones Sombras?",
+  opciones: {
+    A: "Camuflaje perfecto",
+    B: "Aliento venenoso",
+    C: "Resistencia al fuego",
+    D: "Velocidad extrema"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué secreto guarda Violet sobre su pasado?",
+  opciones: {
+    A: "Es hija del comandante enemigo",
+    B: "Posee poderes prohibidos",
+    C: "Fue adoptada por la academia",
+    D: "Tiene un vínculo especial con Andarna"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es el lema de los jinetes de dragón?",
+  opciones: {
+    A: "Fuerza y honor",
+    B: "Alas de fuego, corazón de acero",
+    C: "Por el imperio y la gloria",
+    D: "Libertad y poder"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué representa el amuleto que lleva Violet?",
+  opciones: {
+    A: "Protección mágica",
+    B: "Herencia familiar",
+    C: "Símbolo de alianza",
+    D: "Recuerdo de su madre"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué tipo de magia usa Violet?",
+  opciones: {
+    A: "Magia elemental",
+    B: "Magia de sangre",
+    C: "Magia ancestral",
+    D: "Magia negra"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Quién es el antagonista principal de la saga?",
+  opciones: {
+    A: "Comandante Sorengail",
+    B: "Jack Barlowe",
+    C: "Lord Kaidan",
+    D: "General Melgren"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Cuál es el destino final de Andarna?",
+  opciones: {
+    A: "Muere en batalla",
+    B: "Se convierte en dragón adulto",
+    C: "Es capturada por el Imperio",
+    D: "Se pierde en la dimensión del tiempo"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué significa el color dorado en el traje de Violet?",
+  opciones: {
+    A: "Riqueza",
+    B: "Poder",
+    C: "Esperanza",
+    D: "Gloria"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué le enseña Mira a Violet?",
+  opciones: {
+    A: "Técnicas de vuelo",
+    B: "Magia curativa",
+    C: "Estrategias de combate",
+    D: "Historia del Imperio"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué representa el cuervo en la historia?",
+  opciones: {
+    A: "Muerte",
+    B: "Sabiduría",
+    C: "Libertad",
+    D: "Traición"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Qué secreto oculta Jack Barlowe?",
+  opciones: {
+    A: "Es un espía rebelde",
+    B: "Tiene poderes oscuros",
+    C: "Es hijo del comandante enemigo",
+    D: "Está enamorado de Violet"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cuál es el arma favorita de Dain Aetos?",
+  opciones: {
+    A: "Espada de fuego",
+    B: "Lanza",
+    C: "Arco largo",
+    D: "Daga"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué ciudad se convierte en el centro de la resistencia?",
+  opciones: {
+    A: "Torrath",
+    B: "Basgiath",
+    C: "Velaris",
+    D: "Kaidan"
+  },
+  correcta: "D"
+}
+
+      
+    ];
+
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
+
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
+    }
+
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      const botones = ['btnA', 'btnB', 'btnC', 'btnD'];
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
+      } else {
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
+      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1000);
+    }
+
+    function actualizarEscala() {
+      const total = preguntas.length;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
+    }
+
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
+    }
+
+    function resetGame() {
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
+    }
+
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
+  </script>
+</body>
+</html>

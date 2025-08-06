@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>El Señor de los Anillos - Lector Millonario</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cardo&family=Uncial+Antiqua&display=swap');
+
+    body {
+      font-family: 'Cardo', serif;
+      background: linear-gradient(to right, #2e2b27, #5a4e42);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #f1e6d8;
+    }
+    .container {
+      width: 70%;
+      background: #3f3627;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #a1866f;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      font-family: 'Uncial Antiqua', cursive;
+      font-size: 36px;
+      color: #d9b382;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .book-image {
+      width: 180px;
+      height: 260px;
+      margin: 0 auto 30px;
+      background-color: #6b5b3a;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #d9b382;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #bfa76f;
+    }
+    .question {
+      font-size: 22px;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .options button {
+      display: block;
+      width: 85%;
+      margin: 12px auto;
+      padding: 15px;
+      font-size: 18px;
+      font-family: 'Cardo', serif;
+      border-radius: 8px;
+      border: 2px solid #d9b382;
+      background-color: #5a4e3a;
+      color: #f1e6d8;
+      cursor: pointer;
+      box-shadow: inset 0 0 5px #3c2f1e;
+      transition: background-color 0.3s, transform 0.3s;
+      text-align: left;
+    }
+    .options button:hover {
+      background-color: #7a6c4a;
+    }
+    .options button.correct {
+      background-color: #8bc34a !important;
+      border-color: #558b2f !important;
+      animation: pulseGreen 0.4s;
+      color: #1b3a00;
+    }
+    .options button.incorrect {
+      background-color: #ef5350 !important;
+      border-color: #b71c1c !important;
+      animation: shake 0.4s;
+      color: #3a0000;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .reset-btn, .back-btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      font-family: 'Cardo', serif;
+      color: #3f3112;
+      box-shadow: inset 0 0 8px #bfa76f;
+      transition: background-color 0.3s;
+      font-weight: 700;
+    }
+    .reset-btn {
+      background-color: #d9b382;
+      margin-right: 15px;
+    }
+    .reset-btn:hover {
+      background-color: #c1aa63;
+    }
+    .back-btn {
+      background-color: #8c7a46;
+      color: #f1e6d8;
+    }
+    .back-btn:hover {
+      background-color: #6b5a2f;
+    }
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #d9b382;
+      transition: height 0.3s;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 0 0 6px #bfa76f;
+    }
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
+    .contador {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #d9b382;
+      text-shadow: 1px 1px 2px #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft"></div>
+    <div class="scale right" id="scaleRight"></div>
+
+    <h1>El Señor de los Anillos - Lector Millonario</h1>
+    <div class="book-image" style="background-image: url('imagenes/el\ señor\ de\ los\ anillos.jpg');">
+      <!-- Imagen del libro (personalizable) -->
+    </div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+ 
+       {
+    pregunta: "¿Quién es el portador del Anillo Único al inicio de la historia?",
+    opciones: { A: "Gandalf", B: "Frodo Bolsón", C: "Bilbo Bolsón", D: "Aragorn" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cuál es el nombre del mago gris que ayuda a la Compañía?",
+    opciones: { A: "Saruman", B: "Radagast", C: "Gandalf", D: "Elrond" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué raza es Legolas?",
+    opciones: { A: "Enano", B: "Humano", C: "Elfo", D: "Hobbit" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cuál es el nombre del líder de la Compañía del Anillo?",
+    opciones: { A: "Boromir", B: "Aragorn", C: "Gandalf", D: "Frodo" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo se llama la región donde viven los Hobbits?",
+    opciones: { A: "Mordor", B: "Rohan", C: "La Comarca", D: "Gondor" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué criatura es Gollum?",
+    opciones: { A: "Un Elfo Oscuro", B: "Un Hobbit corrompido", C: "Un Enano maldito", D: "Un orco" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué objeto busca destruir la Compañía?",
+    opciones: { A: "El Arca de la Alianza", B: "La Espada Élfica", C: "El Anillo Único", D: "La Corona de Gondor" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué personaje traiciona a la Compañía en Moria?",
+    opciones: { A: "Boromir", B: "Saruman", C: "Gollum", D: "Ninguno" },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién es el rey de Rohan?",
+    opciones: { A: "Théoden", B: "Denethor", C: "Elrond", D: "Faramir" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué es un Nazgûl?",
+    opciones: { A: "Un mago oscuro", B: "Un jinete fantasma, sirviente de Sauron", C: "Un elfo oscuro", D: "Un orco poderoso" },
+    correcta: "B"
+  },
+
+  // Aquí comienzan las nuevas 40 preguntas:
+
+  {
+    pregunta: "¿Cuál es el nombre completo de Frodo?",
+    opciones: { A: "Frodo Bolsón", B: "Frodo Saquet", C: "Frodo Greenleaf", D: "Frodo Gamyi" },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién es el portador del Anillo después de Frodo?",
+    opciones: { A: "Samwise Gamyi", B: "Gollum", C: "Aragorn", D: "Merry" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cuál es la ciudad fortificada donde reside Elrond?",
+    opciones: { A: "Minas Tirith", B: "Rivendel", C: "Isengard", D: "Lothlórien" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué criatura gigante ayudan a destruir en las minas de Moria?",
+    opciones: { A: "Troll", B: "Balrog", C: "Dragón", D: "Orco" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué nombre recibe la espada de Aragorn?",
+    opciones: { A: "Andúril", B: "Glamdring", C: "Sting", D: "Narsil" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué raza pertenece Gimli?",
+    opciones: { A: "Elfo", B: "Humano", C: "Enano", D: "Hobbit" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Quién gobierna Gondor durante la mayor parte de la historia?",
+    opciones: { A: "Aragorn", B: "Denethor", C: "Faramir", D: "Boromir" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es el nombre de la espada que Frodo lleva?",
+    opciones: { A: "Andúril", B: "Sting", C: "Orcrist", D: "Glamdring" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién es la dama élfica que ayuda a la Compañía en Lothlórien?",
+    opciones: { A: "Galadriel", B: "Arwen", C: "Tauriel", D: "Éowyn" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué personaje humano se hace rey al final de la historia?",
+    opciones: { A: "Boromir", B: "Faramir", C: "Aragorn", D: "Théoden" },
+    correcta: "C"
+  },
+
+  {
+    pregunta: "¿Qué es el Palantír?",
+    opciones: { A: "Una espada antigua", B: "Una piedra vidente", C: "Un escudo mágico", D: "Un anillo de poder" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué grupo de personajes acompaña a Frodo para destruir el Anillo?",
+    opciones: { A: "La Compañía del Anillo", B: "Los Rohirrim", C: "Los Istari", D: "Los Nazgûl" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué criatura ataca a Frodo y sus amigos en la cueva de los trolls?",
+    opciones: { A: "Un troll", B: "Un orco", C: "Un warg", D: "Un balrog" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cuál es la especialidad de Gandalf el Gris?",
+    opciones: { A: "Mago", B: "Rey", C: "Elfo", D: "Guerrero" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién se convierte en rey bajo el nombre de Elessar?",
+    opciones: { A: "Frodo", B: "Aragorn", C: "Boromir", D: "Faramir" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué personaje es conocido por su sabiduría y antigüedad entre los elfos?",
+    opciones: { A: "Legolas", B: "Elrond", C: "Galadriel", D: "Thranduil" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Dónde tiene lugar la batalla final entre las fuerzas del bien y el mal?",
+    opciones: { A: "Minas Tirith", B: "Rivendel", C: "La Comarca", D: "Mordor" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué arma utiliza Legolas?",
+    opciones: { A: "Espada", B: "Lanza", C: "Arco y flechas", D: "Hacha" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Quién es el líder de los orcos?",
+    opciones: { A: "Azog", B: "Uglúk", C: "Gorbag", D: "Gríma" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué criatura ayuda a los Hobbits a escapar de los Nazgûl?",
+    opciones: { A: "Gollum", B: "Tom Bombadil", C: "Barrow-wight", D: "Glorfindel" },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué simboliza el Anillo Único en la historia?",
+    opciones: { A: "Poder absoluto", B: "Sabiduría", C: "Libertad", D: "Unidad" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién es Éowyn?",
+    opciones: { A: "Una elfa", B: "Una guerrera de Rohan", C: "Una hobbit", D: "Una maga" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué significa la palabra 'Mordor'?",
+    opciones: { A: "Tierra Negra", B: "Tierra Oscura", C: "Tierra Maldita", D: "Tierra de Sombra" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué es el Anduin?",
+    opciones: { A: "Una espada", B: "Un río", C: "Un monte", D: "Un anillo" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién es Bilbo Bolsón?",
+    opciones: { A: "Un mago", B: "El tío de Frodo", C: "Un elfo", D: "El rey de Gondor" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es el significado del nombre 'Gandalf'?",
+    opciones: { A: "El sabio", B: "El portador de bastón", C: "El elfo mago", D: "El hombre con bastón" },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién fue el herrero que forjó el Anillo Único?",
+    opciones: { A: "Celebrimbor", B: "Sauron", C: "Elrond", D: "Galadriel" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cuál es la capital de Gondor?",
+    opciones: { A: "Minas Tirith", B: "Minas Morgul", C: "Osgiliath", D: "Edoras" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién ayuda a Frodo a llegar a Mordor al final?",
+    opciones: { A: "Samwise Gamyi", B: "Gollum", C: "Aragorn", D: "Legolas" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién es el autor de la trilogía El Señor de los Anillos?",
+    opciones: { A: "C.S. Lewis", B: "J.K. Rowling", C: "J.R.R. Tolkien", D: "George R.R. Martin" },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué raza es Saruman?",
+    opciones: { A: "Mago", B: "Humano", C: "Elfo", D: "Enano" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué ciudad es conocida como la 'Ciudad Blanca'?",
+    opciones: { A: "Minas Tirith", B: "Rivendel", C: "Lothlórien", D: "Isengard" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién lidera los Rohirrim en batalla?",
+    opciones: { A: "Théoden", B: "Éomer", C: "Éowyn", D: "Aragorn" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es la forma de la espada de Frodo cuando brilla con luz azul?",
+    opciones: { A: "Andúril", B: "Sting", C: "Glamdring", D: "Narsil" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué es Lothlórien?",
+    opciones: { A: "Una fortaleza", B: "Un bosque élfico", C: "Una ciudad humana", D: "Un río" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué son los Ents?",
+    opciones: { A: "Árboles vivos y guardianes del bosque", B: "Guerreros humanos", C: "Magos oscuros", D: "Criaturas de las sombras" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué papel tiene Sam en la historia?",
+    opciones: { A: "Guerrero", B: "Amigo y fiel compañero de Frodo", C: "Enemigo", D: "Mago" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién es el creador de los Anillos de Poder?",
+    opciones: { A: "Sauron", B: "Celebrimbor", C: "Elrond", D: "Galadriel" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué es Barad-dûr?",
+    opciones: { A: "La fortaleza de Sauron en Mordor", B: "La ciudad de Gondor", C: "El hogar de los Elfos", D: "Un río sagrado" },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué sucede cuando el Anillo es destruido?",
+    opciones: { A: "La Tierra Media se inunda", B: "Sauron pierde su poder", C: "Los elfos desaparecen", D: "Los humanos se vuelven magos" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién es Merry?",
+    opciones: { A: "Un elfo", B: "Un hobbit y amigo de Frodo", C: "Un enano", D: "Un mago" },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué personaje femenino tiene un papel importante en la batalla de los campos del Pelennor?",
+    opciones: { A: "Arwen", B: "Galadriel", C: "Éowyn", D: "Tauriel" },
+    correcta: "C"
+  }
+      // Puedes añadir más preguntas aquí para completar 50
+    ];
+
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
+
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
+    }
+
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
+      } else {
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
+      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert(`Juego terminado. Correctas: ${puntos}, Incorrectas: ${errores}`);
+          resetGame();
+        }
+      }, 1200);
+    }
+
+    function actualizarEscala() {
+      const total = preguntas.length;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
+    }
+
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
+    }
+
+    function resetGame() {
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
+    }
+
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
+  </script>
+</body>
+</html>

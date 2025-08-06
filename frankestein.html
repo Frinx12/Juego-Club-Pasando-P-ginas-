@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frankenstein - ¿Quién quiere ser millonario?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+
+    body {
+      font-family: 'IM Fell English SC', serif;
+      background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+      color: #e0d8c3;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #3b3a32;
+      border: 3px solid #b58e31;
+      border-radius: 15px;
+      width: 70%;
+      max-width: 800px;
+      padding: 30px 40px;
+      box-shadow: 0 0 20px #b58e31;
+      position: relative;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #f5deb3;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 5px #4a4a2c;
+    }
+
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 0 auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Frankenstein_1818_edition_title_page.jpg/440px-Frankenstein_1818_edition_title_page.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #b58e31;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #b58e31;
+    }
+
+    .question {
+      font-size: 22px;
+      margin-bottom: 25px;
+      min-height: 80px;
+    }
+
+    .options button {
+      display: block;
+      width: 85%;
+      margin: 10px auto;
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: 2px solid #b58e31;
+      background-color: #554f3f;
+      color: #f5deb3;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: inset 0 0 5px #3f3a2f;
+    }
+
+    .options button:hover {
+      background-color: #b58e31;
+      color: #2c2c2c;
+      transform: scale(1.05);
+    }
+
+    .options button.correct {
+      background-color: #90ee90 !important;
+      color: #2c2c2c !important;
+      animation: pulseGreen 0.5s;
+    }
+
+    .options button.incorrect {
+      background-color: #ef9a9a !important;
+      color: #2c2c2c !important;
+      animation: shake 0.5s;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+    }
+
+    .reset-btn, .back-btn {
+      margin-top: 25px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #2c2c2c;
+      font-weight: bold;
+      box-shadow: 0 0 10px #b58e31;
+      transition: background-color 0.3s;
+    }
+
+    .reset-btn {
+      background-color: #b58e31;
+      margin-right: 15px;
+    }
+
+    .reset-btn:hover {
+      background-color: #d4af37;
+    }
+
+    .back-btn {
+      background-color: #7a6e44;
+    }
+
+    .back-btn:hover {
+      background-color: #a28f45;
+    }
+
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 14px;
+      background-color: #b58e31;
+      transition: height 0.3s;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 0 0 8px #d4af37;
+    }
+
+    .scale.left {
+      left: -20px;
+      transform-origin: bottom;
+    }
+
+    .scale.right {
+      right: -20px;
+      transform-origin: bottom;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #d4af37;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px #4a4a2c;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft"></div>
+    <div class="scale right" id="scaleRight"></div>
+
+    <h1>Frankenstein - ¿Quién quiere ser millonario?</h1>
+    <div class="book-image" style="background-image: url('imagenes/frankenstein-615.jpg');"></div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+      {
+        pregunta: "¿Quién es el autor de Frankenstein?",
+        opciones: {
+          A: "Mary Shelley",
+          B: "Edgar Allan Poe",
+          C: "Bram Stoker",
+          D: "H. P. Lovecraft"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Cómo se llama la criatura creada por Victor Frankenstein?",
+        opciones: {
+          A: "El monstruo de la niebla",
+          B: "La criatura sin nombre",
+          C: "Frankenstein",
+          D: "El engendro"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué inspiró a Mary Shelley a escribir Frankenstein?",
+        opciones: {
+          A: "Una pesadilla",
+          B: "Un reto de escritura en una tormenta",
+          C: "Un sueño recurrente",
+          D: "Una leyenda local"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Dónde estudió Victor Frankenstein para sus experimentos?",
+        opciones: {
+          A: "Universidad de Oxford",
+          B: "Universidad de Ingolstadt",
+          C: "Universidad de Cambridge",
+          D: "Universidad de París"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el principal tema de Frankenstein?",
+        opciones: {
+          A: "La creación y la responsabilidad",
+          B: "El amor prohibido",
+          C: "La búsqueda de la inmortalidad",
+          D: "La traición familiar"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué reacción tiene Victor cuando su criatura cobra vida?",
+        opciones: {
+          A: "Alegría y orgullo",
+          B: "Miedo y rechazo",
+          C: "Curiosidad científica",
+          D: "Confusión"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Quién narra la mayor parte de la historia?",
+        opciones: {
+          A: "Victor Frankenstein",
+          B: "El monstruo",
+          C: "Robert Walton",
+          D: "Elizabeth Lavenza"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Cuál es el destino final de Victor Frankenstein?",
+        opciones: {
+          A: "Muere persiguiendo a su criatura",
+          B: "Se casa con Elizabeth",
+          C: "Se vuelve loco",
+          D: "Escapa a América"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué desea la criatura de Victor Frankenstein?",
+        opciones: {
+          A: "Ser aceptada y amada",
+          B: "Destruir a su creador",
+          C: "Obtener poder",
+          D: "Vengar a su familia"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Quién es Elizabeth Lavenza?",
+        opciones: {
+          A: "Hermana de Victor",
+          B: "Prometida de Victor",
+          C: "Madre adoptiva del monstruo",
+          D: "Amiga de la criatura"
+        },
+        correcta: "B"
+      },
+      {
+  pregunta: "¿En qué año se publicó Frankenstein por primera vez?",
+  opciones: {
+    A: "1818",
+    B: "1831",
+    C: "1798",
+    D: "1824"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué nombre le da Victor Frankenstein a su creación?",
+  opciones: {
+    A: "Adam",
+    B: "No tiene nombre",
+    C: "Frankenstein",
+    D: "Goliat"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es la profesión de Victor Frankenstein?",
+  opciones: {
+    A: "Científico",
+    B: "Médico",
+    C: "Ingeniero",
+    D: "Filósofo natural"
+  },
+  correcta: "D"
+},
+{
+  pregunta: "¿Quién es el narrador del prólogo de Frankenstein?",
+  opciones: {
+    A: "Victor Frankenstein",
+    B: "El monstruo",
+    C: "Robert Walton",
+    D: "Elizabeth Lavenza"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Cómo se siente Victor respecto a la criatura después de darle vida?",
+  opciones: {
+    A: "Orgulloso y feliz",
+    B: "Horrorizado y arrepentido",
+    C: "Indiferente",
+    D: "Emocionado por el futuro"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Dónde encuentra Victor a la criatura después de darle vida?",
+  opciones: {
+    A: "En su laboratorio",
+    B: "En el bosque",
+    C: "En la ciudad",
+    D: "En la costa"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué tragedia ocurre con William Frankenstein?",
+  opciones: {
+    A: "Se pierde en el bosque",
+    B: "Es asesinado",
+    C: "Enferma gravemente",
+    D: "Se muda lejos"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Quién es Justine Moritz en la historia?",
+  opciones: {
+    A: "Una sirvienta de la familia Frankenstein",
+    B: "La madre de Victor",
+    C: "La prometida de Victor",
+    D: "La hermana de Elizabeth"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Por qué Justine es acusada injustamente?",
+  opciones: {
+    A: "Por robar",
+    B: "Por asesinato",
+    C: "Por huir de casa",
+    D: "Por mentir"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es la petición principal de la criatura a Victor?",
+  opciones: {
+    A: "Que le dé un nombre",
+    B: "Que cree una compañera para él",
+    C: "Que lo perdone",
+    D: "Que le enseñe a hablar"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué promesa hace Victor respecto a la petición de la criatura?",
+  opciones: {
+    A: "Acepta de inmediato",
+    B: "Se niega rotundamente",
+    C: "Está indeciso y tarda en decidir",
+    D: "Planea hacerlo pero luego cambia de opinión"
+  },
+  correcta: "D"
+},
+{
+  pregunta: "¿Cómo termina la historia del monstruo y su compañera creada por Victor?",
+  opciones: {
+    A: "Ambos viven juntos felices",
+    B: "La compañera es destruida antes de nacer",
+    C: "Se vuelven enemigos",
+    D: "La compañera huye"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Dónde se desarrolla gran parte de la historia?",
+  opciones: {
+    A: "Inglaterra y Suiza",
+    B: "Francia y Alemania",
+    C: "Estados Unidos",
+    D: "Italia y España"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué rol juega Robert Walton en la historia?",
+  opciones: {
+    A: "Amigo y narrador secundario",
+    B: "Antagonista",
+    C: "Padre de Victor",
+    D: "Hermano de Elizabeth"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cuál es el género literario de Frankenstein?",
+  opciones: {
+    A: "Romanticismo gótico",
+    B: "Realismo",
+    C: "Ciencia ficción moderna",
+    D: "Novela histórica"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué tema filosófico se explora en Frankenstein?",
+  opciones: {
+    A: "La inmortalidad",
+    B: "Los límites de la ciencia y la ética",
+    C: "El destino",
+    D: "La naturaleza humana"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué representa la criatura en el libro?",
+  opciones: {
+    A: "La esperanza",
+    B: "El rechazo social y la soledad",
+    C: "La justicia",
+    D: "La venganza"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cómo reacciona la sociedad ante la criatura?",
+  opciones: {
+    A: "Con miedo y violencia",
+    B: "Con amor y aceptación",
+    C: "Con curiosidad",
+    D: "Con indiferencia"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cuál es la relación entre Victor y Elizabeth?",
+  opciones: {
+    A: "Hermanos",
+    B: "Prometidos",
+    C: "Primos",
+    D: "Amigos de la infancia"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué importancia tiene el lago en la historia?",
+  opciones: {
+    A: "Lugar donde Victor crea a la criatura",
+    B: "Lugar de confrontación entre Victor y la criatura",
+    C: "Lugar de descanso para Victor",
+    D: "Lugar donde muere Elizabeth"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué simboliza la tormenta eléctrica en el libro?",
+  opciones: {
+    A: "El poder de la naturaleza y la creación",
+    B: "La tristeza de Victor",
+    C: "La furia del monstruo",
+    D: "La llegada del invierno"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Quién es Henry Clerval?",
+  opciones: {
+    A: "Mejor amigo de Victor",
+    B: "Hermano de Elizabeth",
+    C: "Profesor de Victor",
+    D: "Un sirviente"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué le ocurre a Henry Clerval?",
+  opciones: {
+    A: "Muere asesinado",
+    B: "Se va a América",
+    C: "Se casa con Elizabeth",
+    D: "Se convierte en científico"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué busca Victor cuando se traslada al Ártico?",
+  opciones: {
+    A: "Aventuras nuevas",
+    B: "Huir de su pasado y buscar al monstruo",
+    C: "Explorar nuevas tierras",
+    D: "Encontrar un tesoro"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué le pide Victor a Robert Walton?",
+  opciones: {
+    A: "Que continúe su investigación científica",
+    B: "Que destruya a la criatura",
+    C: "Que se encargue de la criatura si él muere",
+    D: "Que escriba su historia"
+  },
+  correcta: "D"
+},
+{
+  pregunta: "¿Cuál es la reacción del monstruo cuando se encuentra con Victor al final?",
+  opciones: {
+    A: "Busca venganza",
+    B: "Pide perdón",
+    C: "Se arrepiente y quiere morir",
+    D: "Quiere ayudar a Victor"
+  },
+  correcta: "C"
+},
+{
+  pregunta: "¿Cómo termina la historia del monstruo?",
+  opciones: {
+    A: "Se suicida en el Ártico",
+    B: "Escapa y se pierde en la nieve",
+    C: "Es capturado y juzgado",
+    D: "Vive feliz en la naturaleza"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué elemento científico está presente en la creación de la criatura?",
+  opciones: {
+    A: "Electricidad",
+    B: "Alquimia",
+    C: "Magia negra",
+    D: "Genética"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué sentimientos predominan en Victor durante la historia?",
+  opciones: {
+    A: "Orgullo y ambición",
+    B: "Miedo y culpa",
+    C: "Alegría y esperanza",
+    D: "Indiferencia y odio"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es el verdadero título completo de Frankenstein?",
+  opciones: {
+    A: "Frankenstein o el moderno Prometeo",
+    B: "Frankenstein: La criatura eterna",
+    C: "El monstruo de Frankenstein",
+    D: "Frankenstein y su creador"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Cómo se describe la criatura físicamente?",
+  opciones: {
+    A: "Alta y fuerte con ojos amarillos",
+    B: "De aspecto monstruoso pero inteligente",
+    C: "Pequeña y peluda",
+    D: "Transparente y fantasmal"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué le pide la criatura a Victor antes de morir?",
+  opciones: {
+    A: "Que le perdone",
+    B: "Que destruya todo lo relacionado con ella",
+    C: "Que cuide de sus familiares",
+    D: "Que le prometa venganza"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué representa el título 'El moderno Prometeo'?",
+  opciones: {
+    A: "La creación del hombre por Dios",
+    B: "El desafío a la naturaleza y la creación de vida",
+    C: "El castigo divino",
+    D: "La mitología griega"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Cuál es la relación entre la ciencia y la ética en Frankenstein?",
+  opciones: {
+    A: "La ciencia siempre debe triunfar",
+    B: "La ética debe limitar la ciencia",
+    C: "No hay relación",
+    D: "La ética es más importante que la ciencia"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué rol juega la naturaleza en la novela?",
+  opciones: {
+    A: "Un simple escenario",
+    B: "Un reflejo del estado emocional de los personajes",
+    C: "Un enemigo constante",
+    D: "Un refugio para la criatura solamente"
+  },
+  correcta: "B"
+},
+{
+  pregunta: "¿Qué tipo de narrativa utiliza Mary Shelley en Frankenstein?",
+  opciones: {
+    A: "Narrativa en primera persona y cartas",
+    B: "Narrativa en tercera persona omnisciente",
+    C: "Narrativa en segunda persona",
+    D: "Narrativa sin narrador"
+  },
+  correcta: "A"
+},
+{
+  pregunta: "¿Qué personaje representa la voz de la razón y la ciencia responsable?",
+  opciones: {
+    A: "Victor Frankenstein",
+    B: "El monstruo",
+    C: "Robert Walton",
+    D: "Henry Clerval"
+  },
+  correcta: "D"
+},
+{
+  pregunta: "¿Cuál es la importancia del marco narrativo de Robert Walton?",
+  opciones: {
+    A: "Da credibilidad a la historia y contexto",
+    B: "No tiene importancia",
+    C: "Es un personaje antagonista",
+    D: "Representa la voz del público"
+  },
+  correcta: "A"
+}
+
+    ];
+
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
+
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
+    }
+
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
+      } else {
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
+      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1200);
+    }
+
+    function actualizarEscala() {
+      const total = preguntas.length;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
+    }
+
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
+    }
+
+    function resetGame() {
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
+    }
+
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
+  </script>
+</body>
+</html>

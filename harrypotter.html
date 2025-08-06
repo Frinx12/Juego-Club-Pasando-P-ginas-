@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Harry Potter - Lector Millonario</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer&family=Pirata+One&display=swap');
+
+  body {
+    font-family: 'IM Fell Great Primer', serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #4b2e83 50%, #000000 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: #f0e6d2;
+  }
+  .container {
+    width: 60%;
+    background: #2b1b3f;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 25px 5px rgba(138,43,226,0.7); /* resplandor mágico violeta */
+    position: relative;
+    border: 3px solid #7b3fbf;
+  }
+  h1 {
+    font-family: 'Pirata One', cursive;
+    color: #e2c044; /* dorado Hogwarts */
+    text-shadow: 2px 2px 8px #a67c00;
+    margin-bottom: 30px;
+    font-size: 3rem;
+  }
+  .book-image {
+    width: 160px;
+    height: 230px;
+    margin: 10px auto 30px;
+    background-color: #3e2c60;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #bfa84f;
+    box-shadow: 0 0 15px 5px rgba(186, 147, 64, 0.7);
+    border-radius: 12px;
+  }
+  .question {
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 600;
+    text-shadow: 1px 1px 4px #000;
+  }
+  .options button {
+    display: block;
+    width: 80%;
+    margin: 12px auto;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 2px solid #bfa84f;
+    cursor: pointer;
+    background-color: #f9f3c5; /* pergamino claro */
+    color: #3b2e1e;
+    box-shadow: 0 3px 6px rgba(191, 168, 79, 0.5);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .options button:hover:not(.correct):not(.incorrect) {
+    background-color: #f1e2a6;
+    box-shadow: 0 0 12px #d4c27d;
+  }
+  .options button.correct {
+    background-color: #4caf50 !important; /* verde mágico */
+    color: white;
+    animation: pulseGreen 0.5s;
+  }
+  .options button.incorrect {
+    background-color: #e53935 !important; /* rojo oscuro */
+    color: white;
+    animation: shake 0.5s;
+  }
+  @keyframes pulseGreen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  .reset-btn {
+    margin-top: 25px;
+    background-color: #bfa84f;
+    color: #3b2e1e;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 5px 10px rgba(191,168,79,0.7);
+    transition: background-color 0.3s;
+  }
+  .reset-btn:hover {
+    background-color: #d4c27d;
+  }
+  .back-btn {
+    margin-top: 12px;
+    background-color: #7b3fbf;
+    color: #f0e6d2;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 5px 10px rgba(123,63,191,0.7);
+    transition: background-color 0.3s;
+  }
+  .back-btn:hover {
+    background-color: #a082d6;
+  }
+  .scale {
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 15px;
+    background-color: #bfa84f;
+    transition: height 0.3s;
+    border-radius: 0 12px 12px 0;
+  }
+  .scale.left {
+    left: -25px;
+    transform-origin: bottom;
+  }
+  .scale.right {
+    right: -25px;
+    transform-origin: bottom;
+  }
+  .contador {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #d4c27d;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px #000;
+  }
+</style>
+
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft" style="height: 0;"></div>
+    <div class="scale right" id="scaleRight" style="height: 0;"></div>
+
+    <h1>Harry Potter - Lector Millonario</h1>
+    <div class="book-image" style="background-image: url('imagenes/harry-potter-profile-pictures-1920-x-1080-lclkc1d42ge66s0i.jpg');">
+      <!-- Imagen del libro (personalizable) -->
+    </div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+  {
+    pregunta: "¿Cuál es el segundo nombre de Harry Potter?",
+    opciones: {
+      A: "James",
+      B: "Sirius",
+      C: "Albus",
+      D: "Severus"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué animal representa la casa Gryffindor?",
+    opciones: {
+      A: "Serpiente",
+      B: "León",
+      C: "Tejón",
+      D: "Águila"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo se llama el banco de los magos?",
+    opciones: {
+      A: "Magibanco",
+      B: "Gringotts",
+      C: "Galleons",
+      D: "Hogfunds"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién fue el padrino de Harry Potter?",
+    opciones: {
+      A: "Remus Lupin",
+      B: "Severus Snape",
+      C: "Sirius Black",
+      D: "Arthur Weasley"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué poción permite cambiar de apariencia?",
+    opciones: {
+      A: "Amortentia",
+      B: "Felix Felicis",
+      C: "Poción Multijugos",
+      D: "Veritaserum"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Quién mata a Dumbledore?",
+    opciones: {
+      A: "Draco Malfoy",
+      B: "Voldemort",
+      C: "Bellatrix Lestrange",
+      D: "Severus Snape"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Cuál es la posición de Harry en el Quidditch?",
+    opciones: {
+      A: "Cazador",
+      B: "Buscador",
+      C: "Golpeador",
+      D: "Guardían"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo se llama la madre de Harry?",
+    opciones: {
+      A: "Petunia",
+      B: "Luna",
+      C: "Lily",
+      D: "Minerva"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué criatura puede transformarse en lo que más temes?",
+    opciones: {
+      A: "Dementor",
+      B: "Boggart",
+      C: "Inferi",
+      D: "Thestral"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo se llama el tren que lleva a los estudiantes a Hogwarts?",
+    opciones: {
+      A: "Expreso de King’s Cross",
+      B: "Hogwarts Express",
+      C: "Expreso Mágico",
+      D: "Expreso del Callejón Diagon"
+    },
+    correcta: "B"
+  },
+  // (11)
+  {
+    pregunta: "¿Cuál es la posición de Ron Weasley en el ajedrez mágico?",
+    opciones: {
+      A: "Caballo",
+      B: "Rey",
+      C: "Torre",
+      D: "Peón"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cómo se llama el elfo doméstico que sirve a la familia Malfoy?",
+    opciones: {
+      A: "Kreacher",
+      B: "Dobby",
+      C: "Winky",
+      D: "Hokey"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es el número de la cámara secreta?",
+    opciones: {
+      A: "13",
+      B: "7",
+      C: "9",
+      D: "2"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué animal representa a Hufflepuff?",
+    opciones: {
+      A: "Tejón",
+      B: "Águila",
+      C: "León",
+      D: "Serpiente"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién enseña Pociones en Hogwarts en el primer libro?",
+    opciones: {
+      A: "Minerva McGonagall",
+      B: "Severus Snape",
+      C: "Remus Lupin",
+      D: "Horace Slughorn"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué criatura ataca a Hermione en la Cámara Secreta?",
+    opciones: {
+      A: "Acromántula",
+      B: "Dementor",
+      C: "Basilisco",
+      D: "Dragón"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cuál es el nombre completo de Dumbledore?",
+    opciones: {
+      A: "Albus Brian Dumbledore",
+      B: "Albus Percival Wulfric Brian Dumbledore",
+      C: "Albus Severus Dumbledore",
+      D: "Albus Wulfric Percival Brian Dumbledore"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué hechizo se usa para desarmar a otro mago?",
+    opciones: {
+      A: "Expelliarmus",
+      B: "Stupefy",
+      C: "Protego",
+      D: "Alohomora"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién mata a Sirius Black?",
+    opciones: {
+      A: "Bellatrix Lestrange",
+      B: "Lucius Malfoy",
+      C: "Peter Pettigrew",
+      D: "Fenrir Greyback"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué mago controla a Nagini?",
+    opciones: {
+      A: "Lucius Malfoy",
+      B: "Bellatrix Lestrange",
+      C: "Voldemort",
+      D: "Snape"
+    },
+    correcta: "C"
+  },
+  // (21)
+  {
+    pregunta: "¿Qué criatura mágica cuida Hagrid en su cabaña en el primer libro?",
+    opciones: {
+      A: "Dragón",
+      B: "Hippogrifo",
+      C: "Unicornio",
+      D: "Troll"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién es el director de la casa Slytherin en la mayoría de los libros?",
+    opciones: {
+      A: "Horace Slughorn",
+      B: "Severus Snape",
+      C: "Lucius Malfoy",
+      D: "Tom Riddle"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué objeto debe encontrar Harry para destruir el primer Horrocrux?",
+    opciones: {
+      A: "Diadema",
+      B: "Copa",
+      C: "Medallón",
+      D: "Diario"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién enseña Defensa Contra las Artes Oscuras en el segundo libro?",
+    opciones: {
+      A: "Remus Lupin",
+      B: "Gilderoy Lockhart",
+      C: "Severus Snape",
+      D: "Quirinus Quirrell"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué se necesita para entrar en la sala común de Gryffindor?",
+    opciones: {
+      A: "Llave",
+      B: "Contraseña",
+      C: "Hechizo",
+      D: "Anillo"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo se llama el mapa mágico que muestra a todos en Hogwarts?",
+    opciones: {
+      A: "Mapa del Merodeador",
+      B: "Mapa del Colegio",
+      C: "Mapa Fantasma",
+      D: "Mapa Invisible"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué animal puede transformarse McGonagall?",
+    opciones: {
+      A: "Gato",
+      B: "Búho",
+      C: "Rana",
+      D: "Águila"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién entrega la carta de aceptación a Hogwarts a Harry?",
+    opciones: {
+      A: "Dumbledore",
+      B: "McGonagall",
+      C: "Hagrid",
+      D: "Sirius"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué objeto es una de las Reliquias de la Muerte?",
+    opciones: {
+      A: "Capa de invisibilidad",
+      B: "Copa de Helga Hufflepuff",
+      C: "Diario de Tom Riddle",
+      D: "Mapa del Merodeador"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué personaje tiene una rata llamada Scabbers?",
+    opciones: {
+      A: "Neville Longbottom",
+      B: "Ron Weasley",
+      C: "Harry Potter",
+      D: "Draco Malfoy"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué personaje se convierte en lobo?",
+    opciones: {
+      A: "Sirius Black",
+      B: "Remus Lupin",
+      C: "Peter Pettigrew",
+      D: "Fenrir Greyback"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué criatura cuida Griphook en Gringotts?",
+    opciones: {
+      A: "Troll",
+      B: "Dragón",
+      C: "Acromántula",
+      D: "Thestral"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es el Patronus de Hermione?",
+    opciones: {
+      A: "Cierva",
+      B: "Nutria",
+      C: "Loba",
+      D: "Gato"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué horrocrux destruye Ron?",
+    opciones: {
+      A: "Diario",
+      B: "Diadema",
+      C: "Copa",
+      D: "Medallón"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Cuál es el animal que Harry puede entender y hablar?",
+    opciones: {
+      A: "Dragón",
+      B: "Serpiente",
+      C: "Búho",
+      D: "Thestral"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué es el Quidditch?",
+    opciones: {
+      A: "Un hechizo",
+      B: "Un baile",
+      C: "Un deporte mágico",
+      D: "Una tienda"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué gemelo Weasley pierde una oreja?",
+    opciones: {
+      A: "Fred",
+      B: "George",
+      C: "Percy",
+      D: "Charlie"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién dirige el Torneo de los Tres Magos?",
+    opciones: {
+      A: "Snape",
+      B: "Crouch Jr.",
+      C: "Moody",
+      D: "Dumbledore"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué poción te da buena suerte temporalmente?",
+    opciones: {
+      A: "Amortentia",
+      B: "Veritaserum",
+      C: "Felix Felicis",
+      D: "Multijugos"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cómo se llama el espejo que muestra los deseos del corazón?",
+    opciones: {
+      A: "Espejo del Alma",
+      B: "Espejo del Deseo",
+      C: "Espejo de Oesed",
+      D: "Espejo del Futuro"
+    },
+    correcta: "C"
+  },
+    {
+    pregunta: "¿Qué varita tiene Harry Potter?",
+    opciones: {
+      A: "Madera de roble con pluma de fénix",
+      B: "Madera de acebo con núcleo de dragón",
+      C: "Madera de acebo con pluma de fénix",
+      D: "Madera de sauce con núcleo de unicornio"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Quién es el creador de los Dementores?",
+    opciones: {
+      A: "Voldemort",
+      B: "Dumbledore",
+      C: "No son creados, son espíritus oscuros",
+      D: "Los elfos domésticos"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cuál es el verdadero nombre de Voldemort?",
+    opciones: {
+      A: "Tom Riddle",
+      B: "Tom Marvolo Riddle",
+      C: "Salazar Slytherin",
+      D: "Lucius Malfoy"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué hechizo se usa para abrir puertas cerradas?",
+    opciones: {
+      A: "Alohomora",
+      B: "Expelliarmus",
+      C: "Stupefy",
+      D: "Accio"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cómo se llama el juego de ajedrez mágico en Hogwarts?",
+    opciones: {
+      A: "Ajedrez mágico",
+      B: "Ajedrez de magos",
+      C: "Ajedrez encantado",
+      D: "Ajedrez de batalla"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién era el profesor de Defensa Contra las Artes Oscuras en el quinto libro?",
+    opciones: {
+      A: "Dolores Umbridge",
+      B: "Remus Lupin",
+      C: "Gilderoy Lockhart",
+      D: "Severus Snape"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién ayuda a Harry a rescatar a Sirius en el quinto libro?",
+    opciones: {
+      A: "Ron y Hermione",
+      B: "Neville y Luna",
+      C: "Dumbledore y Snape",
+      D: "Fred y George"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cuál es la forma del Patronus de Harry Potter?",
+    opciones: {
+      A: "Ciervo",
+      B: "Águila",
+      C: "Perro",
+      D: "Lobo"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Cuál es el nombre del sombrero que decide la casa en Hogwarts?",
+    opciones: {
+      A: "Sombrero Elegido",
+      B: "Sombrero Seleccionador",
+      C: "Sombrero Mágico",
+      D: "Sombrero Sabio"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cuál es el nombre del mago oscuro que mató a los padres de Harry?",
+    opciones: {
+      A: "Bellatrix Lestrange",
+      B: "Voldemort",
+      C: "Lucius Malfoy",
+      D: "Severus Snape"
+    },
+    correcta: "B"
+  },
+
+  // Continúa hasta completar las 100 preguntas
+];
+
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
+
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
+    }
+
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      const botones = ['btnA', 'btnB', 'btnC', 'btnD'];
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
+      } else {
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
+      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1000);
+    }
+
+    function actualizarEscala() {
+      const total = preguntas.length;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
+    }
+
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
+    }
+
+    function resetGame() {
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
+    }
+
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
+  </script>
+</body>
+</html>

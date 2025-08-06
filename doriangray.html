@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>El Retrato de Dorian Gray - Lector Millonario</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #1a1a1a, #3d2f2f);
+      color: #f5f1e9;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #2b1f2f;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      width: 70%;
+      max-width: 850px;
+      padding: 40px 35px;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 25px;
+      color: #d4b483;
+      text-shadow: 1px 1px 5px #000;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .book-image {
+      width: 150px;
+      height: 230px;
+      margin: 0 auto 30px;
+      background-image: url('ruta-a-imagen-dorian.jpg'); /* Cambia esta ruta */
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      border: 3px solid #d4b483;
+      box-shadow: 0 0 15px #b39468;
+    }
+    .question {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 30px;
+      min-height: 80px;
+      color: #e6d9b8;
+    }
+    .options button {
+      display: block;
+      width: 85%;
+      margin: 12px auto;
+      padding: 14px;
+      font-size: 18px;
+      color: #2b1f2f;
+      background-color: #d4b483;
+      border: 2px solid #a17d42;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      text-shadow: 0 1px 0 #fff;
+    }
+    .options button:hover {
+      background-color: #b39468;
+      color: #1a1a1a;
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.7);
+    }
+    .options button.correct {
+      background-color: #80b980 !important;
+      border-color: #547d54 !important;
+      color: #1a1a1a !important;
+      box-shadow: 0 0 15px #80b980;
+      animation: pulseGreen 0.4s;
+    }
+    .options button.incorrect {
+      background-color: #e07a7a !important;
+      border-color: #a14a4a !important;
+      color: #3a1a1a !important;
+      box-shadow: 0 0 15px #e07a7a;
+      animation: shake 0.4s;
+    }
+    @keyframes pulseGreen {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .reset-btn, .back-btn {
+      margin-top: 20px;
+      padding: 12px 26px;
+      font-size: 17px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+      transition: background-color 0.3s ease;
+      font-family: 'Playfair Display', serif;
+      color: #2b1f2f;
+      text-shadow: 0 1px 0 #fff;
+    }
+    .reset-btn {
+      background-color: #a14a4a;
+      margin-right: 15px;
+    }
+    .reset-btn:hover {
+      background-color: #7e3838;
+      color: #f5f1e9;
+      text-shadow: none;
+    }
+    .back-btn {
+      background-color: #d4b483;
+    }
+    .back-btn:hover {
+      background-color: #b39468;
+      color: #1a1a1a;
+      text-shadow: none;
+    }
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 14px;
+      background-color: #d4b483;
+      transition: height 0.3s ease;
+      border-radius: 0 12px 12px 0;
+    }
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
+    .contador {
+      margin-top: 22px;
+      font-size: 18px;
+      color: #d4b483;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft"></div>
+    <div class="scale right" id="scaleRight"></div>
+
+    <h1>El Retrato de Dorian Gray - Lector Millonario</h1>
+    <div class="book-image" style="background-image: url('imagenes/DorianGray_Ct.jpg');">
+      <!-- Cambia la imagen por una relacionada -->
+    </div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+      { pregunta: "¿Quién es el autor de 'El retrato de Dorian Gray'?", opciones: { A: "Oscar Wilde", B: "Charles Dickens", C: "Edgar Allan Poe", D: "Bram Stoker" }, correcta: "A" },
+      { pregunta: "¿Cuál es el deseo principal de Dorian Gray?", opciones: { A: "Ser joven para siempre", B: "Ser rico", C: "Ser famoso", D: "Ser un artista" }, correcta: "A" },
+      { pregunta: "¿Qué representa el retrato en la novela?", opciones: { A: "La belleza física", B: "El alma y la corrupción interna", C: "La fama", D: "El tiempo" }, correcta: "B" },
+      { pregunta: "¿Quién pinta el retrato de Dorian Gray?", opciones: { A: "Basil Hallward", B: "Lord Henry Wotton", C: "Dorian Gray", D: "Alan Campbell" }, correcta: "A" },
+      { pregunta: "¿Quién influye fuertemente en Dorian con ideas hedonistas?", opciones: { A: "Basil Hallward", B: "Alan Campbell", C: "Lord Henry Wotton", D: "James Vane" }, correcta: "C" },
+      { pregunta: "¿Cuál es el efecto del deseo de Dorian en el retrato?", opciones: { A: "El retrato envejece y se corrompe", B: "El retrato desaparece", C: "El retrato se vuelve más bello", D: "No cambia" }, correcta: "A" },
+      { pregunta: "¿Qué profesión tiene Basil Hallward?", opciones: { A: "Pintor", B: "Escritor", C: "Músico", D: "Actor" }, correcta: "A" },
+      { pregunta: "¿Quién es Sibyl Vane?", opciones: { A: "La madre de Dorian", B: "Una actriz y amor de Dorian", C: "Hermana de Lord Henry", D: "Amiga de Basil" }, correcta: "B" },
+      { pregunta: "¿Qué le sucede a Sibyl Vane?", opciones: { A: "Se casa con Dorian", B: "Muere tras rechazo de Dorian", C: "Se convierte en artista famosa", D: "Se muda a Francia" }, correcta: "B" },
+      { pregunta: "¿Qué tema principal aborda la novela?", opciones: { A: "La juventud y la corrupción del alma", B: "La guerra", C: "La ciencia", D: "La política" }, correcta: "A" },
+
+      { pregunta: "¿Cómo reacciona Lord Henry ante el retrato?", opciones: { A: "Lo odia", B: "Se siente fascinado y lo admira", C: "Lo destruye", D: "Lo ignora" }, correcta: "B" },
+      { pregunta: "¿Qué le pide Dorian a Basil respecto al retrato?", opciones: { A: "Que lo destruya", B: "Que se lo regale", C: "Que nunca lo muestre", D: "Que lo venda" }, correcta: "C" },
+      { pregunta: "¿Cuál es la relación entre Dorian y James Vane?", opciones: { A: "Amigos de la infancia", B: "Hermanos", C: "James es el hermano de Sibyl y lo busca para vengarse", D: "Son enemigos en la escuela" }, correcta: "C" },
+      { pregunta: "¿Qué simboliza la corrupción en el retrato?", opciones: { A: "El paso del tiempo", B: "La culpa y el pecado de Dorian", C: "La belleza eterna", D: "La fama" }, correcta: "B" },
+      { pregunta: "¿Qué le sucede a Dorian tras años de vida disoluta?", opciones: { A: "Permanece joven y feliz", B: "Su alma se corrompe profundamente", C: "Pierde la memoria", D: "Se vuelve famoso" }, correcta: "B" },
+      { pregunta: "¿Qué hace Dorian con el retrato al final?", opciones: { A: "Lo regala", B: "Lo destruye y muere", C: "Lo esconde", D: "Lo vende" }, correcta: "B" },
+      { pregunta: "¿Qué tipo de novela es 'El retrato de Dorian Gray'?", opciones: { A: "Gótica y filosófica", B: "Romántica", C: "De aventuras", D: "De ciencia ficción" }, correcta: "A" },
+      { pregunta: "¿Qué influencia tiene Lord Henry sobre Dorian?", opciones: { A: "Lo motiva a estudiar", B: "Lo influye para vivir sin límites morales", C: "Lo ayuda a pintar", D: "Lo protege de Basil" }, correcta: "B" },
+      { pregunta: "¿Dónde transcurre la mayor parte de la novela?", opciones: { A: "París", B: "Londres", C: "Roma", D: "Venecia" }, correcta: "B" },
+      { pregunta: "¿Qué significa la juventud eterna para Dorian?", opciones: { A: "Una maldición", B: "Un don y libertad", C: "Un castigo", D: "Una fantasía" }, correcta: "B" },
+
+      { pregunta: "¿Quién es Alan Campbell?", opciones: { A: "Un científico", B: "Amigo de Dorian que ayuda a ocultar un crimen", C: "Hermano de Basil", D: "Un artista rival" }, correcta: "B" },
+      { pregunta: "¿Qué hace Dorian para mantener su juventud?", opciones: { A: "Un pacto sobrenatural", B: "Un trato con Lord Henry", C: "Una fórmula química", D: "Un deseo al retrato" }, correcta: "D" },
+      { pregunta: "¿Qué pasa con el retrato cuando Dorian se arrepiente?", opciones: { A: "Se vuelve hermoso", B: "No cambia", C: "Se destruye", D: "Lo odia" }, correcta: "A" },
+      { pregunta: "¿Qué actitud tiene Dorian hacia la moral tradicional?", opciones: { A: "La sigue estrictamente", B: "La rechaza y vive sin límites", C: "La ignora", D: "La promueve" }, correcta: "B" },
+      { pregunta: "¿Cómo describe Basil a Dorian?", opciones: { A: "Como su musa y amigo", B: "Como un enemigo", C: "Como un extraño", D: "Como un rival" }, correcta: "A" },
+      { pregunta: "¿Qué representa el retrato para Basil?", opciones: { A: "Su obra maestra y amor secreto", B: "Un simple cuadro", C: "Un encargo", D: "Un recuerdo" }, correcta: "A" },
+      { pregunta: "¿Cuál es la reacción de Dorian al ver la corrupción en el retrato?", opciones: { A: "Niega que cambie", B: "Se horroriza pero no cambia su vida", C: "Lo destruye", D: "Lo esconde" }, correcta: "B" },
+      { pregunta: "¿Quién asesina a Basil Hallward?", opciones: { A: "Lord Henry", B: "James Vane", C: "Dorian Gray", D: "Alan Campbell" }, correcta: "C" },
+      { pregunta: "¿Qué tipo de sociedad critica Wilde en la novela?", opciones: { A: "La aristocrática victoriana", B: "La moderna industrial", C: "La rural", D: "La socialista" }, correcta: "A" },
+      { pregunta: "¿Qué tema filosófico destaca en la obra?", opciones: { A: "El existencialismo", B: "El hedonismo y la estética", C: "El nihilismo", D: "El positivismo" }, correcta: "B" },
+
+      { pregunta: "¿Qué símbolo está muy presente en la novela?", opciones: { A: "El espejo", B: "El retrato", C: "El reloj", D: "La luna" }, correcta: "B" },
+      { pregunta: "¿Qué ocurre con James Vane al final?", opciones: { A: "Perdona a Dorian", B: "Muere accidentalmente", C: "Se une a Dorian", D: "Se exilia" }, correcta: "B" },
+      { pregunta: "¿Cuál es la reacción social hacia Dorian a medida que envejece el retrato?", opciones: { A: "Es admirado y respetado", B: "Es rechazado", C: "Es ignorado", D: "Se vuelve famoso" }, correcta: "A" },
+      { pregunta: "¿Qué representa el tema de la doble vida en la novela?", opciones: { A: "La lucha interna entre apariencia y realidad", B: "La amistad", C: "El amor", D: "La muerte" }, correcta: "A" },
+      { pregunta: "¿Cómo termina Dorian Gray?", opciones: { A: "Muere tras destruir el retrato", B: "Escapa y vive oculto", C: "Se casa con Sibyl", D: "Pierde la juventud" }, correcta: "A" },
+      { pregunta: "¿Qué importancia tiene la estética en la obra?", opciones: { A: "Es central, influye en la moral y vida de Dorian", B: "Es secundaria", C: "No aparece", D: "Solo en las pinturas" }, correcta: "A" },
+      { pregunta: "¿Cuál es la frase más famosa atribuida a Lord Henry?", opciones: { A: "La única manera de librarse de la tentación es ceder a ella", B: "El amor es eterno", C: "La belleza es superficial", D: "La verdad siempre triunfa" }, correcta: "A" },
+      { pregunta: "¿Qué mensaje transmite la novela?", opciones: { A: "La juventud eterna es una bendición", B: "La búsqueda obsesiva de la juventud y la belleza conduce a la destrucción", C: "El amor salva todo", D: "La ciencia es peligrosa" }, correcta: "B" },
+      { pregunta: "¿Quién narra la mayor parte de la historia?", opciones: { A: "Dorian Gray", B: "Un narrador omnisciente", C: "Lord Henry", D: "Basil Hallward" }, correcta: "B" },
+      { pregunta: "¿Cuál es el tono general de la novela?", opciones: { A: "Optimista", B: "Gótico, sombrío y decadente", C: "Humorístico", D: "Romántico" }, correcta: "B" },
+      { pregunta: "¿Qué elemento sobrenatural está presente en la trama?", opciones: { A: "Vampiros", B: "El retrato que envejece en lugar de Dorian", C: "Magia negra", D: "Fantasma de Sibyl" }, correcta: "B" }
+    ];
+
+    let currentQuestion = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
+
+    const questionEl = document.getElementById('question');
+    const btnA = document.getElementById('btnA');
+    const btnB = document.getElementById('btnB');
+    const btnC = document.getElementById('btnC');
+    const btnD = document.getElementById('btnD');
+    const contadorEl = document.getElementById('contador');
+    const scaleLeft = document.getElementById('scaleLeft');
+    const scaleRight = document.getElementById('scaleRight');
+
+    function loadQuestion() {
+      if(currentQuestion >= preguntas.length){
+        questionEl.textContent = `¡Juego terminado! Respuestas correctas: ${correctCount}, incorrectas: ${incorrectCount}.`;
+        btnA.style.display = 'none';
+        btnB.style.display = 'none';
+        btnC.style.display = 'none';
+        btnD.style.display = 'none';
+        return;
+      }
+
+      const q = preguntas[currentQuestion];
+      questionEl.textContent = `${currentQuestion + 1}. ${q.pregunta}`;
+      btnA.textContent = `A. ${q.opciones.A}`;
+      btnB.textContent = `B. ${q.opciones.B}`;
+      btnC.textContent = `C. ${q.opciones.C}`;
+      btnD.textContent = `D. ${q.opciones.D}`;
+
+      btnA.className = '';
+      btnB.className = '';
+      btnC.className = '';
+      btnD.className = '';
+
+      btnA.disabled = false;
+      btnB.disabled = false;
+      btnC.disabled = false;
+      btnD.disabled = false;
+    }
+
+    function updateCounter() {
+      contadorEl.textContent = `Correctas: ${correctCount} | Incorrectas: ${incorrectCount}`;
+
+      // Update scale heights (max height = 150px)
+      const total = correctCount + incorrectCount;
+      let leftHeight = 0;
+      let rightHeight = 0;
+      if(total > 0){
+        leftHeight = (correctCount / total) * 150;
+        rightHeight = (incorrectCount / total) * 150;
+      }
+      scaleLeft.style.height = leftHeight + 'px';
+      scaleRight.style.height = rightHeight + 'px';
+    }
+
+    function selectAnswer(letter) {
+      const q = preguntas[currentQuestion];
+      const buttons = { A: btnA, B: btnB, C: btnC, D: btnD };
+
+      // Disable buttons to prevent multiple clicks
+      btnA.disabled = true;
+      btnB.disabled = true;
+      btnC.disabled = true;
+      btnD.disabled = true;
+
+      if(letter === q.correcta){
+        buttons[letter].classList.add('correct');
+        correctCount++;
+      } else {
+        buttons[letter].classList.add('incorrect');
+        buttons[q.correcta].classList.add('correct');
+        incorrectCount++;
+      }
+
+      updateCounter();
+
+      setTimeout(() => {
+        currentQuestion++;
+        loadQuestion();
+      }, 1500);
+    }
+
+    function resetGame() {
+      currentQuestion = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+      btnA.style.display = 'block';
+      btnB.style.display = 'block';
+      btnC.style.display = 'block';
+      btnD.style.display = 'block';
+      updateCounter();
+      loadQuestion();
+    }
+
+    // Inicializar juego
+    resetGame();
+  </script>
+</body>
+</html>

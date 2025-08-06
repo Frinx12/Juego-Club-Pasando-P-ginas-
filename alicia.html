@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Alicia en el País de las Maravillas - Lector Millonario</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+
+    body {
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #9be7ff, #ffb6c1);
+      font-family: 'Fredericka the Great', cursive;
+      color: #2a2a2a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fffaf0;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 75%;
+      max-width: 900px;
+      padding: 40px 35px;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      font-size: 38px;
+      margin-bottom: 25px;
+      color: #d6336c;
+      text-shadow: 1px 1px 4px #fff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .book-image {
+      width: 140px;
+      height: 210px;
+      margin: 0 auto 30px;
+      background-image: url('ruta-a-imagen-alicia.jpg'); /* Cambia esta ruta por imagen relacionada */
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      border: 3px solid #d6336c;
+      box-shadow: 0 0 20px #ff66a3;
+    }
+    .question {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      min-height: 80px;
+      color: #3a0e36;
+      text-shadow: 0 0 3px #ffa1c9;
+    }
+    .options button {
+      display: block;
+      width: 85%;
+      margin: 10px auto;
+      padding: 14px;
+      font-size: 18px;
+      color: #fff;
+      background: #d6336c;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(214,51,108,0.7);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-family: 'Fredericka the Great', cursive;
+      font-weight: 700;
+      text-shadow: 0 1px 2px #600032;
+      user-select: none;
+    }
+    .options button:hover {
+      background-color: #ff4d8a;
+      transform: scale(1.07);
+      box-shadow: 0 8px 18px rgba(255,77,138,0.85);
+    }
+    .options button.correct {
+      background-color: #7de38e !important;
+      color: #1b2e16 !important;
+      box-shadow: 0 0 20px #4ab74a !important;
+      animation: pulseGreen 0.4s;
+    }
+    .options button.incorrect {
+      background-color: #f75c5c !important;
+      color: #3b0a0a !important;
+      box-shadow: 0 0 20px #f22f2f !important;
+      animation: shake 0.4s;
+    }
+    @keyframes pulseGreen {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .reset-btn, .back-btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 17px;
+      border: none;
+      border-radius: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Fredericka the Great', cursive;
+      user-select: none;
+      box-shadow: 0 5px 15px rgba(214,51,108,0.7);
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    .reset-btn {
+      background-color: #1e7d4f;
+      margin-right: 18px;
+    }
+    .reset-btn:hover {
+      background-color: #34b574;
+    }
+    .back-btn {
+      background-color: #d6336c;
+      box-shadow: 0 5px 15px rgba(214,51,108,0.9);
+    }
+    .back-btn:hover {
+      background-color: #ff4d8a;
+    }
+    .contador {
+      margin-top: 22px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #3a0e36;
+      text-shadow: 0 0 6px #ffa1c9;
+    }
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 16px;
+      background-color: #d6336c;
+      transition: height 0.3s ease;
+      border-radius: 0 14px 14px 0;
+    }
+    .scale.left {
+      left: -30px;
+      transform-origin: bottom;
+    }
+    .scale.right {
+      right: -30px;
+      transform-origin: bottom;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scale left" id="scaleLeft"></div>
+    <div class="scale right" id="scaleRight"></div>
+
+    <h1>Alicia en el País de las Maravillas - Lector Millonario</h1>
+
+    <div class="book-image" style="background-image: url('imagenes/Alicia\ en.jpg');">
+      <!-- Cambia esta ruta por imagen relacionada -->
+    </div>
+
+    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="options">
+      <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
+      <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
+      <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
+      <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
+    </div>
+
+    <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
+
+    <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+    <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const preguntas = [
+      { pregunta: "¿Quién es la autora de 'Alicia en el País de las Maravillas'?", opciones: { A: "Lewis Carroll", B: "J.K. Rowling", C: "Jane Austen", D: "Charles Dickens" }, correcta: "A" },
+      { pregunta: "¿Cómo se llama el conejo que Alicia sigue?", opciones: { A: "Conejo Blanco", B: "Conejo Negro", C: "Conejo Rojo", D: "Conejo Azul" }, correcta: "A" },
+      { pregunta: "¿Qué objeto utiliza el Conejo Blanco para controlar el tiempo?", opciones: { A: "Un reloj de bolsillo", B: "Un reloj de pared", C: "Un reloj de arena", D: "Un reloj digital" }, correcta: "A" },
+      { pregunta: "¿Qué le sucede a Alicia al beber una poción que encuentra?", opciones: { A: "Crece mucho", B: "Se hace invisible", C: "Se vuelve pequeña", D: "Se transforma en animal" }, correcta: "C" },
+      { pregunta: "¿Quién gobierna el País de las Maravillas?", opciones: { A: "La Reina de Corazones", B: "La Reina Blanca", C: "El Rey de Copas", D: "El Sombrerero Loco" }, correcta: "A" },
+      { pregunta: "¿Qué frase es famosa de la Reina de Corazones?", opciones: { A: "¡Que le corten la cabeza!", B: "¡Sálvame!", C: "¡Corre rápido!", D: "¡Es mi cumpleaños!" }, correcta: "A" },
+      { pregunta: "¿Qué animal está siempre tomando el té con el Sombrerero Loco?", opciones: { A: "Liebre de Marzo", B: "Gato de Cheshire", C: "Lirón", D: "Tortuga" }, correcta: "A" },
+      { pregunta: "¿Cómo se llama el gato que puede desaparecer y dejar solo su sonrisa?", opciones: { A: "Gato de Cheshire", B: "Gato de Nieve", C: "Gato Negro", D: "Gato Blanco" }, correcta: "A" },
+      { pregunta: "¿Qué tipo de juego juegan los personajes con las rosas?", opciones: { A: "Pintar las rosas de rojo", B: "Tirar las rosas", C: "Recoger rosas blancas", D: "Talar rosas" }, correcta: "A" },
+      { pregunta: "¿Qué comida hace que Alicia crezca?", opciones: { A: "Un pastel con etiqueta 'Cómeme'", B: "Una bebida misteriosa", C: "Un caramelo", D: "Una manzana" }, correcta: "A" },
+
+      { pregunta: "¿Qué le pregunta el Sombrerero a Alicia en la fiesta del té?", opciones: { A: "¿Por qué es una mesa redonda?", B: "¿Cuál es tu nombre?", C: "¿Por qué el tiempo se detuvo?", D: "¿Quieres té?" }, correcta: "C" },
+      { pregunta: "¿Qué le dice el Gato de Cheshire a Alicia?", opciones: { A: "Que todos estamos locos", B: "Que tenga cuidado con la Reina", C: "Que el tiempo no existe", D: "Que ella es especial" }, correcta: "A" },
+      { pregunta: "¿Qué pasa cuando Alicia bebe el frasco etiquetado 'Bébeme'?", opciones: { A: "Se vuelve gigante", B: "Se vuelve pequeña", C: "Se queda dormida", D: "Se transforma en gato" }, correcta: "B" },
+      { pregunta: "¿Quién es el Lirón?", opciones: { A: "Un ratón dormilón que participa en la fiesta del té", B: "Un conejo veloz", C: "Un gato bromista", D: "Un ratón sabio" }, correcta: "A" },
+      { pregunta: "¿Qué criatura Alicia encuentra en la laguna de lágrimas?", opciones: { A: "Un dodo", B: "Una tortuga", C: "Un ratón", D: "Un pez" }, correcta: "C" },
+      { pregunta: "¿Cómo reacciona Alicia ante el juicio de la Reina de Corazones?", opciones: { A: "Defiende a su amigo", B: "Se asusta y corre", C: "No entiende las reglas", D: "Participa en el juicio" }, correcta: "C" },
+      { pregunta: "¿Qué usa la oruga para aconsejar a Alicia?", opciones: { A: "Una pipa y palabras crípticas", B: "Un espejo", C: "Un sombrero mágico", D: "Un libro" }, correcta: "A" },
+      { pregunta: "¿Qué animal dirige el juicio en el País de las Maravillas?", opciones: { A: "El Rey de Corazones", B: "La Reina de Corazones", C: "El Gato de Cheshire", D: "El Dodo" }, correcta: "B" },
+      { pregunta: "¿Cuál es el lema del País de las Maravillas?", opciones: { A: "Curiouser and curiouser", B: "Todo es posible", C: "Nunca es tarde", D: "Sigue el conejo blanco" }, correcta: "A" },
+      { pregunta: "¿Qué evento ocurre al final de la historia?", opciones: { A: "Alicia despierta de un sueño", B: "Alicia se casa con el Sombrerero", C: "La Reina pierde su corona", D: "Alicia se queda en el País de las Maravillas" }, correcta: "A" },
+
+      { pregunta: "¿Qué simboliza el País de las Maravillas en la novela?", opciones: { A: "Un mundo de sueños y absurdo", B: "Un reino real", C: "Una prisión", D: "Un lugar de terror" }, correcta: "A" },
+      { pregunta: "¿Quién es el mejor amigo de Alicia en el País de las Maravillas?", opciones: { A: "El Conejo Blanco", B: "El Sombrerero Loco", C: "El Gato de Cheshire", D: "La Oruga" }, correcta: "C" },
+      { pregunta: "¿Qué le pregunta Alicia a la Oruga?", opciones: { A: "¿Quién soy yo?", B: "¿Dónde estoy?", C: "¿Cómo volver a casa?", D: "¿Qué hora es?" }, correcta: "A" },
+      { pregunta: "¿Qué es la 'laguna de lágrimas'?", opciones: { A: "El lugar donde caen las lágrimas de Alicia", B: "Un lago real", C: "Un río mágico", D: "Un pozo sin fondo" }, correcta: "A" },
+      { pregunta: "¿Quién organiza la fiesta del té interminable?", opciones: { A: "El Sombrerero Loco y la Liebre de Marzo", B: "La Reina de Corazones", C: "El Dodo", D: "La Oruga" }, correcta: "A" },
+      { pregunta: "¿Qué tipo de animal es la Liebre de Marzo?", opciones: { A: "Liebre", B: "Conejo", C: "Zorro", D: "Gato" }, correcta: "A" },
+      { pregunta: "¿Cuál es el mensaje principal del libro?", opciones: { A: "La curiosidad y la imaginación son poderosas", B: "La obediencia es fundamental", C: "El tiempo lo cura todo", D: "La realidad es absoluta" }, correcta: "A" },
+      { pregunta: "¿Qué sucede con el tamaño de Alicia durante la historia?", opciones: { A: "Varía constantemente", B: "Se mantiene igual", C: "Solo crece", D: "Solo se hace pequeña" }, correcta: "A" },
+      { pregunta: "¿Cómo describe Alicia al País de las Maravillas?", opciones: { A: "Un lugar loco y sin sentido", B: "Un paraíso", C: "Un lugar aburrido", D: "Un castillo" }, correcta: "A" },
+      { pregunta: "¿Qué sucede cuando Alicia come el pastel etiquetado 'Cómeme'?", opciones: { A: "Crece mucho", B: "Se vuelve invisible", C: "Se duerme", D: "Se hace pequeña" }, correcta: "A" },
+
+      { pregunta: "¿Qué consejo da el Gato de Cheshire?", opciones: { A: "Todos estamos locos aquí", B: "Nunca confíes en nadie", C: "Sigue al conejo blanco", D: "No crezcas" }, correcta: "A" },
+      { pregunta: "¿Qué objeto usa el Sombrerero Loco en la fiesta del té?", opciones: { A: "Un reloj roto", B: "Un sombrero extraño", C: "Una taza mágica", D: "Un pastel" }, correcta: "B" },
+      { pregunta: "¿Qué personajes participan en la carrera de la tortuga?", opciones: { A: "El Dodo y otros animales", B: "El Sombrerero y la Reina", C: "Alicia y la Oruga", D: "El Conejo y el Gato" }, correcta: "A" },
+      { pregunta: "¿Cómo se llama el hermano de la Reina de Corazones?", opciones: { A: "El Rey de Corazones", B: "El Príncipe de Copas", C: "El Duque de Corazones", D: "No tiene hermano" }, correcta: "A" },
+      { pregunta: "¿Qué pregunta confunde a Alicia durante el juicio?", opciones: { A: "¿Quién pintó las rosas?", B: "¿Dónde está el Conejo Blanco?", C: "¿Cómo se llegó aquí?", D: "¿Qué es la justicia?" }, correcta: "A" },
+      { pregunta: "¿Cuál es el estilo literario de 'Alicia en el País de las Maravillas'?", opciones: { A: "Literatura fantástica y nonsense", B: "Realismo", C: "Romanticismo", D: "Ciencia ficción" }, correcta: "A" },
+      { pregunta: "¿Qué personaje dice '¡Es mi cumpleaños!'?", opciones: { A: "El Sombrerero Loco", B: "La Reina de Corazones", C: "Alicia", D: "La Liebre de Marzo" }, correcta: "A" },
+      { pregunta: "¿Cómo termina el libro?", opciones: { A: "Alicia despierta y todo fue un sueño", B: "Alicia se queda en el País de las Maravillas", C: "La Reina pierde su corona", D: "El Conejo Blanco escapa" }, correcta: "A" },
+      { pregunta: "¿Qué objeto lleva siempre el Conejo Blanco?", opciones: { A: "Un reloj de bolsillo", B: "Una varita mágica", C: "Un sombrero", D: "Un libro" }, correcta: "A" },
+      { pregunta: "¿Qué sucede con Alicia cuando come la torta etiquetada 'Córtame'?", opciones: { A: "Se hace más pequeña", B: "Se hace más grande", C: "Se vuelve invisible", D: "Se transforma en conejo" }, correcta: "A" }
+    ];
+
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
+
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
+    }
+
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      const botones = ['btnA', 'btnB', 'btnC', 'btnD'];
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
+      } else {
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
+      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1200);
+    }
+
+    function actualizarEscala() {
+      const total = preguntas.length;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
+    }
+
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
+    }
+
+    function resetGame() {
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
+    }
+
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
+  </script>
+</body>
+</html>

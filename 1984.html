@@ -3,175 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <title>1984 - Lector Millonario</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  <style>@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-    body {
-      font-family: 'Orbitron', monospace, monospace;
-      background: linear-gradient(135deg, #121212 0%, #2c2c2c 100%);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      color: #d1d1d1;
-      user-select: none;
-    }
+body {
+  font-family: 'Orbitron', monospace, monospace;
+  background: linear-gradient(135deg, #121212 0%, #2c2c2c 100%);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  color: #d1d1d1;
+  user-select: none;
+}
 
-    .container {
-      width: 65%;
-      background: #181818;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #0f0f0f;
-      text-align: center;
-      position: relative;
-      border: 2px solid #00ff00;
-    }
+.container {
+  width: 70vw;
+  max-width: 650px;
+  background: #181818;
+  padding: clamp(20px, 4vw, 40px);
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0f0f0f;
+  text-align: center;
+  position: relative;
+  border: 2px solid #00ff00;
+}
 
-    h1 {
-      color: #00ff00;
-      font-size: 32px;
-      margin-bottom: 20px;
-      letter-spacing: 3px;
-      text-shadow: 0 0 8px #00ff00;
-    }
+h1 {
+  color: #00ff00;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: clamp(12px, 3vw, 20px);
+  letter-spacing: 3px;
+  text-shadow: 0 0 8px #00ff00;
+}
 
-    .book-image {
-      width: 150px;
-      height: 230px;
-      margin: 0 auto 30px;
-      background-image: url('https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg');
-      background-size: cover;
-      background-position: center;
-      border: 2px solid #00ff00;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #00ff00;
-    }
+.book-image {
+  width: clamp(120px, 25vw, 150px);
+  height: clamp(180px, 35vw, 230px);
+  margin: 0 auto clamp(20px, 4vw, 30px);
+  background-image: url('https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #00ff00;
+}
 
-    .question {
-      font-size: 22px;
-      margin-bottom: 25px;
-      font-weight: 600;
-      color: #a1ffa1;
-      text-shadow: 0 0 5px #00ff00;
-    }
+.question {
+  font-size: clamp(16px, 3vw, 22px);
+  margin-bottom: clamp(20px, 4vw, 25px);
+  font-weight: 600;
+  color: #a1ffa1;
+  text-shadow: 0 0 5px #00ff00;
+}
 
-    .options button {
-      display: block;
-      width: 80%;
-      margin: 12px auto;
-      padding: 14px;
-      font-size: 18px;
-      border-radius: 6px;
-      border: 2px solid #00ff00;
-      background-color: #101010;
-      color: #00ff00;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
-      font-weight: 700;
-      text-shadow: 0 0 4px #00ff00;
-    }
+.options button {
+  display: block;
+  width: 80%;
+  margin: 12px auto;
+  padding: clamp(10px, 2vw, 14px);
+  font-size: clamp(14px, 2.5vw, 18px);
+  border-radius: 6px;
+  border: 2px solid #00ff00;
+  background-color: #101010;
+  color: #00ff00;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  font-weight: 700;
+  text-shadow: 0 0 4px #00ff00;
+}
 
-    .options button:hover:not(.correct):not(.incorrect) {
-      background-color: #004d00;
-      color: #aaffaa;
-      transform: scale(1.05);
-    }
+.options button:hover:not(.correct):not(.incorrect) {
+  background-color: #004d00;
+  color: #aaffaa;
+  transform: scale(1.05);
+}
 
-    .options button.correct {
-      background-color: #00ff00 !important;
-      color: #001a00 !important;
-      animation: pulseGreen 0.5s;
-      border-color: #00cc00 !important;
-    }
+.options button.correct {
+  background-color: #00ff00 !important;
+  color: #001a00 !important;
+  animation: pulseGreen 0.5s;
+  border-color: #00cc00 !important;
+}
 
-    .options button.incorrect {
-      background-color: #ff0000 !important;
-      color: #330000 !important;
-      animation: shake 0.5s;
-      border-color: #cc0000 !important;
-    }
+.options button.incorrect {
+  background-color: #ff0000 !important;
+  color: #330000 !important;
+  animation: shake 0.5s;
+  border-color: #cc0000 !important;
+}
 
-    @keyframes pulseGreen {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+@keyframes pulseGreen {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
-    }
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
 
-    .reset-btn, .back-btn {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 700;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #101010;
-      text-shadow: none;
-      user-select: none;
-      box-shadow: 0 0 10px #00ff00;
-      transition: background-color 0.3s;
-    }
+.reset-btn, .back-btn {
+  margin-top: 20px;
+  padding: clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px);
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #101010;
+  text-shadow: none;
+  user-select: none;
+  box-shadow: 0 0 10px #00ff00;
+  transition: background-color 0.3s;
+}
 
-    .reset-btn {
-      background-color: #00ff00;
-      margin-right: 15px;
-    }
+.reset-btn {
+  background-color: #00ff00;
+  margin-right: 15px;
+}
 
-    .reset-btn:hover {
-      background-color: #00cc00;
-    }
+.reset-btn:hover {
+  background-color: #00cc00;
+}
 
-    .back-btn {
-      background-color: #333333;
-      color: #00ff00;
-      border: 2px solid #00ff00;
-    }
+.back-btn {
+  background-color: #333333;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+}
 
-    .back-btn:hover {
-      background-color: #004d00;
-      color: #aaffaa;
-      border-color: #00cc00;
-    }
+.back-btn:hover {
+  background-color: #004d00;
+  color: #aaffaa;
+  border-color: #00cc00;
+}
 
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 15px;
-      background-color: #00ff00;
-      transition: height 0.3s;
-      border-radius: 0 6px 6px 0;
-      box-shadow: 0 0 10px #00ff00;
-    }
+.scale {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 15px;
+  background-color: #00ff00;
+  transition: height 0.3s;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 0 10px #00ff00;
+}
 
-    .scale.left {
-      left: -25px;
-      transform-origin: bottom;
-    }
+.scale.left {
+  left: -5vw;
+ 
+  transform-origin: bottom;
+}
 
-    .scale.right {
-      right: -25px;
-      transform-origin: bottom;
-    }
+.scale.right {
+  right: -5vw;
+  
+  transform-origin: bottom;
+}
 
-    .contador {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #00ff00;
-      font-weight: 700;
-      text-shadow: 0 0 8px #00ff00;
-    }
+.contador {
+  margin-top: 20px;
+  font-size: clamp(14px, 3vw, 18px);
+  color: #00ff00;
+  font-weight: 700;
+  text-shadow: 0 0 8px #00ff00;
+}
+
+/* Media Queries para móviles y tablets */
+@media (max-width: 768px) {
+  .container {
+    width: 90vw;
+    padding: 20px 15px;
+  }
+  h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+  .book-image {
+    width: 40vw;
+    height: 60vw;
+  }
+  .question {
+    font-size: 18px;
+  }
+  .options button {
+    width: 90%;
+    font-size: 16px;
+  }
+  .reset-btn, .back-btn {
+    width: 48%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
+  .book-image {
+    width: 60vw;
+    height: 90vw;
+  }
+  .options button {
+    width: 100%;
+    font-size: 14px;
+  }
+  .reset-btn, .back-btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+}
+
   </style>
 </head>
 <body>

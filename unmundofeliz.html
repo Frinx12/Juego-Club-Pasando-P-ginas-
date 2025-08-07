@@ -3,212 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <title>Un Mundo Feliz - Lector Millonario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
-body {
-  font-family: 'Roboto Slab', serif;
-  background: linear-gradient(135deg, #3e5151, #decba4);
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #222;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container {
-  width: 70vw;
-  max-width: 800px;
-  background: #f9f5e3;
-  border-radius: 15px;
-  padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 30px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  position: relative;
-  text-align: center;
-  color: #222;
-}
+    body {
+      font-family: 'Orbitron', monospace;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #e0e6e9;
+    }
 
-h1 {
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  color: #004346;
-  margin-bottom: clamp(15px, 3vw, 25px);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 3px #bdb76b;
-}
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #1b2a38;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 25px 5px rgba(46, 134, 193, 0.7);
+      position: relative;
+      border: 3px solid #2e86c1;
+    }
 
-.book-image {
-  width: clamp(100px, 20vw, 140px);
-  height: clamp(150px, 30vw, 210px);
-  margin: 0 auto clamp(20px, 4vw, 30px);
-  background-color: #bdb76b;
-  border-radius: 10px;
-  background-size: cover;
-  background-position: center;
-  border: 3px solid #004346;
-}
+    h1 {
+      font-family: 'Orbitron', monospace;
+      color: #66fcf1;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      text-shadow: 0 0 10px #45a29e;
+    }
 
-.question {
-  font-size: clamp(16px, 3vw, 20px);
-  margin-bottom: clamp(20px, 4vw, 25px);
-  min-height: 80px;
-  font-weight: 600;
-}
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/en/6/62/BraveNewWorld_FirstEdition.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #45a29e;
+      box-shadow: 0 0 20px 7px rgba(102, 252, 241, 0.7);
+      border-radius: 12px;
+    }
 
-.options button {
-  display: block;
-  width: 85%;
-  margin: 10px auto;
-  padding: clamp(10px, 2.5vw, 14px);
-  font-size: clamp(14px, 3vw, 18px);
-  border-radius: 8px;
-  border: 2px solid #004346;
-  background-color: #e2d9b3;
-  color: #004346;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-}
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #cde7e9;
+    }
 
-.options button:hover {
-  background-color: #004346;
-  color: #f9f5e3;
-  transform: scale(1.03);
-}
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #45a29e;
+      cursor: pointer;
+      background-color: #162a3a;
+      color: #66fcf1;
+      box-shadow: 0 3px 6px rgba(70, 162, 158, 0.7);
+      transition: background-color 0.3s, transform 0.3s;
+    }
 
-.options button.correct {
-  background-color: #81b29a !important;
-  border-color: #588157 !important;
-  color: #20453e !important;
-  animation: pulseGreen 0.4s;
-  box-shadow: 0 0 12px #81b29a;
-}
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #1f3a50;
+      box-shadow: 0 0 12px #66fcf1;
+    }
 
-.options button.incorrect {
-  background-color: #e07a5f !important;
-  border-color: #9e3a27 !important;
-  color: #4a1f12 !important;
-  animation: shake 0.4s;
-  box-shadow: 0 0 12px #e07a5f;
-}
+    .options button.correct {
+      background-color: #45a29e !important;
+      color: #0b0c10;
+      animation: pulseGreen 0.5s;
+    }
 
-@keyframes pulseGreen {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
+    .options button.incorrect {
+      background-color: #e84118 !important;
+      color: #0b0c10;
+      animation: shake 0.5s;
+    }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
-}
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
 
-.reset-btn, .back-btn {
-  margin-top: 20px;
-  padding: clamp(10px, 2.5vw, 12px) clamp(18px, 4vw, 26px);
-  font-size: clamp(14px, 3vw, 17px);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  color: #f9f5e3;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  transition: background-color 0.3s ease;
-}
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
 
-.reset-btn {
-  background-color: #9a031e;
-  margin-right: 15px;
-}
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+      color: #0b0c10;
+    }
 
-.reset-btn:hover {
-  background-color: #6d0216;
-}
+    .reset-btn {
+      background-color: #45a29e;
+      box-shadow: 0 5px 10px rgba(69, 162, 158, 0.7);
+    }
 
-.back-btn {
-  background-color: #004346;
-}
+    .reset-btn:hover {
+      background-color: #66fcf1;
+    }
 
-.back-btn:hover {
-  background-color: #002822;
-}
+    .back-btn {
+      background-color: #e84118;
+      box-shadow: 0 5px 10px rgba(232, 65, 24, 0.7);
+    }
 
-.scale {
-  position: absolute;
-  top: 0;
-  height: 0;
-  width: 14px;
-  background-color: #588157;
-  transition: height 0.3s ease;
-  border-radius: 0 10px 10px 0;
-}
+    .back-btn:hover {
+      background-color: #ff5c33;
+    }
 
-.scale.left {
-  left: -5vw;
-  transform-origin: bottom;
-}
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #45a29e;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
+    }
 
-.scale.right {
-  right: -5vw;
-  transform-origin: bottom;
-}
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
 
-.contador {
-  margin-top: 22px;
-  font-size: clamp(14px, 3vw, 18px);
-  color: #004346;
-  font-weight: 700;
-}
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
 
-/* Media Queries para móviles y tablets */
-@media (max-width: 768px) {
-  .container {
-    width: 90vw;
-    padding: 20px 15px;
-  }
-  h1 {
-    font-size: 1.8rem;
-  }
-  .book-image {
-    width: 40vw;
-    height: 60vw;
-  }
-  .question {
-    font-size: 18px;
-  }
-  .options button {
-    width: 90%;
-    font-size: 16px;
-  }
-  .reset-btn, .back-btn {
-    width: 48%;
-    padding: 10px;
-    font-size: 14px;
-  }
-}
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #66fcf1;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #0b0c10;
+    }
 
-@media (max-width: 400px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-  .book-image {
-    width: 60vw;
-    height: 90vw;
-  }
-  .options button {
-    width: 100%;
-    font-size: 14px;
-  }
-  .reset-btn, .back-btn {
-    width: 100%;
-    margin: 10px 0 0 0;
-  }
-}
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2.2rem; }
+      .question { font-size: 18px; }
+      .book-image { width: 120px; height: 170px; }
+    }
 
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      .question { font-size: 16px; }
+      .book-image { width: 100px; height: 140px; }
+      .options button, .reset-btn, .back-btn { font-size: 14px; padding: 10px; }
+      .contador { font-size: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -217,172 +189,189 @@ h1 {
     <div class="scale right" id="scaleRight"></div>
 
     <h1>Un Mundo Feliz - Lector Millonario</h1>
-    <div class="book-image" style="background-image: url('imagenes/un\ mundo\ feliz.jpg');">
-      <!-- Aquí puedes cambiar la imagen -->
+       <div class="book-image" style="background-image: url('imagenes/un\ mundo\ feliz.jpg');">
+      <!-- Imagen del libro (personalizable) -->
     </div>
 
-    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="question" id="question">Cargando pregunta...</div>
     <div class="options">
       <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
       <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
       <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
       <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
     </div>
-
     <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
-
     <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
     <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
   </div>
 
   <script>
     const preguntas = [
-      { pregunta: "¿Quién es el autor de 'Un mundo feliz'?", opciones: { A: "George Orwell", B: "Aldous Huxley", C: "Ray Bradbury", D: "Philip K. Dick" }, correcta: "B" },
-      { pregunta: "¿Cuál es el nombre del método de reproducción humana en el libro?", opciones: { A: "Parto natural", B: "Reproducción asistida", C: "Bokanovsky", D: "Clonación" }, correcta: "C" },
-      { pregunta: "¿Qué sustancia usan para mantener a la población feliz?", opciones: { A: "Soma", B: "Melatonina", C: "Éxtasis", D: "LSD" }, correcta: "A" },
-      { pregunta: "¿Qué es el 'Mundo Feliz' según la novela?", opciones: { A: "Un lugar utópico", B: "Una sociedad distópica", C: "Una isla paradisíaca", D: "Una ciudad futurista" }, correcta: "B" },
-      { pregunta: "¿Cómo se llama el personaje principal que cuestiona la sociedad?", opciones: { A: "Bernard Marx", B: "John el Salvaje", C: "Mustafa Mond", D: "Henry Foster" }, correcta: "B" },
-      { pregunta: "¿Qué papel tiene Bernard Marx?", opciones: { A: "Un alfa que se siente diferente", B: "Un trabajador clase baja", C: "Un líder rebelde", D: "El director del Centro de Incubación" }, correcta: "A" },
-      { pregunta: "¿Qué es el 'Centro de Incubación y Condicionamiento'?", opciones: { A: "Una escuela", B: "Un hospital", C: "Una fábrica de humanos", D: "Un laboratorio de robots" }, correcta: "C" },
-      { pregunta: "¿Qué clase social es la más alta en la sociedad?", opciones: { A: "Epsilons", B: "Gammas", C: "Betas", D: "Alfas" }, correcta: "D" },
-      { pregunta: "¿Cómo se llama el hombre que viene del 'Mundo Salvaje'?", opciones: { A: "Lenina Crowne", B: "John", C: "Helmholtz Watson", D: "Bernard Marx" }, correcta: "B" },
-      { pregunta: "¿Qué significa la frase 'Comunidad, Identidad, Estabilidad'?", opciones: { A: "Valores religiosos", B: "Lema del Estado Mundial", C: "Un poema", D: "Un mantra de resistencia" }, correcta: "B" },
-
-      // 40 preguntas adicionales:
-      { pregunta: "¿Quién es Helmholtz Watson?", opciones: { A: "Un alfa escritor y amigo de Bernard", B: "El director del centro", C: "Un salvaje del mundo externo", D: "Un científico loco" }, correcta: "A" },
-      { pregunta: "¿Qué sucede con los individuos que no encajan en la sociedad?", opciones: { A: "Son exiliados", B: "Son eliminados", C: "Son enviados al mundo salvaje", D: "Son reprogramados" }, correcta: "B" },
-      { pregunta: "¿Qué simboliza el soma en la novela?", opciones: { A: "Libertad", B: "Opiáceo para control social", C: "Una droga para la creatividad", D: "Una medicina para enfermedades" }, correcta: "B" },
-      { pregunta: "¿Qué actitud tiene el Estado Mundial hacia la historia y la cultura pasada?", opciones: { A: "La preserva", B: "La celebra", C: "La elimina o distorsiona", D: "La ignora" }, correcta: "C" },
-      { pregunta: "¿Cuál es el propósito principal del condicionamiento?", opciones: { A: "Fomentar la creatividad", B: "Asegurar la estabilidad social", C: "Crear líderes", D: "Rebelar a la población" }, correcta: "B" },
-      { pregunta: "¿Qué objeto cultural busca y lee John el Salvaje?", opciones: { A: "El Quijote", B: "La Biblia", C: "Shakespeare", D: "El Corán" }, correcta: "C" },
-      { pregunta: "¿Qué representa la isla del Salvaje para John?", opciones: { A: "Un paraíso perdido", B: "Un lugar de castigo", C: "Una prisión", D: "Una fantasía" }, correcta: "A" },
-      { pregunta: "¿Qué ocurre cuando John se enfrenta a la sociedad 'feliz'?", opciones: { A: "Se adapta rápidamente", B: "Se enamora", C: "Sufre y se siente alienado", D: "Se convierte en líder" }, correcta: "C" },
-      { pregunta: "¿Qué papel tiene Mustafá Mond?", opciones: { A: "Es un rebelde", B: "Es un alfa y controlador del orden", C: "Es un salvaje", D: "Es un científico loco" }, correcta: "B" },
-      { pregunta: "¿Cuál es la postura de Mustafá Mond sobre la libertad y el control?", opciones: { A: "Prefiere libertad absoluta", B: "Prefiere control y estabilidad social", C: "Quiere destruir la sociedad", D: "No tiene opinión" }, correcta: "B" },
-
-      { pregunta: "¿Qué método se usa para enseñar a los niños desde pequeños?", opciones: { A: "Educación tradicional", B: "Condicionamiento hipnopédico", C: "Entrenamiento militar", D: "Escuelas especiales" }, correcta: "B" },
-      { pregunta: "¿Qué significa ser un Epsilon en la sociedad?", opciones: { A: "Clase alta", B: "Clase media", C: "Clase baja y trabajo manual", D: "Rebeldes" }, correcta: "C" },
-      { pregunta: "¿Qué es la 'decantación'?", opciones: { A: "Proceso de selección genética", B: "Un método para crear humanos en laboratorio", C: "Una ceremonia religiosa", D: "Un tipo de condicionamiento" }, correcta: "B" },
-      { pregunta: "¿Qué emoción es más controlada en esta sociedad?", opciones: { A: "Felicidad", B: "Amor", C: "Tristeza", D: "Enojo" }, correcta: "B" },
-      { pregunta: "¿Qué elemento religioso es ridiculizado en la novela?", opciones: { A: "Cristianismo", B: "Budismo", C: "Islam", D: "Hinduismo" }, correcta: "A" },
-      { pregunta: "¿Cómo se llama la novela que John lleva consigo?", opciones: { A: "Romeo y Julieta", B: "Hamlet", C: "La Odisea", D: "Romeo y Julieta" }, correcta: "D" },
-      { pregunta: "¿Qué sucede cuando John consume soma?", opciones: { A: "Se siente feliz y relajado", B: "Se vuelve violento", C: "Pierde el conocimiento", D: "Nada" }, correcta: "A" },
-      { pregunta: "¿Cuál es la función del sexo en esta sociedad?", opciones: { A: "Reproducción natural", B: "Placer y vínculo afectivo", C: "Actividad social sin compromiso", D: "Tabú" }, correcta: "C" },
-      { pregunta: "¿Qué es la 'fiesta del soma'?", opciones: { A: "Una celebración religiosa", B: "Una reunión social para consumir soma", C: "Una protesta", D: "Un rito de paso" }, correcta: "B" },
-      { pregunta: "¿Quién es Lenina Crowne?", opciones: { A: "Una alfa y trabajadora modelo", B: "Una salvaje", C: "Una científica", D: "Una rebelde" }, correcta: "A" },
-
-      { pregunta: "¿Qué efecto tiene el condicionamiento en la sociedad?", opciones: { A: "Promueve la libertad individual", B: "Fomenta la obediencia y conformidad", C: "Aumenta la creatividad", D: "Genera conflictos" }, correcta: "B" },
-      { pregunta: "¿Cómo reaccionan los alfas a la disidencia?", opciones: { A: "Son tolerantes", B: "La reprimen", C: "Ignoran", D: "La fomentan" }, correcta: "B" },
-      { pregunta: "¿Cuál es el papel de la literatura en la novela?", opciones: { A: "Es censurada y controlada", B: "Es ampliamente leída", C: "Es celebrada", D: "No existe" }, correcta: "A" },
-      { pregunta: "¿Qué representa la falta de familia en el libro?", opciones: { A: "Libertad", B: "Control social y ausencia de vínculos afectivos", C: "Tragedia", D: "Tradición" }, correcta: "B" },
-      { pregunta: "¿Qué es la estabilidad social para el Estado Mundial?", opciones: { A: "Un equilibrio entre libertad y control", B: "Supresión de emociones y deseos individuales", C: "Democracia", D: "Revolución" }, correcta: "B" },
-      { pregunta: "¿Qué problema tiene Bernard Marx con la sociedad?", opciones: { A: "Está demasiado feliz", B: "No encaja y se siente alienado", C: "Es líder rebelde", D: "No tiene problemas" }, correcta: "B" },
-      { pregunta: "¿Qué reacción tiene John ante la muerte de su madre?", opciones: { A: "Indiferencia", B: "Tristeza profunda y rechazo a la sociedad", C: "Alegría", D: "Rabia contra la madre" }, correcta: "B" },
-      { pregunta: "¿Qué rol juega Mustafá Mond al final de la novela?", opciones: { A: "Defensor de la sociedad", B: "Rebelde", C: "Salvaje", D: "Ignorado" }, correcta: "A" },
-      { pregunta: "¿Qué tema principal aborda 'Un mundo feliz'?", opciones: { A: "Utopía tecnológica", B: "Distopía y control social", C: "Romance", D: "Aventura" }, correcta: "B" },
-      { pregunta: "¿Cuál es la reacción de la sociedad ante el arte y la música?", opciones: { A: "Son fomentados", B: "Son tolerados", C: "Son suprimidos y controlados", D: "No existen" }, correcta: "C" },
-      { pregunta: "¿Qué representa el personaje de John en la novela?", opciones: { A: "La conformidad", B: "La rebelión y el choque con la sociedad", C: "La sumisión", D: "La ignorancia" }, correcta: "B" },
-      { pregunta: "¿Cómo termina la novela 'Un mundo feliz'?", opciones: { A: "John se adapta a la sociedad", B: "John se suicida", C: "La sociedad se derrumba", D: "John se convierte en líder" }, correcta: "B" },
-      { pregunta: "¿Cuál es el lema de la sociedad distópica en 'Un mundo feliz'?", opciones: { A: "Libertad, Igualdad, Fraternidad", B: "Comunidad, Identidad, Estabilidad", C: "Paz y Amor", D: "Trabajo y Justicia" }, correcta: "B" },
-      { pregunta: "¿Qué tipo de novela es 'Un mundo feliz'?", opciones: { A: "Romántica", B: "Distópica y de ciencia ficción", C: "Histórica", D: "Aventuras" }, correcta: "B" }
+      {
+        pregunta: "¿Quién es el autor de 'Un mundo feliz'?",
+        opciones: {
+          A: "George Orwell",
+          B: "Aldous Huxley",
+          C: "Ray Bradbury",
+          D: "Philip K. Dick"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el nombre del gobierno que controla la sociedad en 'Un mundo feliz'?",
+        opciones: {
+          A: "El Partido Único",
+          B: "La Sociedad Perfecta",
+          C: "El Control Mundial",
+          D: "La Administración Mundial"
+        },
+        correcta: "D"
+      },
+      {
+        pregunta: "¿Cómo se llaman las castas sociales principales en la novela?",
+        opciones: {
+          A: "Alfa, Beta, Gamma, Delta y Épsilon",
+          B: "Oro, Plata, Bronce y Cobre",
+          C: "Ricos, Medios y Pobres",
+          D: "Clero, Nobleza y Campesinado"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué droga es usada para mantener la felicidad en la sociedad?",
+        opciones: {
+          A: "Soma",
+          B: "Nirvana",
+          C: "Zoloft",
+          D: "HappyX"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Quién es el 'Salvaje' en la historia?",
+        opciones: {
+          A: "Un Alfa que cuestiona la sociedad",
+          B: "Un hombre nacido fuera de la sociedad controlada",
+          C: "Un científico rebelde",
+          D: "Un líder político"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué representa el 'Salvaje' para la sociedad controlada?",
+        opciones: {
+          A: "La esperanza de cambio",
+          B: "Una amenaza y diferencia radical",
+          C: "Un modelo a seguir",
+          D: "Un líder espiritual"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es la técnica principal para controlar a las personas desde la infancia?",
+        opciones: {
+          A: "Condicionamiento hipnótico",
+          B: "Programación genética",
+          C: "Condicionamiento psicológico y social",
+          D: "Educación tradicional"
+        },
+        correcta: "C"
+      },
+      {
+        pregunta: "¿Cuál es el papel de Bernard Marx en la historia?",
+        opciones: {
+          A: "Un Alfa que no encaja en la sociedad",
+          B: "Un líder del Control Mundial",
+          C: "El creador de la sociedad perfecta",
+          D: "El 'Salvaje'"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué símbolo representa la cultura antigua y natural?",
+        opciones: {
+          A: "El soma",
+          B: "El libro de Shakespeare",
+          C: "La máquina de reproducción",
+          D: "El deporte"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cómo termina la novela?",
+        opciones: {
+          A: "Con la rebelión exitosa contra el Control Mundial",
+          B: "Con la aceptación plena del Control Mundial",
+          C: "Con la muerte del Salvaje y la continuidad de la sociedad controlada",
+          D: "Con la destrucción total de la sociedad"
+        },
+        correcta: "C"
+      }
     ];
 
-    let preguntaActual = 0;
-    let correctas = 0;
-    let incorrectas = 0;
-    const questionEl = document.getElementById('question');
-    const btnA = document.getElementById('btnA');
-    const btnB = document.getElementById('btnB');
-    const btnC = document.getElementById('btnC');
-    const btnD = document.getElementById('btnD');
-    const contadorEl = document.getElementById('contador');
-    const scaleLeft = document.getElementById('scaleLeft');
-    const scaleRight = document.getElementById('scaleRight');
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
 
     function cargarPregunta() {
-      const q = preguntas[preguntaActual];
-      questionEl.textContent = `${preguntaActual + 1}. ${q.pregunta}`;
-      btnA.textContent = `A. ${q.opciones.A}`;
-      btnB.textContent = `B. ${q.opciones.B}`;
-      btnC.textContent = `C. ${q.opciones.C}`;
-      btnD.textContent = `D. ${q.opciones.D}`;
-      btnA.className = '';
-      btnB.className = '';
-      btnC.className = '';
-      btnD.className = '';
-      habilitarBotones(true);
-    }
-
-    function habilitarBotones(estado) {
-      btnA.disabled = !estado;
-      btnB.disabled = !estado;
-      btnC.disabled = !estado;
-      btnD.disabled = !estado;
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
     }
 
     function selectAnswer(opcion) {
-      habilitarBotones(false);
-      const q = preguntas[preguntaActual];
-      const botones = { A: btnA, B: btnB, C: btnC, D: btnD };
-
-      if (opcion === q.correcta) {
-        botones[opcion].classList.add('correct');
-        correctas++;
+      const correcta = preguntas[actual].correcta;
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
       } else {
-        botones[opcion].classList.add('incorrect');
-        botones[q.correcta].classList.add('correct');
-        incorrectas++;
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
+        document.getElementById('btn' + correcta).classList.add('correct');
       }
-      actualizarContador();
       actualizarEscala();
-
+      actualizarContador();
       setTimeout(() => {
-        preguntaActual++;
-        if (preguntaActual < preguntas.length) {
+        actual++;
+        if (actual < preguntas.length) {
           cargarPregunta();
         } else {
-          finalizarJuego();
+          alert("Juego terminado. ¡Gracias por jugar!");
         }
-      }, 1200);
-    }
-
-    function actualizarContador() {
-      contadorEl.textContent = `Correctas: ${correctas} | Incorrectas: ${incorrectas}`;
+      }, 1000);
     }
 
     function actualizarEscala() {
       const total = preguntas.length;
-      const alturaCorrectas = (correctas / total) * 250;
-      const alturaIncorrectas = (incorrectas / total) * 250;
-      scaleLeft.style.height = `${alturaCorrectas}px`;
-      scaleRight.style.height = `${alturaIncorrectas}px`;
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
     }
 
-    function finalizarJuego() {
-      questionEl.textContent = `¡Juego terminado! Respuestas correctas: ${correctas} de ${preguntas.length}.`;
-      btnA.style.display = 'none';
-      btnB.style.display = 'none';
-      btnC.style.display = 'none';
-      btnD.style.display = 'none';
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
     }
 
     function resetGame() {
-      preguntaActual = 0;
-      correctas = 0;
-      incorrectas = 0;
-      btnA.style.display = 'block';
-      btnB.style.display = 'block';
-      btnC.style.display = 'block';
-      btnD.style.display = 'block';
-      actualizarContador();
+      actual = 0;
+      puntos = 0;
+      errores = 0;
       actualizarEscala();
+      actualizarContador();
       cargarPregunta();
     }
 
-    // Iniciar juego
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
     cargarPregunta();
-    actualizarContador();
-    actualizarEscala();
   </script>
 </body>
 </html>

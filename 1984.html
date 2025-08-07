@@ -3,225 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <title>1984 - Lector Millonario</title>
-  <style>@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Share+Tech+Mono&display=swap');
 
-body {
-  font-family: 'Orbitron', monospace, monospace;
-  background: linear-gradient(135deg, #121212 0%, #2c2c2c 100%);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  color: #d1d1d1;
-  user-select: none;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container {
-  width: 70vw;
-  max-width: 650px;
-  background: #181818;
-  padding: clamp(20px, 4vw, 40px);
-  border-radius: 12px;
-  box-shadow: 0 0 20px #0f0f0f;
-  text-align: center;
-  position: relative;
-  border: 2px solid #00ff00;
-}
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: linear-gradient(135deg, #111 0%, #3c3c3c 50%, #000 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #e0e0e0;
+    }
 
-h1 {
-  color: #00ff00;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  margin-bottom: clamp(12px, 3vw, 20px);
-  letter-spacing: 3px;
-  text-shadow: 0 0 8px #00ff00;
-}
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #1e1e1e;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 25px 5px rgba(200,0,0,0.7);
+      position: relative;
+      border: 3px solid #b30000;
+    }
 
-.book-image {
-  width: clamp(120px, 25vw, 150px);
-  height: clamp(180px, 35vw, 230px);
-  margin: 0 auto clamp(20px, 4vw, 30px);
-  background-image: url('https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg');
-  background-size: cover;
-  background-position: center;
-  border: 2px solid #00ff00;
-  border-radius: 8px;
-  box-shadow: 0 0 15px #00ff00;
-}
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #ff0000;
+      text-shadow: 2px 2px 8px #800000;
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+    }
 
-.question {
-  font-size: clamp(16px, 3vw, 22px);
-  margin-bottom: clamp(20px, 4vw, 25px);
-  font-weight: 600;
-  color: #a1ffa1;
-  text-shadow: 0 0 5px #00ff00;
-}
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #ff0000;
+      box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
+      border-radius: 12px;
+    }
 
-.options button {
-  display: block;
-  width: 80%;
-  margin: 12px auto;
-  padding: clamp(10px, 2vw, 14px);
-  font-size: clamp(14px, 2.5vw, 18px);
-  border-radius: 6px;
-  border: 2px solid #00ff00;
-  background-color: #101010;
-  color: #00ff00;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  font-weight: 700;
-  text-shadow: 0 0 4px #00ff00;
-}
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 1px 1px 4px #000;
+    }
 
-.options button:hover:not(.correct):not(.incorrect) {
-  background-color: #004d00;
-  color: #aaffaa;
-  transform: scale(1.05);
-}
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #ff6666;
+      cursor: pointer;
+      background-color: #fcecec;
+      color: #330000;
+      box-shadow: 0 3px 6px rgba(255, 100, 100, 0.5);
+      transition: background-color 0.3s, transform 0.3s;
+    }
 
-.options button.correct {
-  background-color: #00ff00 !important;
-  color: #001a00 !important;
-  animation: pulseGreen 0.5s;
-  border-color: #00cc00 !important;
-}
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #ffd6d6;
+    }
 
-.options button.incorrect {
-  background-color: #ff0000 !important;
-  color: #330000 !important;
-  animation: shake 0.5s;
-  border-color: #cc0000 !important;
-}
+    .options button.correct {
+      background-color: #4caf50 !important;
+      color: white;
+      animation: pulseGreen 0.5s;
+    }
 
-@keyframes pulseGreen {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
+    .options button.incorrect {
+      background-color: #e53935 !important;
+      color: white;
+      animation: shake 0.5s;
+    }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
-}
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
 
-.reset-btn, .back-btn {
-  margin-top: 20px;
-  padding: clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px);
-  font-size: clamp(14px, 2vw, 16px);
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #101010;
-  text-shadow: none;
-  user-select: none;
-  box-shadow: 0 0 10px #00ff00;
-  transition: background-color 0.3s;
-}
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
 
-.reset-btn {
-  background-color: #00ff00;
-  margin-right: 15px;
-}
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
 
-.reset-btn:hover {
-  background-color: #00cc00;
-}
+    .reset-btn {
+      background-color: #ff0000;
+      color: white;
+      box-shadow: 0 5px 10px rgba(255,0,0,0.7);
+    }
 
-.back-btn {
-  background-color: #333333;
-  color: #00ff00;
-  border: 2px solid #00ff00;
-}
+    .reset-btn:hover {
+      background-color: #ff4d4d;
+    }
 
-.back-btn:hover {
-  background-color: #004d00;
-  color: #aaffaa;
-  border-color: #00cc00;
-}
+    .back-btn {
+      background-color: #333;
+      color: white;
+      box-shadow: 0 5px 10px rgba(100,100,100,0.7);
+    }
 
-.scale {
-  position: absolute;
-  top: 0;
-  height: 0;
-  width: 15px;
-  background-color: #00ff00;
-  transition: height 0.3s;
-  border-radius: 0 6px 6px 0;
-  box-shadow: 0 0 10px #00ff00;
-}
+    .back-btn:hover {
+      background-color: #666;
+    }
 
-.scale.left {
-  left: -5vw;
- 
-  transform-origin: bottom;
-}
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #ff0000;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
+    }
 
-.scale.right {
-  right: -5vw;
-  
-  transform-origin: bottom;
-}
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
 
-.contador {
-  margin-top: 20px;
-  font-size: clamp(14px, 3vw, 18px);
-  color: #00ff00;
-  font-weight: 700;
-  text-shadow: 0 0 8px #00ff00;
-}
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
 
-/* Media Queries para móviles y tablets */
-@media (max-width: 768px) {
-  .container {
-    width: 90vw;
-    padding: 20px 15px;
-  }
-  h1 {
-    font-size: 2rem;
-    letter-spacing: 2px;
-  }
-  .book-image {
-    width: 40vw;
-    height: 60vw;
-  }
-  .question {
-    font-size: 18px;
-  }
-  .options button {
-    width: 90%;
-    font-size: 16px;
-  }
-  .reset-btn, .back-btn {
-    width: 48%;
-    padding: 10px;
-    font-size: 14px;
-  }
-}
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #ff9999;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #000;
+    }
 
-@media (max-width: 400px) {
-  h1 {
-    font-size: 1.5rem;
-    letter-spacing: 1.5px;
-  }
-  .book-image {
-    width: 60vw;
-    height: 90vw;
-  }
-  .options button {
-    width: 100%;
-    font-size: 14px;
-  }
-  .reset-btn, .back-btn {
-    width: 100%;
-    margin: 10px 0 0 0;
-  }
-}
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2rem; }
+      .question { font-size: 18px; }
+      .book-image { width: 120px; height: 180px; }
+    }
 
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      .question { font-size: 16px; }
+      .book-image { width: 100px; height: 150px; }
+      .options button, .reset-btn, .back-btn { font-size: 14px; padding: 10px; }
+      .contador { font-size: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -230,19 +189,18 @@ h1 {
     <div class="scale right" id="scaleRight"></div>
 
     <h1>1984 - Lector Millonario</h1>
+   <div class="book-image" style="background-image: url('imagenes/1984.jpg');">
+      <!-- Imagen del libro (personalizable) -->
+    </div>
 
-    <div class="book-image" style="background-image: url('imagenes/1984.jpg');"></div>
-
-    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="question" id="question">Cargando pregunta...</div>
     <div class="options">
       <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
       <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
       <button onclick="selectAnswer('C')" id="btnC">Opción C</button>
       <button onclick="selectAnswer('D')" id="btnD">Opción D</button>
     </div>
-
     <div class="contador" id="contador">Correctas: 0 | Incorrectas: 0</div>
-
     <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
     <button class="back-btn" onclick="location.href='index.html'">Volver al inicio</button>
   </div>
@@ -250,586 +208,105 @@ h1 {
   <script>
     const preguntas = [
       {
-        pregunta: "¿Quién es el protagonista principal de 1984?",
+        pregunta: "¿Cómo se llama el protagonista de 1984?",
         opciones: {
           A: "Winston Smith",
-          B: "Big Brother",
-          C: "O'Brien",
-          D: "Julia"
+          B: "O'Brien",
+          C: "Emmanuel Goldstein",
+          D: "Big Brother"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿En qué ciudad ficticia se ambienta la novela?",
+        pregunta: "¿Cuál es el lema del Partido?",
         opciones: {
-          A: "Londres",
-          B: "Airstrip One",
-          C: "Nueva York",
-          D: "Oceania"
+          A: "La libertad es poder",
+          B: "La guerra es paz",
+          C: "El pensamiento es libre",
+          D: "Ignorancia es felicidad"
         },
         correcta: "B"
       },
       {
-        pregunta: "¿Cuál es el lema del Partido en 1984?",
+        pregunta: "¿Qué controla el Ministerio de la Verdad?",
         opciones: {
-          A: "Libertad, Igualdad, Fraternidad",
-          B: "Guerra es Paz, Libertad es Esclavitud, Ignorancia es Fuerza",
-          C: "Trabajo y Progreso",
-          D: "Paz y Prosperidad"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué objeto representa la vigilancia constante del Partido?",
-        opciones: {
-          A: "Teléfono",
-          B: "Pantalla de televisión",
-          C: "Micrófono",
-          D: "Gran Hermano (Big Brother)"
-        },
-        correcta: "D"
-      },
-      {
-        pregunta: "¿Cuál es el Ministerio encargado de la guerra?",
-        opciones: {
-          A: "Ministerio de la Verdad",
-          B: "Ministerio del Amor",
-          C: "Ministerio de la Paz",
-          D: "Ministerio de la Guerra"
+          A: "Justicia",
+          B: "Educación",
+          C: "Medios y registros históricos",
+          D: "Ciencia y tecnología"
         },
         correcta: "C"
       },
       {
-        pregunta: "¿Quién es Julia en la novela?",
+        pregunta: "¿Cómo se llama el idioma modificado creado por el Partido?",
         opciones: {
-          A: "Una agente del Partido",
-          B: "Amante de Winston",
-          C: "Hermana de Winston",
-          D: "Jefa del Partido"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué es la neolengua?",
-        opciones: {
-          A: "Un idioma antiguo",
-          B: "El idioma oficial creado para controlar el pensamiento",
-          C: "Un dialecto regional",
-          D: "El lenguaje de los rebeldes"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué símbolo tiene Winston en su casa?",
-        opciones: {
-          A: "Un reloj roto",
-          B: "Un diario secreto",
-          C: "Un póster del Gran Hermano",
-          D: "Una rosa"
-        },
-        correcta: "C"
-      },
-      {
-        pregunta: "¿Cómo se llama la habitación donde torturan a Winston?",
-        opciones: {
-          A: "Cuarto 101",
-          B: "Sala 7",
-          C: "El calabozo",
-          D: "La celda 9"
+          A: "Neolengua",
+          B: "Oldspeak",
+          C: "Doublethink",
+          D: "Thoughtcrime"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué es la vigilancia constante a la que están sometidos los ciudadanos?",
+        pregunta: "¿Quién es el enemigo público del Partido?",
         opciones: {
-          A: "Policía secreta",
-          B: "Televisión pública",
-          C: "Gran Hermano",
-          D: "Ejército"
+          A: "Winston Smith",
+          B: "O'Brien",
+          C: "Emmanuel Goldstein",
+          D: "Big Brother"
         },
         correcta: "C"
       },
-       {
-    pregunta: "¿Quién es el protagonista principal de 1984?",
-    opciones: {
-      A: "Winston Smith",
-      B: "Big Brother",
-      C: "O'Brien",
-      D: "Julia"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿En qué ciudad ficticia se ambienta la novela?",
-    opciones: {
-      A: "Londres",
-      B: "Airstrip One",
-      C: "Nueva York",
-      D: "Oceania"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es el lema del Partido en 1984?",
-    opciones: {
-      A: "Libertad, Igualdad, Fraternidad",
-      B: "Guerra es Paz, Libertad es Esclavitud, Ignorancia es Fuerza",
-      C: "Trabajo y Progreso",
-      D: "Paz y Prosperidad"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué objeto representa la vigilancia constante del Partido?",
-    opciones: {
-      A: "Teléfono",
-      B: "Pantalla de televisión",
-      C: "Micrófono",
-      D: "Gran Hermano (Big Brother)"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Cuál es el Ministerio encargado de la guerra?",
-    opciones: {
-      A: "Ministerio de la Verdad",
-      B: "Ministerio del Amor",
-      C: "Ministerio de la Paz",
-      D: "Ministerio de la Guerra"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Quién es Julia en la novela?",
-    opciones: {
-      A: "Una agente del Partido",
-      B: "Amante de Winston",
-      C: "Hermana de Winston",
-      D: "Jefa del Partido"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es la neolengua?",
-    opciones: {
-      A: "Un idioma antiguo",
-      B: "El idioma oficial creado para controlar el pensamiento",
-      C: "Un dialecto regional",
-      D: "El lenguaje de los rebeldes"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué símbolo tiene Winston en su casa?",
-    opciones: {
-      A: "Un reloj roto",
-      B: "Un diario secreto",
-      C: "Un póster del Gran Hermano",
-      D: "Una rosa"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Cómo se llama la habitación donde torturan a Winston?",
-    opciones: {
-      A: "Cuarto 101",
-      B: "Sala 7",
-      C: "El calabozo",
-      D: "La celda 9"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué es la vigilancia constante a la que están sometidos los ciudadanos?",
-    opciones: {
-      A: "Policía secreta",
-      B: "Televisión pública",
-      C: "Gran Hermano",
-      D: "Ejército"
-    },
-    correcta: "C"
-  },
-  // Ahora las 40 preguntas adicionales:
-  {
-    pregunta: "¿Cuál es el propósito principal del Ministerio de la Verdad?",
-    opciones: {
-      A: "Crear noticias falsas",
-      B: "Controlar la información y reescribir la historia",
-      C: "Proteger al pueblo",
-      D: "Coordinar la guerra"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cómo se llama la esposa de Winston Smith?",
-    opciones: {
-      A: "Julia",
-      B: "Katharine",
-      C: "Daisy",
-      D: "Mary"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué actividad prohibida realiza Winston al principio de la novela?",
-    opciones: {
-      A: "Escribir un diario",
-      B: "Hablar con Julia",
-      C: "Escapar de la ciudad",
-      D: "Leer libros antiguos"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Quién es O’Brien?",
-    opciones: {
-      A: "Un amigo de Winston",
-      B: "Un agente del Partido que engaña a Winston",
-      C: "El líder de la resistencia",
-      D: "El esposo de Julia"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es la Policía del Pensamiento?",
-    opciones: {
-      A: "La policía común",
-      B: "La fuerza que persigue el pensamiento criminal",
-      C: "Un grupo de rebeldes",
-      D: "La policía de tráfico"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué técnica usa el Partido para borrar personas de la historia?",
-    opciones: {
-      A: "Modificación genética",
-      B: "Vaporización (Vaporized)",
-      C: "Prisión perpetua",
-      D: "Exilio"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es el nombre del idioma simplificado y restrictivo en la novela?",
-    opciones: {
-      A: "Neolengua",
-      B: "Oldspeak",
-      C: "Newspeak",
-      D: "Doublespeak"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Cuál es el mensaje del 'doble pensamiento'?",
-    opciones: {
-      A: "Pensar dos veces antes de actuar",
-      B: "Aceptar dos ideas contradictorias al mismo tiempo",
-      C: "Tener dos trabajos",
-      D: "Ignorar la realidad"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué hace el Ministerio del Amor?",
-    opciones: {
-      A: "Proporciona cuidados médicos",
-      B: "Castiga y tortura a los disidentes",
-      C: "Organiza eventos sociales",
-      D: "Maneja la propaganda"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es el 'Goldstein' en la novela?",
-    opciones: {
-      A: "El enemigo público número uno",
-      B: "El líder del Partido",
-      C: "Un héroe revolucionario",
-      D: "Un miembro del Comité Central"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué es la 'Habitación 101'?",
-    opciones: {
-      A: "Un lugar de reunión clandestino",
-      B: "El peor lugar de tortura personal",
-      C: "La oficina de Winston",
-      D: "La biblioteca secreta"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es el propósito de las 'Dos Minutos de Odio'?",
-    opciones: {
-      A: "Motivar a los ciudadanos",
-      B: "Fomentar el odio hacia los enemigos del Partido",
-      C: "Fomentar la amistad",
-      D: "Controlar la televisión"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es el rol de Emmanuel Goldstein en la novela?",
-    opciones: {
-      A: "Es el líder del Partido",
-      B: "Es el símbolo de la resistencia",
-      C: "Es el jefe de la Policía del Pensamiento",
-      D: "Es el esposo de Julia"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué relación tiene Winston con Julia?",
-    opciones: {
-      A: "Son enemigos",
-      B: "Son amantes rebeldes contra el Partido",
-      C: "Son hermanos",
-      D: "No se conocen"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué representa la 'lagrima' que Winston siente en la novela?",
-    opciones: {
-      A: "Esperanza",
-      B: "Desesperación y humanidad",
-      C: "Felicidad",
-      D: "Miedo"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Por qué Winston trabaja en el Ministerio de la Verdad?",
-    opciones: {
-      A: "Para crear propaganda falsa",
-      B: "Para cambiar documentos históricos",
-      C: "Para enseñar neolengua",
-      D: "Para proteger a la gente"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué significa 'crimental'?",
-    opciones: {
-      A: "Crimen mental o pensamiento prohibido",
-      B: "Crimen común",
-      C: "Nuevo deporte",
-      D: "Nueva ley"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué es la 'visión del futuro' de Winston?",
-    opciones: {
-      A: "Un mundo mejor",
-      B: "Un mundo dominado por la opresión y la vigilancia",
-      C: "Una revolución triunfante",
-      D: "Un país en paz"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cómo reacciona Winston al ser atrapado por la Policía del Pensamiento?",
-    opciones: {
-      A: "Se suicida",
-      B: "Es torturado y traiciona sus ideas",
-      C: "Escapa a otro país",
-      D: "Es absuelto"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué papel juega el 'diario' en la historia de Winston?",
-    opciones: {
-      A: "Es su forma de resistencia y rebelión",
-      B: "Es un regalo del Partido",
-      C: "No tiene importancia",
-      D: "Lo usa para mentir"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué significa el término 'proles' en 1984?",
-    opciones: {
-      A: "Los altos funcionarios del Partido",
-      B: "La clase trabajadora sin control",
-      C: "Los policías secretos",
-      D: "Los agentes de propaganda"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es la función de la Telepantalla?",
-    opciones: {
-      A: "Entretenimiento",
-      B: "Herramienta de vigilancia y propaganda",
-      C: "Comunicación personal",
-      D: "Radio musical"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es el 'Ministerio de la Verdad' en realidad?",
-    opciones: {
-      A: "Ministerio de la información verdadera",
-      B: "Ministerio que manipula la verdad",
-      C: "Ministerio de la educación",
-      D: "Ministerio de la cultura"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué representa el Gran Hermano para los ciudadanos?",
-    opciones: {
-      A: "Un líder benevolente",
-      B: "Una figura autoritaria y omnipresente",
-      C: "Un político corrupto",
-      D: "Un héroe revolucionario"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué símbolo usa el Partido para mostrar poder?",
-    opciones: {
-      A: "El ojo que todo lo ve",
-      B: "El martillo y la hoz",
-      C: "La bandera roja",
-      D: "La estrella de cinco puntas"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué técnica utiliza el Partido para controlar el pasado?",
-    opciones: {
-      A: "Borrar documentos y reescribir la historia",
-      B: "Control mental",
-      C: "Educación tradicional",
-      D: "Propaganda visual"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué representa la 'libertad' para los personajes en 1984?",
-    opciones: {
-      A: "Hacer lo que quieran sin consecuencias",
-      B: "Libertad de pensamiento y acción, prohibida por el Partido",
-      C: "Un derecho constitucional",
-      D: "Un mito"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es la 'hermandad' en el contexto del libro?",
-    opciones: {
-      A: "Una organización ficticia de resistencia",
-      B: "Un club social",
-      C: "El Partido mismo",
-      D: "Un grupo de policías"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué hace que Winston finalmente sea derrotado?",
-    opciones: {
-      A: "Su traición por Julia",
-      B: "La tortura y el lavado de cerebro en el Ministerio del Amor",
-      C: "La muerte",
-      D: "Su huida fallida"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué significa el término 'doublespeak'?",
-    opciones: {
-      A: "Hablar dos idiomas",
-      B: "Uso de lenguaje ambiguo para manipular la verdad",
-      C: "Mentir abiertamente",
-      D: "Hablar con dobles sentidos"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué actitud tiene Winston hacia el Gran Hermano al final del libro?",
-    opciones: {
-      A: "Odio eterno",
-      B: "Amor condicionado y aceptación",
-      C: "Indiferencia",
-      D: "Rebeldía"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cuál es la función del Ministerio del Amor?",
-    opciones: {
-      A: "Proteger a los ciudadanos",
-      B: "Castigar a los enemigos del Partido",
-      C: "Difundir propaganda",
-      D: "Organizar eventos"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué representa la novela dentro de la novela que Winston lee?",
-    opciones: {
-      A: "La realidad del Partido",
-      B: "Una guía para la revolución",
-      C: "Una historia de amor",
-      D: "Una propaganda oficial"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué es el 'crimental'?",
-    opciones: {
-      A: "Un delito de pensamiento",
-      B: "Un nuevo deporte",
-      C: "Un objeto prohibido",
-      D: "Un lugar secreto"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Cuál es la actitud del Partido hacia la verdad y la realidad?",
-    opciones: {
-      A: "La manipulan para mantener el control",
-      B: "La respetan",
-      C: "No les interesa",
-      D: "La enseñan libremente"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué rol tiene el personaje Parsons en la novela?",
-    opciones: {
-      A: "Vecino de Winston, fanático del Partido",
-      B: "Jefe del Partido",
-      C: "Policía del Pensamiento",
-      D: "Líder rebelde"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Cuál es el propósito de la propaganda en 1984?",
-    opciones: {
-      A: "Educar a la población",
-      B: "Mantener el poder del Partido y controlar a las masas",
-      C: "Informar sobre la guerra",
-      D: "Difundir cultura"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué significa el término 'vaporizado' en el libro?",
-    opciones: {
-      A: "Exiliado",
-      B: "Eliminado sin rastro de la historia",
-      C: "Promovido",
-      D: "Capturado"
-    },
-    correcta: "B"
-  }
+      {
+        pregunta: "¿Cuál es el símbolo omnipresente que vigila a la población?",
+        opciones: {
+          A: "El Gran Hermano",
+          B: "La Policía del Pensamiento",
+          C: "La Telescreen",
+          D: "La Guardia Exterior"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué práctica mental permite aceptar dos ideas contradictorias a la vez?",
+        opciones: {
+          A: "Neolengua",
+          B: "Doublethink",
+          C: "Memory hole",
+          D: "Thoughtcrime"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el lugar donde se eliminan las evidencias y documentos incómodos?",
+        opciones: {
+          A: "Memory hole",
+          B: "La Sala 101",
+          C: "Ministerio del Amor",
+          D: "La Zona Prohibida"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué tipo de castigo es la Sala 101?",
+        opciones: {
+          A: "Exilio",
+          B: "Reeducación mediante tortura psicológica",
+          C: "Trabajo forzado",
+          D: "Pena de muerte pública"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Cuál es el final trágico de Winston Smith?",
+        opciones: {
+          A: "Escapa y funda una resistencia",
+          B: "Es ejecutado públicamente",
+          C: "Acepta la autoridad del Partido y ama al Gran Hermano",
+          D: "Es enviado al exilio"
+        },
+        correcta: "C"
+      }
     ];
 
     let actual = 0;

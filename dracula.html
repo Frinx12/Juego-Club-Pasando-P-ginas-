@@ -3,215 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <title>Drácula - Lector Millonario</title>
-<style>
-  body {
-    font-family: 'Georgia', serif;
-    background: linear-gradient(to right, #1b0000, #440000, #1b0000);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    color: #f0e6d2;
-  }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel&family=UnifrakturCook:wght@700&display=swap');
 
-  .container {
-    width: 60%;
-    background: #2c0b0b;
-    padding: 40px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(255,0,0,0.8);
-    position: relative;
-    border: 2px solid #6b0f0f;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  h1 {
-    color: #e02b2b;
-    font-family: 'Gothic A1', sans-serif;
-    text-shadow: 1px 1px 4px #3a0000;
-    margin-bottom: 20px;
-    font-size: 2rem;
-  }
+    body {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(135deg, #0b0b0b 0%, #2c1a1a 60%, #000000 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #e1dcd8;
+    }
 
-  .book-image {
-    width: 150px;
-    height: 220px;
-    margin: 10px auto 30px;
-    background-color: #3e1f1f;
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #6b0f0f;
-    box-shadow: 0 0 10px #8b0000;
-  }
-
-  .question {
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px #000;
-  }
-
-  .options button {
-    display: block;
-    width: 80%;
-    margin: 12px auto;
-    padding: 14px;
-    font-size: 18px;
-    border-radius: 6px;
-    border: 2px solid #8b0000;
-    cursor: pointer;
-    background-color: #5a0b0b;
-    color: #f0e6d2;
-    transition: background-color 0.4s, transform 0.3s;
-    box-shadow: 0 0 5px #660000;
-    font-family: 'Georgia', serif;
-  }
-
-  .options button:hover:not(.correct):not(.incorrect) {
-    background-color: #8b0000;
-    box-shadow: 0 0 12px #ff0000;
-    color: #fff0f0;
-  }
-
-  .options button.correct {
-    background-color: #2ecc71 !important;
-    color: #000;
-    animation: pulseGreen 0.6s;
-    box-shadow: 0 0 15px #27ae60;
-    border-color: #27ae60;
-  }
-
-  .options button.incorrect {
-    background-color: #e74c3c !important;
-    color: #000;
-    animation: shake 0.6s;
-    box-shadow: 0 0 15px #c0392b;
-    border-color: #c0392b;
-  }
-
-  @keyframes pulseGreen {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-    100% { transform: scale(1); }
-  }
-
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    50% { transform: translateX(6px); }
-    75% { transform: translateX(-6px); }
-    100% { transform: translateX(0); }
-  }
-
-  .reset-btn, .back-btn {
-    margin-top: 20px;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    font-family: 'Georgia', serif;
-    transition: background-color 0.3s;
-    box-shadow: 0 0 8px #660000;
-  }
-
-  .reset-btn {
-    background-color: #b22222;
-    color: #f0e6d2;
-    border: 2px solid #8b0000;
-  }
-
-  .reset-btn:hover {
-    background-color: #e74c3c;
-    box-shadow: 0 0 15px #ff3333;
-  }
-
-  .back-btn {
-    background-color: #3d0f0f;
-    color: #f0e6d2;
-    border: 2px solid #660000;
-  }
-
-  .back-btn:hover {
-    background-color: #660000;
-    box-shadow: 0 0 15px #ff0000;
-  }
-
-  .scale {
-    position: absolute;
-    top: 0;
-    height: 0;
-    width: 18px;
-    background: linear-gradient(to top, #e74c3c, #8b0000);
-    transition: height 0.3s;
-    border-radius: 0 8px 8px 0;
-    box-shadow: 0 0 8px #ff0000;
-  }
-
-  .scale.left {
-    left: -24px;
-    transform-origin: bottom;
-  }
-
-  .scale.right {
-    right: -24px;
-    transform-origin: bottom;
-  }
-
-  .contador {
-    margin-top: 15px;
-    font-size: 20px;
-    color: #f0e6d2;
-    text-shadow: 1px 1px 3px #400000;
-    font-weight: bold;
-  }
-
-  /* Media queries para tablets y celulares */
-  @media screen and (max-width: 1024px) {
     .container {
-      width: 80%;
-      padding: 30px;
+      width: 90%;
+      max-width: 700px;
+      background: #1f1f1f;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 30px 5px rgba(139,0,0,0.7);
+      position: relative;
+      border: 3px solid #8b0000;
     }
-    .question {
-      font-size: 20px;
-    }
-    .options button {
-      font-size: 16px;
-      padding: 12px;
-    }
-  }
 
-  @media screen and (max-width: 600px) {
-    .container {
-      width: 95%;
-      padding: 25px 20px;
-    }
     h1 {
-      font-size: 1.5rem;
+      font-family: 'UnifrakturCook', cursive;
+      color: #b22222;
+      text-shadow: 2px 2px 8px #400000;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
     }
-    .question {
-      font-size: 18px;
-    }
-    .options button {
-      font-size: 15px;
-      padding: 10px;
-    }
-    .reset-btn, .back-btn {
-      font-size: 14px;
-      padding: 10px 20px;
-    }
-    .book-image {
-      width: 120px;
-      height: 180px;
-    }
-    .contador {
-      font-size: 18px;
-    }
-  }
-</style>
 
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6a/Dracula_first_edition_cover_1897.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #b22222;
+      box-shadow: 0 0 20px 7px rgba(178,34,34,0.7);
+      border-radius: 12px;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #b22222;
+      cursor: pointer;
+      background-color: #f4e3e3;
+      color: #3b2a2a;
+      box-shadow: 0 3px 6px rgba(178,34,34,0.5);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #e9d3d3;
+      box-shadow: 0 0 12px #dca0a0;
+    }
+
+    .options button.correct {
+      background-color: #4caf50 !important;
+      color: white;
+      animation: pulseGreen 0.5s;
+    }
+
+    .options button.incorrect {
+      background-color: #e53935 !important;
+      color: white;
+      animation: shake 0.5s;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .reset-btn {
+      background-color: #b22222;
+      color: #3b2a2a;
+      box-shadow: 0 5px 10px rgba(178,34,34,0.7);
+    }
+
+    .reset-btn:hover {
+      background-color: #d04040;
+    }
+
+    .back-btn {
+      background-color: #400000;
+      color: #f4e3e3;
+      box-shadow: 0 5px 10px rgba(64,0,0,0.7);
+    }
+
+    .back-btn:hover {
+      background-color: #6b1a1a;
+    }
+
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #b22222;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
+
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #b22222;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #400000;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2.2rem; }
+      .question { font-size: 18px; }
+      .book-image { width: 120px; height: 170px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      .question { font-size: 16px; }
+      .book-image { width: 100px; height: 140px; }
+      .options button, .reset-btn, .back-btn { font-size: 14px; padding: 10px; }
+      .contador { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -219,11 +190,11 @@
     <div class="scale right" id="scaleRight"></div>
 
     <h1>Drácula - Lector Millonario</h1>
-    <div class="book-image" style="background-image: url('imagenes/Drácula-la-novela-que-revolucionó-las-historias-de-terror.png');">
+       <div class="book-image" style="background-image: url('imagenes/Drácula-la-novela-que-revolucionó-las-historias-de-terror.png');">
       <!-- Imagen del libro (personalizable) -->
     </div>
 
-    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="question" id="question">Cargando pregunta...</div>
     <div class="options">
       <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
       <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
@@ -237,397 +208,171 @@
 
   <script>
     const preguntas = [
-  {
-    pregunta: "¿Quién es el autor de 'Drácula'?",
-    opciones: {
-      A: "Edgar Allan Poe",
-      B: "Mary Shelley",
-      C: "Stephen King",
-      D: "Bram Stoker"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿De dónde es originario el Conde Drácula?",
-    opciones: {
-      A: "Rusia",
-      B: "Hungría",
-      C: "Inglaterra",
-      D: "Transilvania"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué profesión tiene Jonathan Harker?",
-    opciones: {
-      A: "Doctor",
-      B: "Detective",
-      C: "Escritor",
-      D: "Abogado"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Dónde se hospeda Jonathan Harker al inicio del libro?",
-    opciones: {
-      A: "En París",
-      B: "En Londres",
-      C: "En Budapest",
-      D: "En el castillo de Drácula"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Quién es Mina Murray en la historia?",
-    opciones: {
-      A: "Una vampira",
-      B: "La hermana de Drácula",
-      C: "Una cazavampiros",
-      D: "La prometida de Jonathan Harker"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué objeto protege a los personajes del vampiro?",
-    opciones: {
-      A: "Agua bendita",
-      B: "Cruz de plata",
-      C: "Ajo",
-      D: "Todas las anteriores"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué poder tiene Drácula para transformarse?",
-    opciones: {
-      A: "Puede cambiar de color",
-      B: "Puede convertirse en murciélago y niebla",
-      C: "Puede convertirse en lobo",
-      D: "Puede volverse invisible"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué ciudad visita Drácula en Inglaterra?",
-    opciones: {
-      A: "Manchester",
-      B: "Whitby",
-      C: "Londres",
-      D: "Bristol"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Quién es Van Helsing?",
-    opciones: {
-      A: "Un sirviente de Drácula",
-      B: "El mejor amigo de Jonathan",
-      C: "Un detective",
-      D: "Un profesor y cazador de vampiros"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué simboliza la luz en el libro?",
-    opciones: {
-      A: "El poder de Drácula",
-      B: "La muerte",
-      C: "El misterio",
-      D: "La esperanza y la pureza"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Quién es Lucy Westenra?",
-    opciones: {
-      A: "Una vampira enemiga",
-      B: "Esposa de Jonathan",
-      C: "Hermana de Van Helsing",
-      D: "Amiga de Mina y víctima de Drácula"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué le pasa a Lucy durante la novela?",
-    opciones: {
-      A: "Se convierte en vampira y muere",
-      B: "Se casa con Van Helsing",
-      C: "Se muda a Transilvania",
-      D: "Desaparece misteriosamente"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Qué objeto usa Van Helsing para controlar a Lucy vampira?",
-    opciones: {
-      A: "Cruz",
-      B: "Estaca",
-      C: "Agua bendita",
-      D: "Magia"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué representa el castillo de Drácula?",
-    opciones: {
-      A: "La esperanza",
-      B: "La inocencia",
-      C: "El misterio y el mal",
-      D: "La libertad"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Quién ayuda a cazar a Drácula junto con Jonathan y Van Helsing?",
-    opciones: {
-      A: "Mina y Lucy",
-      B: "El conde y su sirviente",
-      C: "Arthur Holmwood y Quincy Morris",
-      D: "Nadie más"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Qué animal es asociado con Drácula?",
-    opciones: {
-      A: "Serpiente",
-      B: "Murciélago",
-      C: "Lobo",
-      D: "Gato negro"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué efecto tiene la mordida de Drácula?",
-    opciones: {
-      A: "La hace invencible",
-      B: "La cura de enfermedades",
-      C: "Convierte a la víctima en vampiro",
-      D: "La vuelve humana"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Qué rol juega Mina en la historia?",
-    opciones: {
-      A: "Sirvienta del conde",
-      B: "Esposa y apoyo crucial para detener a Drácula",
-      C: "Detective",
-      D: "Antagonista principal"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Cómo es descrito Drácula físicamente?",
-    opciones: {
-      A: "Viejo y de barba blanca",
-      B: "Pálido, elegante y con colmillos afilados",
-      C: "Joven y alto",
-      D: "Robusto y de cabello rubio"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué sucede al final con Drácula?",
-    opciones: {
-      A: "Muere de viejo",
-      B: "Es derrotado y destruido por el grupo",
-      C: "Se convierte en humano",
-      D: "Escapa y sigue su reinado"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué documento es la base narrativa del libro?",
-    opciones: {
-      A: "Una novela tradicional",
-      B: "Un cuento oral",
-      C: "Diarios y cartas de los personajes",
-      D: "Un poema"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Cuál es el principal tema del libro?",
-    opciones: {
-      A: "La amistad",
-      B: "El bien contra el mal",
-      C: "La historia de amor",
-      D: "La aventura espacial"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué elemento gótico predomina en la novela?",
-    opciones: {
-      A: "Comedia",
-      B: "Tecnología avanzada",
-      C: "Fantasía infantil",
-      D: "Castillos, oscuridad y misterio"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Cuál es la profesión de Van Helsing?",
-    opciones: {
-      A: "Detective privado",
-      B: "Doctor y profesor",
-      C: "Militar",
-      D: "Escritor"
-    },
-    correcta: "B"
-  },
-  {
-    pregunta: "¿Qué representa el vampiro Drácula en la cultura popular?",
-    opciones: {
-      A: "La alegría",
-      B: "La amistad",
-      C: "La riqueza",
-      D: "El miedo a lo desconocido y la muerte"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué objeto utiliza Drácula para entrar a las casas?",
-    opciones: {
-      A: "Invitación",
-      B: "Puertas abiertas",
-      C: "Magia",
-      D: "Llaves"
-    },
-    correcta: "A"
-  },
-  {
-    pregunta: "¿Quién es Renfield en la novela?",
-    opciones: {
-      A: "Un científico",
-      B: "Un detective",
-      C: "Un vampiro rival",
-      D: "Un sirviente loco que sigue a Drácula"
-    },
-    correcta: "D"
-  },
-  {
-    pregunta: "¿Qué teme Drácula más que nada?",
-    opciones: {
-      A: "El agua",
-      B: "Los perros",
-      C: "La luz del sol y la cruz",
-      D: "Los espejos"
-    },
-    correcta: "C"
-  },
-  {
-    pregunta: "¿Qué tipo de narración usa el libro?",
-    opciones: {
-      A: "Narración en tercera persona limitada",
-      B: "Narración en primera persona única",
-      C: "Narración omnisciente",
-      D: "Epistolar (diarios y cartas)"
-    },
-    correcta: "D"
-  }
-];
+      {
+        pregunta: "¿Quién es el protagonista principal que visita Transilvania?",
+        opciones: {
+          A: "Jonathan Harker",
+          B: "Dr. Van Helsing",
+          C: "Quincey Morris",
+          D: "Arthur Holmwood"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Dónde se encuentra el castillo de Drácula?",
+        opciones: {
+          A: "Hungría",
+          B: "Transilvania",
+          C: "Rumania",
+          D: "Polonia"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué habilidad sobrenatural posee Drácula?",
+        opciones: {
+          A: "Controlar el clima",
+          B: "Transformarse en murciélago",
+          C: "Leer la mente",
+          D: "Volverse invisible"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Quién es la esposa de Jonathan Harker?",
+        opciones: {
+          A: "Lucy Westenra",
+          B: "Mina Murray",
+          C: "Jenny Harker",
+          D: "Dolores Harker"
+        },
+        correcta: "B"
+      },
+      {
+        pregunta: "¿Qué objeto se usa para protegerse de Drácula?",
+        opciones: {
+          A: "Crucifijo",
+          B: "Espada",
+          C: "Escudo",
+          D: "Anillo mágico"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué pasa con Lucy Westenra?",
+        opciones: {
+          A: "Se convierte en vampiro",
+          B: "Se muda a Transilvania",
+          C: "Se casa con Arthur Holmwood",
+          D: "Se convierte en cazadora de vampiros"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Quién ayuda a combatir a Drácula?",
+        opciones: {
+          A: "Van Helsing y sus amigos",
+          B: "Jonathan solo",
+          C: "El Conde Drácula",
+          D: "Los aldeanos"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Cómo muere Drácula al final?",
+        opciones: {
+          A: "Desangrado y apuñalado",
+          B: "Quemado en la hoguera",
+          C: "Aplastado por una roca",
+          D: "Exorcizado"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Qué simboliza Drácula en la literatura?",
+        opciones: {
+          A: "La lucha entre el bien y el mal",
+          B: "La belleza eterna",
+          C: "El poder político",
+          D: "La amistad"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Quién es el creador del personaje Drácula?",
+        opciones: {
+          A: "Mary Shelley",
+          B: "Bram Stoker",
+          C: "Edgar Allan Poe",
+          D: "Robert Louis Stevenson"
+        },
+        correcta: "B"
+      }
+    ];
 
-    let current = 0;
-    let correctas = 0;
-    let incorrectas = 0;
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
 
-    const questionEl = document.getElementById('question');
-    const btnA = document.getElementById('btnA');
-    const btnB = document.getElementById('btnB');
-    const btnC = document.getElementById('btnC');
-    const btnD = document.getElementById('btnD');
-    const contadorEl = document.getElementById('contador');
-    const scaleLeft = document.getElementById('scaleLeft');
-    const scaleRight = document.getElementById('scaleRight');
-
-    function showQuestion() {
-      const q = preguntas[current];
-      questionEl.textContent = q.pregunta;
-      btnA.textContent = 'A) ' + q.opciones.A;
-      btnB.textContent = 'B) ' + q.opciones.B;
-      btnC.textContent = 'C) ' + q.opciones.C;
-      btnD.textContent = 'D) ' + q.opciones.D;
-      enableButtons();
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
     }
 
-    function disableButtons() {
-      btnA.disabled = true;
-      btnB.disabled = true;
-      btnC.disabled = true;
-      btnD.disabled = true;
-    }
-
-    function enableButtons() {
-      btnA.disabled = false;
-      btnB.disabled = false;
-      btnC.disabled = false;
-      btnD.disabled = false;
-      btnA.classList.remove('correct', 'incorrect');
-      btnB.classList.remove('correct', 'incorrect');
-      btnC.classList.remove('correct', 'incorrect');
-      btnD.classList.remove('correct', 'incorrect');
-    }
-
-    function selectAnswer(letra) {
-      disableButtons();
-      const correcta = preguntas[current].correcta;
-      if (letra === correcta) {
-        correctas++;
-        document.getElementById('btn' + letra).classList.add('correct');
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
       } else {
-        incorrectas++;
-        document.getElementById('btn' + letra).classList.add('incorrect');
-        // También marcamos la correcta para que se vea
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
         document.getElementById('btn' + correcta).classList.add('correct');
       }
-      updateContador();
-      updateScale();
-      current++;
-      if (current < preguntas.length) {
-        setTimeout(showQuestion, 1500);
-      } else {
-        setTimeout(showResults, 1500);
-      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1000);
     }
 
-    function updateContador() {
-      contadorEl.textContent = `Correctas: ${correctas} | Incorrectas: ${incorrectas}`;
-    }
-
-    function updateScale() {
-      // Altura del lado izquierdo = correctas * factor (porcentaje)
+    function actualizarEscala() {
       const total = preguntas.length;
-      let alturaCorrectas = (correctas / total) * 200; // px
-      let alturaIncorrectas = (incorrectas / total) * 200; // px
-      scaleLeft.style.height = alturaCorrectas + 'px';
-      scaleRight.style.height = alturaIncorrectas + 'px';
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
     }
 
-    function showResults() {
-      questionEl.textContent = `Juego terminado. Correctas: ${correctas}, Incorrectas: ${incorrectas}`;
-      btnA.style.display = 'none';
-      btnB.style.display = 'none';
-      btnC.style.display = 'none';
-      btnD.style.display = 'none';
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
     }
 
     function resetGame() {
-      current = 0;
-      correctas = 0;
-      incorrectas = 0;
-      updateContador();
-      updateScale();
-      btnA.style.display = 'block';
-      btnB.style.display = 'block';
-      btnC.style.display = 'block';
-      btnD.style.display = 'block';
-      showQuestion();
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
     }
 
-    // Iniciar
-    resetGame();
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
   </script>
 </body>
 </html>

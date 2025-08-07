@@ -3,204 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <title>El Principito - Lector Millonario</title>
-<style>
-  body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(to right, #f6e3b4, #ffe5a1, #f6e3b4);
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    color: #5d4037;
-    box-sizing: border-box;
-  }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Slab:wght@600&display=swap');
 
-  .container {
-    width: 90%;
-    max-width: 600px;
-    background: #fff8e1;
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 0 25px rgba(218, 165, 32, 0.5);
-    position: relative;
-    border: 2px solid #fdd835;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  h1 {
-    color: #fbc02d;
-    font-family: 'Cursive', 'Lucida Handwriting', cursive;
-    text-shadow: 1px 1px 3px #a57c00;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-  }
+    body {
+      font-family: 'Patrick Hand', cursive;
+      background: linear-gradient(135deg, #f9f5e3 0%, #f5e1a4 50%, #e7d59a 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #4a3f35;
+    }
 
-  .book-image {
-    width: 60%;
-    max-width: 180px;
-    aspect-ratio: 2/3;
-    margin: 10px auto 1.5rem;
-    background-color: #fff3e0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 3px solid #fbc02d;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #fdd835;
-  }
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #fff8dc;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 25px 5px rgba(210, 180, 140, 0.7);
+      position: relative;
+      border: 3px solid #f4c542;
+    }
 
-  .question {
-    margin-bottom: 1.2rem;
-    font-size: 1.2rem;
-    font-style: italic;
-  }
-
-  .options button {
-    display: block;
-    width: 90%;
-    margin: 0.5rem auto;
-    padding: 0.9rem;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: 2px solid #fbc02d;
-    cursor: pointer;
-    background-color: #fffde7;
-    color: #5d4037;
-    box-shadow: 0 2px 6px rgba(251, 192, 45, 0.5);
-    transition: background-color 0.3s, transform 0.3s;
-  }
-
-  .options button:hover:not(.correct):not(.incorrect) {
-    background-color: #fff9c4;
-    box-shadow: 0 0 12px #fbc02d;
-  }
-
-  .options button.correct {
-    background-color: #aed581 !important;
-    animation: pulseGreen 0.5s;
-    color: #33691e;
-  }
-
-  .options button.incorrect {
-    background-color: #ef9a9a !important;
-    animation: shake 0.5s;
-    color: #b71c1c;
-  }
-
-  @keyframes pulseGreen {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-  }
-
-  .reset-btn, .back-btn {
-    margin-top: 1rem;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-  }
-
-  .reset-btn {
-    background-color: #fbc02d;
-    color: #5d4037;
-    box-shadow: 0 4px 8px rgba(251, 192, 45, 0.6);
-  }
-
-  .reset-btn:hover {
-    background-color: #fdd835;
-  }
-
-  .back-btn {
-    background-color: #ffcc80;
-    color: #5d4037;
-    box-shadow: 0 4px 8px rgba(255, 204, 128, 0.6);
-  }
-
-  .back-btn:hover {
-    background-color: #ffd54f;
-  }
-
-  .scale {
-    position: absolute;
-    top: 0;
-    height: 0;
-    width: 10px;
-    background-color: #fbc02d;
-    transition: height 0.3s;
-    border-radius: 0 6px 6px 0;
-  }
-
-  .scale.left {
-    left: -15px;
-    transform-origin: bottom;
-  }
-
-  .scale.right {
-    right: -15px;
-    transform-origin: bottom;
-  }
-
-  .contador {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: #7b5e00;
-    font-weight: 600;
-  }
-
-  /* MEDIA QUERIES */
-  @media (max-width: 600px) {
     h1 {
-      font-size: 1.4rem;
-    }
-
-    .question {
-      font-size: 1rem;
-    }
-
-    .options button {
-      font-size: 0.95rem;
-      padding: 0.8rem;
-    }
-
-    .reset-btn, .back-btn {
-      font-size: 0.95rem;
-      padding: 0.7rem 1.2rem;
+      font-family: 'Roboto Slab', serif;
+      color: #d98c26;
+      text-shadow: 1px 1px 4px #b07a1a;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
     }
 
     .book-image {
-      width: 70%;
-      max-width: 150px;
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/48/LePetitPrinceFirstEdition.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #f4c542;
+      box-shadow: 0 0 15px 5px rgba(244, 197, 66, 0.5);
+      border-radius: 12px;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 1px 1px 3px #fff8dc;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #f4c542;
+      cursor: pointer;
+      background-color: #fffbea;
+      color: #7b5e00;
+      box-shadow: 0 3px 6px rgba(244, 197, 66, 0.5);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #fff0a0;
+    }
+
+    .options button.correct {
+      background-color: #4caf50 !important;
+      color: white;
+      animation: pulseGreen 0.5s;
+    }
+
+    .options button.incorrect {
+      background-color: #e53935 !important;
+      color: white;
+      animation: shake 0.5s;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .reset-btn {
+      background-color: #f4c542;
+      color: #5b4300;
+      box-shadow: 0 5px 10px rgba(244, 197, 66, 0.7);
+    }
+
+    .reset-btn:hover {
+      background-color: #e0b02d;
+    }
+
+    .back-btn {
+      background-color: #7b5e00;
+      color: #fffbea;
+      box-shadow: 0 5px 10px rgba(123, 94, 0, 0.7);
+    }
+
+    .back-btn:hover {
+      background-color: #a87f00;
     }
 
     .scale {
-      width: 8px;
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #f4c542;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
     }
 
     .scale.left {
-      left: -12px;
+      left: -25px;
+      transform-origin: bottom;
     }
 
     .scale.right {
-      right: -12px;
+      right: -25px;
+      transform-origin: bottom;
     }
-  }
-</style>
 
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #a67c00;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #fffbea;
+    }
 
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2rem; }
+      .question { font-size: 18px; }
+      .book-image { width: 120px; height: 180px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      .question { font-size: 16px; }
+      .book-image { width: 100px; height: 150px; }
+      .options button, .reset-btn, .back-btn { font-size: 14px; padding: 10px; }
+      .contador { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -208,11 +189,11 @@
     <div class="scale right" id="scaleRight"></div>
 
     <h1>El Principito - Lector Millonario</h1>
-    <div class="book-image" style="background-image: url('imagenes/el-principito.webp');">
+       <div class="book-image" style="background-image: url('imagenes/el-principito.webp');">
       <!-- Imagen del libro (personalizable) -->
     </div>
 
-    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="question" id="question">Cargando pregunta...</div>
     <div class="options">
       <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
       <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
@@ -227,606 +208,170 @@
   <script>
     const preguntas = [
       {
-        pregunta: "¿Quién es el autor de 'El Principito'?",
+        pregunta: "¿Cómo se llama el narrador y protagonista del libro?",
         opciones: {
-          A: "Antoine de Saint-Exupéry",
-          B: "J.K. Rowling",
-          C: "Gabriel García Márquez",
-          D: "Miguel de Cervantes"
+          A: "El aviador",
+          B: "El principito",
+          C: "El zorro",
+          D: "El rey"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Cuál es el planeta del Principito?",
+        pregunta: "¿De dónde viene el principito?",
         opciones: {
-          A: "Asteroide B-612",
-          B: "Tierra",
-          C: "Marte",
-          D: "Venus"
+          A: "Del asteroide B-612",
+          B: "De la Tierra",
+          C: "De Marte",
+          D: "Del planeta Tierra"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué animal es la primera amistad del Principito en la Tierra?",
+        pregunta: "¿Qué animal le pide el principito que lo domestique?",
         opciones: {
           A: "El zorro",
-          B: "El elefante",
-          C: "La serpiente",
-          D: "El cordero"
+          B: "La serpiente",
+          C: "El ave",
+          D: "El caballo"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué representa la rosa para el Principito?",
+        pregunta: "¿Qué símbolo representa al principito en la historia?",
         opciones: {
-          A: "El amor y la belleza",
-          B: "La tristeza",
-          C: "La soledad",
-          D: "La aventura"
+          A: "La inocencia y la curiosidad",
+          B: "La sabiduría y la vejez",
+          C: "La tristeza y la soledad",
+          D: "La fuerza y el poder"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué le pide el Principito al narrador que le dibuje?",
-        opciones: {
-          A: "Un elefante dentro de una boa",
-          B: "Un cordero",
-          C: "Un zorro",
-          D: "Una estrella"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué le dice el zorro al Principito que es esencial?",
-        opciones: {
-          A: "Lo esencial es invisible a los ojos",
-          B: "Hay que ser fuerte",
-          C: "El tiempo cura todo",
-          D: "La inteligencia es lo más importante"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué trabajo tenía el narrador antes de conocer al Principito?",
-        opciones: {
-          A: "Piloto de avión",
-          B: "Maestro",
-          C: "Escritor",
-          D: "Astrónomo"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué planeta visita el Principito donde vive un rey solitario?",
-        opciones: {
-          A: "El planeta del rey",
-          B: "El planeta del hombre vanidoso",
-          C: "El planeta del farolero",
-          D: "El planeta del bebedor"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el farolero en su planeta?",
-        opciones: {
-          A: "Enciende y apaga un farol",
-          B: "Recolecta flores",
-          C: "Cuida ovejas",
-          D: "Vuela"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué simboliza el vuelo del Principito?",
-        opciones: {
-          A: "La búsqueda del sentido de la vida",
-          B: "El escape de problemas",
-          C: "La libertad absoluta",
-          D: "La aventura sin fin"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cuál es la profesión del autor Antoine de Saint-Exupéry además de escritor?",
-        opciones: {
-          A: "Piloto",
-          B: "Profesor",
-          C: "Ingeniero",
-          D: "Médico"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué planeta visita el Principito donde vive un hombre vanidoso?",
-        opciones: {
-          A: "El planeta del rey",
-          B: "El planeta del hombre vanidoso",
-          C: "El planeta del farolero",
-          D: "El planeta del geógrafo"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué símbolo tiene la flor que cuida el Principito?",
+        pregunta: "¿Qué flor cuida el principito en su planeta?",
         opciones: {
           A: "Una rosa",
           B: "Un girasol",
-          C: "Un tulipán",
-          D: "Una margarita"
+          C: "Una margarita",
+          D: "Una orquídea"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué pregunta hace el zorro para ser domesticado?",
+        pregunta: "¿Qué le enseña el zorro al principito?",
         opciones: {
-          A: "¿Quieres ser mi amigo?",
-          B: "¿Qué significa domesticar?",
-          C: "¿Cómo te llamas?",
-          D: "¿Quieres jugar conmigo?"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué significa para el zorro 'domesticar'?",
-        opciones: {
-          A: "Crear lazos y hacerse único para alguien",
-          B: "Entrenar para obedecer",
-          C: "Convertirse en mascota",
-          D: "Ser capturado"
+          A: "A domesticar y amar",
+          B: "A cazar",
+          C: "A volar",
+          D: "A pensar"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Cuál es la lección más importante que aprende el Principito del zorro?",
-        opciones: {
-          A: "La amistad y el amor verdadero",
-          B: "La valentía",
-          C: "El poder",
-          D: "La inteligencia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué representa la serpiente en la historia?",
+        pregunta: "¿Qué representa la serpiente en el libro?",
         opciones: {
           A: "La muerte y el misterio",
-          B: "La sabiduría",
-          C: "La amistad",
+          B: "La traición",
+          C: "La sabiduría",
           D: "El engaño"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué dice la serpiente sobre su veneno?",
+        pregunta: "¿Qué planeta visita el principito antes de llegar a la Tierra?",
         opciones: {
-          A: "Su veneno puede enviar a cualquiera a casa",
-          B: "Es inofensiva",
-          C: "Puede curar",
-          D: "Es un veneno mágico"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué planeta visita el Principito donde vive un bebedor?",
-        opciones: {
-          A: "El planeta del bebedor",
+          A: "El planeta del rey",
           B: "El planeta del farolero",
-          C: "El planeta del rey",
-          D: "El planeta del vanidoso"
+          C: "El planeta del vanidoso",
+          D: "Todos los anteriores"
+        },
+        correcta: "D"
+      },
+      {
+        pregunta: "¿Qué significa la frase 'Lo esencial es invisible a los ojos'?",
+        opciones: {
+          A: "Las cosas importantes no se ven, se sienten",
+          B: "Solo lo que se ve es real",
+          C: "La belleza está en lo material",
+          D: "La verdad está en la apariencia"
         },
         correcta: "A"
       },
       {
-        pregunta: "¿Qué problema tiene el bebedor en el libro?",
+        pregunta: "¿Qué representa el avión en la historia?",
         opciones: {
-          A: "Bebe para olvidar que tiene vergüenza de beber",
-          B: "Está triste por perder su esposa",
-          C: "Está enfermo",
-          D: "No puede dormir"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué significa la frase: 'Lo esencial es invisible a los ojos'?",
-        opciones: {
-          A: "Lo que importa no se puede ver, solo sentir",
-          B: "Las cosas pequeñas no importan",
-          C: "Solo importa la belleza",
-          D: "La apariencia es lo más importante"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué significa la rosa para el Principito después de sus viajes?",
-        opciones: {
-          A: "Su flor única y especial, aunque sea frágil",
-          B: "Una flor cualquiera",
-          C: "Un simple adorno",
-          D: "Un recuerdo sin importancia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué es lo que más extraña el Principito de su planeta?",
-        opciones: {
-          A: "Su rosa y sus volcanes",
-          B: "El desierto",
-          C: "El zorro",
-          D: "La Tierra"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cómo es la relación entre el Principito y el aviador?",
-        opciones: {
-          A: "Una amistad profunda y sincera",
-          B: "Desconfianza y miedo",
-          C: "Indiferencia",
-          D: "Rivalidad"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el aviador cuando se encuentra con el Principito?",
-        opciones: {
-          A: "Lo ayuda a reparar su avión",
-          B: "Lo ignora",
-          C: "Lo captura",
-          D: "Lo reta a un duelo"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Por qué el Principito decide irse de su planeta?",
-        opciones: {
-          A: "Porque se sentía solo y quería conocer otros mundos",
-          B: "Por aburrimiento",
-          C: "Para evitar un peligro",
-          D: "Por órdenes de su familia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué significa la frase 'Eres responsable para siempre de lo que has domesticado'?",
-        opciones: {
-          A: "Debes cuidar y amar lo que haces tuyo",
-          B: "La responsabilidad es solo temporal",
-          C: "No tienes que cuidar a nadie",
-          D: "Solo importa uno mismo"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cómo describe el Principito a los adultos en su viaje?",
-        opciones: {
-          A: "Como seres que olvidan lo importante y se preocupan por cosas sin sentido",
-          B: "Sabios y divertidos",
-          C: "Generosos y amables",
-          D: "Valientes y aventureros"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué planeta visita el Principito donde vive un hombre de negocios?",
-        opciones: {
-          A: "El planeta del hombre de negocios",
-          B: "El planeta del farolero",
-          C: "El planeta del rey",
-          D: "El planeta del vanidoso"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el hombre de negocios en su planeta?",
-        opciones: {
-          A: "Cuenta estrellas para poseerlas",
-          B: "Construye casas",
-          C: "Pinta cuadros",
-          D: "Escribe libros"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué lección aprende el Principito del hombre de negocios?",
-        opciones: {
-          A: "Que los adultos a veces persiguen cosas sin sentido",
-          B: "Que ser rico es lo más importante",
-          C: "Que trabajar mucho es divertido",
-          D: "Que contar estrellas es valioso"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué planeta visita el Principito donde vive un geógrafo?",
-        opciones: {
-          A: "El planeta del geógrafo",
-          B: "El planeta del rey",
-          C: "El planeta del hombre vanidoso",
-          D: "El planeta del farolero"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué le dice el geógrafo al Principito sobre su planeta?",
-        opciones: {
-          A: "Que no sabe mucho porque no explora el planeta",
-          B: "Que es el más bonito",
-          C: "Que no existe",
-          D: "Que está lleno de riquezas"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué significa la frase: 'Los niños deberían ser muy indulgentes con los adultos'?",
-        opciones: {
-          A: "Que los adultos olvidan cosas importantes y los niños deben entenderlos",
-          B: "Que los niños son mejores",
-          C: "Que los adultos son siempre sabios",
-          D: "Que los niños no entienden nada"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el Principito cuando llega a la Tierra?",
-        opciones: {
-          A: "Busca amigos y conoce varios personajes",
-          B: "Se esconde",
-          C: "Se pone triste y regresa",
-          D: "Se pelea con la gente"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué le regala el Principito al aviador antes de partir?",
-        opciones: {
-          A: "Su amistad y un recuerdo de su rosa",
-          B: "Un dibujo",
-          C: "Un libro",
-          D: "Una estrella"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué simboliza la rosa en la historia?",
-        opciones: {
-          A: "El amor verdadero y la belleza",
-          B: "La tristeza y el dolor",
-          C: "La soledad",
-          D: "La riqueza"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué mensaje final transmite 'El Principito'?",
-        opciones: {
-          A: "Valorar la amistad, la inocencia y lo invisible a los ojos",
-          B: "Que la vida es dura y triste",
-          C: "Que solo importa el poder",
-          D: "Que el mundo es un lugar cruel"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Por qué el Principito habla de la importancia de cuidar su planeta?",
-        opciones: {
-          A: "Porque es pequeño y vulnerable",
-          B: "Porque es muy grande",
-          C: "Porque está en peligro de guerra",
-          D: "Porque nadie más lo hace"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hacen los volcanes en el planeta del Principito?",
-        opciones: {
-          A: "Están activos y el Principito los limpia",
-          B: "Están dormidos",
-          C: "Son de fuego mágico",
-          D: "No existen"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué representa el dibujo del elefante dentro de la boa?",
-        opciones: {
-          A: "La imaginación y la percepción infantil",
-          B: "El miedo",
-          C: "La realidad dura",
-          D: "La tristeza"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué importancia tiene la amistad en el libro?",
-        opciones: {
-          A: "Es esencial para entender el mundo y a uno mismo",
-          B: "No tiene importancia",
-          C: "Solo es un pasatiempo",
-          D: "Es una obligación"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el Principito con los volcanes y la rosa antes de irse?",
-        opciones: {
-          A: "Limpia los volcanes y protege la rosa",
-          B: "Los ignora",
-          C: "Los destruye",
-          D: "Los deja sin cuidado"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué le dice el Principito al aviador sobre los adultos?",
-        opciones: {
-          A: "Que a veces pierden su imaginación y son difíciles de entender",
-          B: "Que son los mejores",
-          C: "Que siempre saben la verdad",
-          D: "Que son divertidos"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué simboliza la serpiente que aparece al final del libro?",
-        opciones: {
-          A: "La muerte y el retorno a casa",
-          B: "El peligro y el mal",
-          C: "La traición",
-          D: "La amistad"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué hace el aviador al final del libro?",
-        opciones: {
-          A: "Se siente triste pero agradecido por la experiencia",
-          B: "Se olvida del Principito",
-          C: "Se va de la región",
-          D: "Se enoja"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cuál es el mensaje principal que deja 'El Principito' a sus lectores?",
-        opciones: {
-          A: "Valorar lo invisible y lo esencial en la vida",
-          B: "Buscar riquezas y poder",
-          C: "Ser siempre adultos serios",
-          D: "Ignorar la infancia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué edad tiene el Principito?",
-        opciones: {
-          A: "No se especifica una edad exacta",
-          B: "10 años",
-          C: "15 años",
-          D: "8 años"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué significa la frase 'Eres responsable para siempre de lo que has domesticado'?",
-        opciones: {
-          A: "La responsabilidad perdura en las relaciones y el cariño",
-          B: "La responsabilidad dura poco",
-          C: "No hay responsabilidad en la amistad",
-          D: "Solo uno mismo importa"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué es lo que más extraña el Principito cuando llega a la Tierra?",
-        opciones: {
-          A: "Su rosa y su planeta",
-          B: "Los volcanes",
-          C: "El zorro",
-          D: "El desierto"
+          A: "La conexión entre el adulto y el niño",
+          B: "La tecnología y el progreso",
+          C: "La libertad y el escape",
+          D: "La aventura y el peligro"
         },
         correcta: "A"
       }
     ];
 
-    let current = 0;
-    let correctas = 0;
-    let incorrectas = 0;
+    let actual = 0;
+    let puntos = 0;
+    let errores = 0;
 
-    const questionEl = document.getElementById('question');
-    const btnA = document.getElementById('btnA');
-    const btnB = document.getElementById('btnB');
-    const btnC = document.getElementById('btnC');
-    const btnD = document.getElementById('btnD');
-    const contadorEl = document.getElementById('contador');
-    const scaleLeft = document.getElementById('scaleLeft');
-    const scaleRight = document.getElementById('scaleRight');
-
-    function showQuestion() {
-      const q = preguntas[current];
-      questionEl.textContent = q.pregunta;
-      btnA.textContent = 'A) ' + q.opciones.A;
-      btnB.textContent = 'B) ' + q.opciones.B;
-      btnC.textContent = 'C) ' + q.opciones.C;
-      btnD.textContent = 'D) ' + q.opciones.D;
-      enableButtons();
+    function cargarPregunta() {
+      const p = preguntas[actual];
+      document.getElementById('question').innerText = p.pregunta;
+      document.getElementById('btnA').innerText = "A: " + p.opciones.A;
+      document.getElementById('btnB').innerText = "B: " + p.opciones.B;
+      document.getElementById('btnC').innerText = "C: " + p.opciones.C;
+      document.getElementById('btnD').innerText = "D: " + p.opciones.D;
+      clearHighlight();
     }
 
-    function disableButtons() {
-      btnA.disabled = true;
-      btnB.disabled = true;
-      btnC.disabled = true;
-      btnD.disabled = true;
-    }
-
-    function enableButtons() {
-      btnA.disabled = false;
-      btnB.disabled = false;
-      btnC.disabled = false;
-      btnD.disabled = false;
-      btnA.classList.remove('correct', 'incorrect');
-      btnB.classList.remove('correct', 'incorrect');
-      btnC.classList.remove('correct', 'incorrect');
-      btnD.classList.remove('correct', 'incorrect');
-    }
-
-    function selectAnswer(letra) {
-      disableButtons();
-      const correcta = preguntas[current].correcta;
-      if (letra === correcta) {
-        correctas++;
-        document.getElementById('btn' + letra).classList.add('correct');
+    function selectAnswer(opcion) {
+      const correcta = preguntas[actual].correcta;
+      if (opcion === correcta) {
+        puntos++;
+        document.getElementById('btn' + opcion).classList.add('correct');
       } else {
-        incorrectas++;
-        document.getElementById('btn' + letra).classList.add('incorrect');
-        // También marcamos la correcta para que se vea
+        errores++;
+        document.getElementById('btn' + opcion).classList.add('incorrect');
         document.getElementById('btn' + correcta).classList.add('correct');
       }
-      updateContador();
-      updateScale();
-      current++;
-      if (current < preguntas.length) {
-        setTimeout(showQuestion, 1500);
-      } else {
-        setTimeout(showResults, 1500);
-      }
+      actualizarEscala();
+      actualizarContador();
+      setTimeout(() => {
+        actual++;
+        if (actual < preguntas.length) {
+          cargarPregunta();
+        } else {
+          alert("Juego terminado. ¡Gracias por jugar!");
+        }
+      }, 1000);
     }
 
-    function updateContador() {
-      contadorEl.textContent = `Correctas: ${correctas} | Incorrectas: ${incorrectas}`;
-    }
-
-    function updateScale() {
-      // Altura del lado izquierdo = correctas * factor (porcentaje)
+    function actualizarEscala() {
       const total = preguntas.length;
-      let alturaCorrectas = (correctas / total) * 200; // px
-      let alturaIncorrectas = (incorrectas / total) * 200; // px
-      scaleLeft.style.height = alturaCorrectas + 'px';
-      scaleRight.style.height = alturaIncorrectas + 'px';
+      const porcentaje = ((puntos / total) * 100).toFixed(0);
+      document.getElementById('scaleLeft').style.height = porcentaje + '%';
+      document.getElementById('scaleRight').style.height = porcentaje + '%';
     }
 
-    function showResults() {
-      questionEl.textContent = `Juego terminado. Correctas: ${correctas}, Incorrectas: ${incorrectas}`;
-      btnA.style.display = 'none';
-      btnB.style.display = 'none';
-      btnC.style.display = 'none';
-      btnD.style.display = 'none';
+    function actualizarContador() {
+      document.getElementById('contador').innerText = `Correctas: ${puntos} | Incorrectas: ${errores}`;
     }
 
     function resetGame() {
-      current = 0;
-      correctas = 0;
-      incorrectas = 0;
-      updateContador();
-      updateScale();
-      btnA.style.display = 'block';
-      btnB.style.display = 'block';
-      btnC.style.display = 'block';
-      btnD.style.display = 'block';
-      showQuestion();
+      actual = 0;
+      puntos = 0;
+      errores = 0;
+      actualizarEscala();
+      actualizarContador();
+      cargarPregunta();
     }
 
-    // Iniciar
-    resetGame();
+    function clearHighlight() {
+      ['btnA', 'btnB', 'btnC', 'btnD'].forEach(id => {
+        document.getElementById(id).classList.remove('correct', 'incorrect');
+      });
+    }
+
+    cargarPregunta();
   </script>
 </body>
 </html>

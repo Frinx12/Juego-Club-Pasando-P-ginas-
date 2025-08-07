@@ -3,178 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <title>Cien Años de Soledad - Lector Millonario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merriweather:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Gloock&display=swap');
 
-body {
-  font-family: 'Merriweather', serif;
-  background: linear-gradient(135deg, #d9b382, #6e4a22);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  color: #3e2f1c;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container {
-  width: 70vw;
-  max-width: 900px;
-  background: #f5f0e6cc;
-  padding: clamp(20px, 4vw, 40px) clamp(25px, 5vw, 50px);
-  border-radius: 18px;
-  box-shadow: 0 10px 25px rgba(101, 67, 33, 0.4);
-  text-align: center;
-  position: relative;
-  border: 3px solid #b8975e;
-}
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #4a3c31 0%, #b58b57 50%, #342a20 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #f2ecd7;
+    }
 
-h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  color: #8b5e3c;
-  margin-bottom: 1vw;
-  text-shadow: 1px 1px 2px #cdb380;
-}
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #70563b;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 25px 5px rgba(181, 139, 87, 0.7);
+      position: relative;
+      border: 3px solid #c4a56e;
+    }
 
-.book-image {
-  width: clamp(140px, 20vw, 180px);
-  height: clamp(200px, 28vw, 260px);
-  margin: clamp(15px, 2vw, 20px) auto clamp(20px, 3vw, 30px);
-  background-color: #cdb380;
-  background-size: cover;
-  background-position: center;
-  border-radius: 12px;
-  border: 3px solid #8b5e3c;
-  box-shadow: 0 4px 10px rgba(139, 94, 60, 0.7);
-}
+    h1 {
+      font-family: 'Gloock', serif;
+      color: #e9d4a7;
+      text-shadow: 2px 2px 8px #5d4a31;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      font-weight: 700;
+    }
 
-.question {
-  margin-bottom: clamp(15px, 3vw, 25px);
-  font-size: clamp(18px, 3vw, 22px);
-  font-weight: 700;
-  color: #6e4a22;
-  text-shadow: 0.5px 0.5px 0.5px #b8975e;
-  min-height: 70px;
-}
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/en/0/03/Cien_a%C3%B1os_de_soledad.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #c4a56e;
+      box-shadow: 0 0 15px 5px rgba(196, 165, 110, 0.7);
+      border-radius: 12px;
+    }
 
-.options button {
-  display: block;
-  width: 80%;
-  margin: 12px auto;
-  padding: clamp(10px, 1.5vw, 14px);
-  font-size: clamp(16px, 2vw, 18px);
-  border-radius: 12px;
-  border: 2px solid #b8975e;
-  background-color: #f3e5ab;
-  color: #6e4a22;
-  cursor: pointer;
-  box-shadow: 1px 2px 5px rgba(139,94,60,0.3);
-  transition: background-color 0.3s, transform 0.3s, color 0.3s;
-  font-weight: 600;
-}
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 1px 1px 4px #2c1f0e;
+    }
 
-.options button:hover {
-  background-color: #b8975e;
-  color: #fff9db;
-  transform: scale(1.05);
-}
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #c4a56e;
+      cursor: pointer;
+      background-color: #f3e7d3;
+      color: #5a4321;
+      box-shadow: 0 3px 6px rgba(196, 165, 110, 0.5);
+      transition: background-color 0.3s, transform 0.3s;
+    }
 
-.options button.correct {
-  background-color: #7a945e !important;
-  color: #fff !important;
-  animation: pulseGreen 0.5s;
-  border-color: #556b2f !important;
-  box-shadow: 0 0 12px #556b2f;
-}
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #eadfae;
+      box-shadow: 0 0 12px #d4c27d;
+    }
 
-.options button.incorrect {
-  background-color: #d46a6a !important;
-  color: #fff !important;
-  animation: shake 0.5s;
-  border-color: #a83232 !important;
-  box-shadow: 0 0 12px #a83232;
-}
+    .options button.correct {
+      background-color: #4caf50 !important;
+      color: white;
+      animation: pulseGreen 0.5s;
+    }
 
-@keyframes pulseGreen {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
+    .options button.incorrect {
+      background-color: #e53935 !important;
+      color: white;
+      animation: shake 0.5s;
+    }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-7px); }
-  50% { transform: translateX(7px); }
-  75% { transform: translateX(-7px); }
-  100% { transform: translateX(0); }
-}
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
 
-.reset-btn, .back-btn {
-  margin-top: 18px;
-  padding: clamp(10px, 1.5vw, 12px) clamp(20px, 3vw, 26px);
-  border: none;
-  border-radius: 14px;
-  font-size: clamp(16px, 2vw, 18px);
-  cursor: pointer;
-  font-weight: 700;
-  box-shadow: 0 4px 8px rgba(139,94,60,0.3);
-  transition: background-color 0.3s;
-}
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
 
-.reset-btn {
-  background-color: #b8975e;
-  color: #3e2f1c;
-  margin-right: 15px;
-}
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
 
-.reset-btn:hover {
-  background-color: #8b5e3c;
-  color: #fff;
-}
+    .reset-btn {
+      background-color: #c4a56e;
+      color: #5a4321;
+      box-shadow: 0 5px 10px rgba(196, 165, 110, 0.7);
+    }
 
-.back-btn {
-  background-color: #6e4a22;
-  color: #f5f0e6;
-  margin-left: 15px;
-}
+    .reset-btn:hover {
+      background-color: #d4be7d;
+    }
 
-.back-btn:hover {
-  background-color: #4b3313;
-}
+    .back-btn {
+      background-color: #70563b;
+      color: #f2ecd7;
+      box-shadow: 0 5px 10px rgba(112, 86, 59, 0.7);
+    }
 
-.scale {
-  position: absolute;
-  top: 0;
-  height: 0;
-  width: 14px;
-  background-color: #b8975e;
-  transition: height 0.3s;
-  border-radius: 0 12px 12px 0;
-  box-shadow: 0 0 6px #b8975e;
-}
+    .back-btn:hover {
+      background-color: #8c7047;
+    }
 
-.scale.left {
-  left: clamp(-26px, -5vw, -10px);
-  transform-origin: bottom;
-}
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #c4a56e;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
+    }
 
-.scale.right {
-  right: clamp(-26px, -5vw, -10px);
-  transform-origin: bottom;
-}
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
 
-.contador {
-  margin-top: 22px;
-  font-size: clamp(16px, 2vw, 20px);
-  font-weight: 700;
-  color: #6e4a22;
-  text-shadow: 0.3px 0.3px 0.3px #b8975e;
-}
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
 
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #e9d4a7;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #2c1f0e;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2.2rem; }
+      .question { font-size: 18px; }
+      .book-image { width: 120px; height: 170px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      .question { font-size: 16px; }
+      .book-image { width: 100px; height: 140px; }
+      .options button, .reset-btn, .back-btn { font-size: 14px; padding: 10px; }
+      .contador { font-size: 14px; }
+    }
   </style>
-  
 </head>
 <body>
   <div class="container">
@@ -182,11 +191,11 @@ h1 {
     <div class="scale right" id="scaleRight"></div>
 
     <h1>Cien Años de Soledad - Lector Millonario</h1>
-    <div class="book-image" style="background-image: url('imagenes/cienaños\ de\ soledad.jpg');">
-      <!-- Aquí puedes poner la imagen de portada del libro -->
+       <div class="book-image" style="background-image: url('imagenes/cienaños\ de\ soledad.jpg');">
+      <!-- Imagen del libro (personalizable) -->
     </div>
 
-    <div class="question" id="question">Pregunta aquí...</div>
+    <div class="question" id="question">Cargando pregunta...</div>
     <div class="options">
       <button onclick="selectAnswer('A')" id="btnA">Opción A</button>
       <button onclick="selectAnswer('B')" id="btnB">Opción B</button>
@@ -201,7 +210,7 @@ h1 {
   <script>
     const preguntas = [
       {
-        pregunta: "¿Quién es el fundador de Macondo en 'Cien años de soledad'?",
+        pregunta: "¿Quién fundó Macondo en 'Cien Años de Soledad'?",
         opciones: {
           A: "José Arcadio Buendía",
           B: "Úrsula Iguarán",
@@ -213,485 +222,93 @@ h1 {
       {
         pregunta: "¿Qué objeto trae Melquíades cuando regresa a Macondo?",
         opciones: {
-          A: "Un espejo mágico",
-          B: "Un pergamino con escritos en código",
-          C: "Una piedra filosofal",
-          D: "Un libro antiguo"
+          A: "Un libro con escritos cifrados",
+          B: "Un mapa del mundo",
+          C: "Un amuleto mágico",
+          D: "Una brújula"
+        },
+        correcta: "A"
+      },
+      {
+        pregunta: "¿Cuál es el nombre de la matriarca de la familia Buendía?",
+        opciones: {
+          A: "Remedios la Bella",
+          B: "Úrsula Iguarán",
+          C: "Amaranta",
+          D: "Fernanda del Carpio"
         },
         correcta: "B"
       },
       {
-        pregunta: "¿Cómo se llama la esposa de José Arcadio Buendía?",
+        pregunta: "¿Qué fenómeno extraño ocurre cuando Aureliano Buendía fabrica peces de oro?",
         opciones: {
-          A: "Rebeca",
-          B: "Fernanda del Carpio",
-          C: "Úrsula Iguarán",
-          D: "Remedios la Bella"
+          A: "Los peces vuelven a la vida",
+          B: "Los peces desaparecen misteriosamente",
+          C: "Los peces de oro nunca se oxidan",
+          D: "Los peces hablan"
         },
         correcta: "C"
       },
       {
-        pregunta: "¿Qué característica tienen los hijos de José Arcadio Buendía y Úrsula Iguarán?",
+        pregunta: "¿Qué personaje es conocido como el coronel Aureliano Buendía?",
         opciones: {
-          A: "Todos se parecen físicamente mucho",
-          B: "Sufren de memoria frágil",
-          C: "Tienen nombres repetidos",
-          D: "Son inmortales"
+          A: "Un revolucionario",
+          B: "Un comerciante",
+          C: "Un sacerdote",
+          D: "Un juez"
         },
-        correcta: "C"
+        correcta: "A"
       },
       {
-        pregunta: "¿Qué fenómeno inunda Macondo durante años?",
+        pregunta: "¿Qué elemento mágico aparece cuando Remedios la Bella asciende al cielo?",
         opciones: {
-          A: "Una tormenta de arena",
-          B: "Una lluvia interminable",
-          C: "Un incendio forestal",
-          D: "Una niebla mágica"
+          A: "Una nube brillante",
+          B: "Una ráfaga de viento",
+          C: "Un resplandor dorado",
+          D: "Un caballo blanco"
         },
-        correcta: "B"
+        correcta: "A"
       },
       {
-        pregunta: "¿Qué hace Remedios la Bella que sorprende a todos?",
+        pregunta: "¿Cuál es la peculiaridad del personaje José Arcadio Segundo?",
         opciones: {
-          A: "Se vuelve invisible",
-          B: "Desaparece flotando al cielo",
-          C: "Predice el futuro",
-          D: "Habla con los muertos"
-        },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué es la peste del insomnio en Macondo?",
-        opciones: {
-          A: "Un sueño profundo que no termina",
-          B: "Un estado donde nadie puede dormir ni recordar",
-          C: "Una enfermedad mortal",
-          D: "Una bendición divina"
+          A: "Era invisible",
+          B: "Se convirtió en hombre pez",
+          C: "Pudo predecir el futuro",
+          D: "Se quedó petrificado"
         },
         correcta: "B"
       },
       {
-        pregunta: "¿Quién es Aureliano Buendía en la novela?",
+        pregunta: "¿Cómo termina la historia de Macondo según el libro?",
         opciones: {
-          A: "El primer hijo de José Arcadio y Úrsula",
-          B: "Un revolucionario con 32 hijos",
-          C: "Un amigo de Melquíades",
-          D: "El alcalde de Macondo"
+          A: "Con la destrucción del pueblo por una tormenta",
+          B: "Con el olvido total de su existencia",
+          C: "Con la desaparición gradual de sus habitantes",
+          D: "Con la profecía de su extinción leída en un manuscrito"
+        },
+        correcta: "D"
+      },
+      {
+        pregunta: "¿Cuál es el tema central de 'Cien Años de Soledad'?",
+        opciones: {
+          A: "El amor y la pasión",
+          B: "La soledad y el destino",
+          C: "La justicia social",
+          D: "La naturaleza y el tiempo"
         },
         correcta: "B"
       },
       {
-        pregunta: "¿Cuál es el objeto que Úrsula teme que cause la locura familiar?",
+        pregunta: "¿Qué vínculo familiar se evita por miedo a la maldición en la familia Buendía?",
         opciones: {
-          A: "Un espejo roto",
-          B: "Un huevo gigante",
-          C: "Un espejo antiguo",
-          D: "Un retrato maldito"
+          A: "Matrimonio entre primos",
+          B: "Matrimonio entre hermanos",
+          C: "Matrimonio entre tíos y sobrinos",
+          D: "Matrimonio entre primos segundos"
         },
-        correcta: "B"
-      },
-      {
-        pregunta: "¿Qué personaje escribe los manuscritos en los pergaminos?",
-        opciones: {
-          A: "José Arcadio Buendía",
-          B: "Melquíades",
-          C: "Aureliano Babilonia",
-          D: "José Arcadio Segundo"
-        },
-        correcta: "B"
-      },
-      {
-  pregunta: "¿Cuál es el nombre completo de Úrsula, la matriarca de la familia?",
-  opciones: {
-    A: "Úrsula Iguarán",
-    B: "Úrsula Buendía",
-    C: "Úrsula Márquez",
-    D: "Úrsula Amaranta"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué profesión tiene Melquíades en la novela?",
-  opciones: {
-    A: "Alquimista y sabio",
-    B: "Alfarero",
-    C: "Escritor",
-    D: "Mercader"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué objeto trae Melquíades que permite descifrar los pergaminos?",
-  opciones: {
-    A: "Un espejo",
-    B: "Una calculadora",
-    C: "Una máquina de escribir",
-    D: "Un telescopio"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué símbolo representa la familia Buendía en la historia?",
-  opciones: {
-    A: "Un loro",
-    B: "Un gallo",
-    C: "Un pez",
-    D: "Un cerdo"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué personaje tiene el don de la clarividencia y predice el futuro?",
-  opciones: {
-    A: "Remedios la Bella",
-    B: "Rebeca",
-    C: "Fernanda del Carpio",
-    D: "Amaranta"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Quién es el único Buendía que logra romper la maldición familiar?",
-  opciones: {
-    A: "Aureliano Babilonia",
-    B: "José Arcadio Segundo",
-    C: "José Arcadio Buendía",
-    D: "Mauricio Babilonia"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué tipo de insecto invade Macondo durante la peste del insomnio?",
-  opciones: {
-    A: "Mariposas amarillas",
-    B: "Mosquitos",
-    C: "Hormigas",
-    D: "Moscas"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué papel tiene José Arcadio Segundo en la novela?",
-  opciones: {
-    A: "Líder sindical",
-    B: "Sacerdote",
-    C: "Mercader",
-    D: "Escritor"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué relación tiene Mauricio Babilonia con Meme?",
-  opciones: {
-    A: "Son hermanos",
-    B: "Son amantes",
-    C: "Son enemigos",
-    D: "Son primos"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué elemento mágico aparece con frecuencia en la novela?",
-  opciones: {
-    A: "Dragones",
-    B: "Mariposas amarillas",
-    C: "Unicornio",
-    D: "Relojes de arena"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué evento marca el declive de Macondo?",
-  opciones: {
-    A: "La llegada del tren",
-    B: "La guerra civil",
-    C: "El asesinato de Aureliano",
-    D: "El auge del banano"
-  },
-  correcta: "D"
-},
-{
-  pregunta: "¿Qué sucede con Amaranta al final de la novela?",
-  opciones: {
-    A: "Se casa y tiene hijos",
-    B: "Muere virgen y sola",
-    C: "Se va de Macondo",
-    D: "Se convierte en hechicera"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué maldición pesa sobre la familia Buendía?",
-  opciones: {
-    A: "Que ningún hijo nazca sin cola de cerdo",
-    B: "Que todos mueran jóvenes",
-    C: "Que nunca puedan salir de Macondo",
-    D: "Que olviden su pasado"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Cómo se llama la ciudad ficticia donde ocurre la novela?",
-  opciones: {
-    A: "Macondo",
-    B: "Aracataca",
-    C: "Santa Marta",
-    D: "Barranquilla"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué sucede con Rebeca, la hija adoptiva de Úrsula?",
-  opciones: {
-    A: "Se casa con José Arcadio",
-    B: "Muere tras un duelo",
-    C: "Come tierra y se vuelve solitaria",
-    D: "Se va a vivir a la ciudad"
-  },
-  correcta: "C"
-},
-{
-  pregunta: "¿Quién es Fernanda del Carpio?",
-  opciones: {
-    A: "La esposa de Aureliano Segundo",
-    B: "La hija de José Arcadio",
-    C: "La madre de Amaranta",
-    D: "La vecina de Macondo"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué caracteriza a la escritura de Gabriel García Márquez en esta novela?",
-  opciones: {
-    A: "Realismo mágico",
-    B: "Naturalismo puro",
-    C: "Realismo social",
-    D: "Modernismo"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué objeto tiene un papel crucial en la historia y es difícil de descifrar?",
-  opciones: {
-    A: "Los pergaminos de Melquíades",
-    B: "La Biblia",
-    C: "Un diario antiguo",
-    D: "Un espejo roto"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué ocurre con Aureliano Babilonia al final de la historia?",
-  opciones: {
-    A: "Se convierte en un sabio alquimista",
-    B: "Muere sin descendencia",
-    C: "Descifra los pergaminos y muere",
-    D: "Se va a la ciudad"
-  },
-  correcta: "C"
-},
-{
-  pregunta: "¿Qué fenómeno rodea el nacimiento de José Arcadio Buendía?",
-  opciones: {
-    A: "Una tormenta eléctrica",
-    B: "Un eclipse solar",
-    C: "La llegada de un cometa",
-    D: "Una luna roja"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué animal es símbolo recurrente en la novela?",
-  opciones: {
-    A: "Gato",
-    B: "Pájaro",
-    C: "Gallo",
-    D: "Serpiente"
-  },
-  correcta: "C"
-},
-{
-  pregunta: "¿Qué representa el personaje de Melquíades?",
-  opciones: {
-    A: "La ciencia y la magia",
-    B: "La muerte",
-    C: "El amor",
-    D: "La guerra"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué hecho histórico influye en la novela?",
-  opciones: {
-    A: "La guerra civil colombiana",
-    B: "La independencia de Colombia",
-    C: "La conquista española",
-    D: "La revolución industrial"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué objeto tienen en común Aureliano y Melquíades?",
-  opciones: {
-    A: "Una pluma",
-    B: "Un anillo",
-    C: "Los pergaminos",
-    D: "Una piedra mágica"
-  },
-  correcta: "C"
-},
-{
-  pregunta: "¿Qué sucede con el Coronel Aureliano Buendía en la novela?",
-  opciones: {
-    A: "Se convierte en revolucionario",
-    B: "Muere en batalla",
-    C: "Se vuelve un sacerdote",
-    D: "Se exilia"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué aspecto mágico tiene Remedios la Bella?",
-  opciones: {
-    A: "Belleza sobrenatural que causa la muerte",
-    B: "Puede volar",
-    C: "Puede desaparecer",
-    D: "Lee la mente"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Cuál es el destino de Macondo al final de la novela?",
-  opciones: {
-    A: "Desaparece arrasada por el viento",
-    B: "Es destruida por el ejército",
-    C: "Es abandonada y olvidada",
-    D: "Es destruida por una tormenta y olvidada en el tiempo"
-  },
-  correcta: "D"
-},
-{
-  pregunta: "¿Qué importancia tiene el incesto en la historia?",
-  opciones: {
-    A: "Es el motor de la maldición familiar",
-    B: "No tiene importancia",
-    C: "Es un tabú que se rompe",
-    D: "Simboliza la unión familiar"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué es lo que provoca la soledad en la novela?",
-  opciones: {
-    A: "La maldición y destino trágico de la familia",
-    B: "La guerra",
-    C: "El aislamiento geográfico de Macondo",
-    D: "La muerte"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Quién se casa con Fernanda del Carpio?",
-  opciones: {
-    A: "Aureliano Segundo",
-    B: "José Arcadio Segundo",
-    C: "Mauricio Babilonia",
-    D: "Aureliano Babilonia"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué papel tiene Amaranta Úrsula en la historia?",
-  opciones: {
-    A: "Última descendiente de los Buendía",
-    B: "La villana principal",
-    C: "Una maga poderosa",
-    D: "Una viajera"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Cuál es la relación entre Aureliano Babilonia y Amaranta Úrsula?",
-  opciones: {
-    A: "Primos",
-    B: "Esposos",
-    C: "Hermanos",
-    D: "Amantes sin saber que son familia"
-  },
-  correcta: "D"
-},
-{
-  pregunta: "¿Qué sucede con el niño nacido de la relación incestuosa final?",
-  opciones: {
-    A: "Nace con cola de cerdo",
-    B: "Nace normal",
-    C: "No nace",
-    D: "Es abandonado"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué significa el título 'Cien años de soledad'?",
-  opciones: {
-    A: "La historia de un siglo de aislamiento",
-    B: "Una metáfora del destino familiar",
-    C: "El tiempo que dura Macondo",
-    D: "La duración del amor"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Qué relación tiene José Arcadio con Pilar Ternera?",
-  opciones: {
-    A: "Amigos de la infancia",
-    B: "Padre de sus hijos",
-    C: "Enemigos",
-    D: "Primos"
-  },
-  correcta: "B"
-},
-{
-  pregunta: "¿Quién es Meme Buendía?",
-  opciones: {
-    A: "Hija de Fernanda y Aureliano Segundo",
-    B: "Hermana de Amaranta",
-    C: "Madre de Mauricio Babilonia",
-    D: "Esposa de José Arcadio"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué papel tiene la música en Macondo?",
-  opciones: {
-    A: "Un símbolo de alegría y vida",
-    B: "No es importante",
-    C: "Se asocia a la magia",
-    D: "Se utiliza para rituales"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Qué efecto tiene la llegada del ferrocarril a Macondo?",
-  opciones: {
-    A: "Abre el pueblo al mundo exterior y cambios",
-    B: "Provoca la destrucción de Macondo",
-    C: "Trae la peste",
-    D: "No tiene efecto"
-  },
-  correcta: "A"
-},
-{
-  pregunta: "¿Cuál es la importancia de los pergaminos de Melquíades?",
-  opciones: {
-    A: "Contienen la historia y destino de la familia Buendía",
-    B: "Son un libro sagrado",
-    C: "Son un tesoro escondido",
-    D: "Son una carta de amor"
-  },
-  correcta: "A"
-}
-
-      // Aquí se pueden seguir agregando más preguntas...
+        correcta: "A"
+      }
     ];
 
     let actual = 0;
@@ -725,10 +342,9 @@ h1 {
         if (actual < preguntas.length) {
           cargarPregunta();
         } else {
-          alert(`Juego terminado. Correctas: ${puntos}, Incorrectas: ${errores}`);
-          resetGame();
+          alert("Juego terminado. ¡Gracias por jugar!");
         }
-      }, 1200);
+      }, 1000);
     }
 
     function actualizarEscala() {

@@ -4,158 +4,224 @@
   <meta charset="UTF-8" />
   <title>El Retrato de Dorian Gray - Lector Millonario</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
-    body {
-      font-family: 'Playfair Display', serif;
-      background: linear-gradient(135deg, #1a1a1a, #3d2f2f);
-      color: #f5f1e9;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .container {
-      background: #2b1f2f;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
-      width: 70%;
-      max-width: 850px;
-      padding: 40px 35px;
-      text-align: center;
-      position: relative;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 25px;
-      color: #d4b483;
-      text-shadow: 1px 1px 5px #000;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    .book-image {
-      width: 150px;
-      height: 230px;
-      margin: 0 auto 30px;
-      background-image: url('ruta-a-imagen-dorian.jpg'); /* Cambia esta ruta */
-      background-size: cover;
-      background-position: center;
-      border-radius: 10px;
-      border: 3px solid #d4b483;
-      box-shadow: 0 0 15px #b39468;
-    }
-    .question {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 30px;
-      min-height: 80px;
-      color: #e6d9b8;
-    }
-    .options button {
-      display: block;
-      width: 85%;
-      margin: 12px auto;
-      padding: 14px;
-      font-size: 18px;
-      color: #2b1f2f;
-      background-color: #d4b483;
-      border: 2px solid #a17d42;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      font-family: 'Playfair Display', serif;
-      font-weight: 600;
-      text-shadow: 0 1px 0 #fff;
-    }
-    .options button:hover {
-      background-color: #b39468;
-      color: #1a1a1a;
-      transform: scale(1.05);
-      box-shadow: 0 6px 10px rgba(0,0,0,0.7);
-    }
-    .options button.correct {
-      background-color: #80b980 !important;
-      border-color: #547d54 !important;
-      color: #1a1a1a !important;
-      box-shadow: 0 0 15px #80b980;
-      animation: pulseGreen 0.4s;
-    }
-    .options button.incorrect {
-      background-color: #e07a7a !important;
-      border-color: #a14a4a !important;
-      color: #3a1a1a !important;
-      box-shadow: 0 0 15px #e07a7a;
-      animation: shake 0.4s;
-    }
-    @keyframes pulseGreen {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-    .reset-btn, .back-btn {
-      margin-top: 20px;
-      padding: 12px 26px;
-      font-size: 17px;
-      border: none;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.6);
-      transition: background-color 0.3s ease;
-      font-family: 'Playfair Display', serif;
-      color: #2b1f2f;
-      text-shadow: 0 1px 0 #fff;
-    }
-    .reset-btn {
-      background-color: #a14a4a;
-      margin-right: 15px;
-    }
-    .reset-btn:hover {
-      background-color: #7e3838;
-      color: #f5f1e9;
-      text-shadow: none;
-    }
-    .back-btn {
-      background-color: #d4b483;
-    }
-    .back-btn:hover {
-      background-color: #b39468;
-      color: #1a1a1a;
-      text-shadow: none;
-    }
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 14px;
-      background-color: #d4b483;
-      transition: height 0.3s ease;
-      border-radius: 0 12px 12px 0;
-    }
-    .scale.left {
-      left: -25px;
-      transform-origin: bottom;
-    }
-    .scale.right {
-      right: -25px;
-      transform-origin: bottom;
-    }
-    .contador {
-      margin-top: 22px;
-      font-size: 18px;
-      color: #d4b483;
-      font-weight: 700;
-    }
+body {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #1a1a1a, #3d2f2f);
+  color: #f5f1e9;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: #2b1f2f;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  width: 70vw;
+  max-width: 850px;
+  padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 35px);
+  text-align: center;
+  position: relative;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.25rem);
+  margin-bottom: clamp(15px, 3vw, 25px);
+  color: #d4b483;
+  text-shadow: 1px 1px 5px #000;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.book-image {
+  width: clamp(100px, 20vw, 150px);
+  height: clamp(150px, 30vw, 230px);
+  margin: 0 auto clamp(20px, 4vw, 30px);
+  background-image: url('ruta-a-imagen-dorian.jpg'); /* Cambia esta ruta */
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  border: 3px solid #d4b483;
+  box-shadow: 0 0 15px #b39468;
+}
+
+.question {
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 600;
+  margin-bottom: clamp(20px, 4vw, 30px);
+  min-height: 80px;
+  color: #e6d9b8;
+}
+
+.options button {
+  display: block;
+  width: 85%;
+  margin: 12px auto;
+  padding: clamp(10px, 2.5vw, 14px);
+  font-size: clamp(14px, 3vw, 18px);
+  color: #2b1f2f;
+  background-color: #d4b483;
+  border: 2px solid #a17d42;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.options button:hover {
+  background-color: #b39468;
+  color: #1a1a1a;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.7);
+}
+
+.options button.correct {
+  background-color: #80b980 !important;
+  border-color: #547d54 !important;
+  color: #1a1a1a !important;
+  box-shadow: 0 0 15px #80b980;
+  animation: pulseGreen 0.4s;
+}
+
+.options button.incorrect {
+  background-color: #e07a7a !important;
+  border-color: #a14a4a !important;
+  color: #3a1a1a !important;
+  box-shadow: 0 0 15px #e07a7a;
+  animation: shake 0.4s;
+}
+
+@keyframes pulseGreen {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.reset-btn, .back-btn {
+  margin-top: 20px;
+  padding: clamp(10px, 2.5vw, 12px) clamp(18px, 4vw, 26px);
+  font-size: clamp(14px, 3vw, 17px);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+  transition: background-color 0.3s ease;
+  font-family: 'Playfair Display', serif;
+  color: #2b1f2f;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.reset-btn {
+  background-color: #a14a4a;
+  margin-right: 15px;
+}
+
+.reset-btn:hover {
+  background-color: #7e3838;
+  color: #f5f1e9;
+  text-shadow: none;
+}
+
+.back-btn {
+  background-color: #d4b483;
+}
+
+.back-btn:hover {
+  background-color: #b39468;
+  color: #1a1a1a;
+  text-shadow: none;
+}
+
+.scale {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 14px;
+  background-color: #d4b483;
+  transition: height 0.3s ease;
+  border-radius: 0 12px 12px 0;
+}
+
+/* Evitar valores negativos que generan error, usar porcentajes para desplazar */
+.scale.left {
+  left: -4vw;
+  transform-origin: bottom;
+}
+
+.scale.right {
+  right: -4vw;
+  transform-origin: bottom;
+}
+
+.contador {
+  margin-top: 22px;
+  font-size: clamp(14px, 3vw, 18px);
+  color: #d4b483;
+  font-weight: 700;
+}
+
+/* Media Queries para móviles y tablets */
+@media (max-width: 768px) {
+  .container {
+    width: 90vw;
+    padding: 20px 15px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .book-image {
+    width: 40vw;
+    height: 60vw;
+  }
+  .question {
+    font-size: 18px;
+  }
+  .options button {
+    width: 90%;
+    font-size: 16px;
+  }
+  .reset-btn, .back-btn {
+    width: 48%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+  .book-image {
+    width: 60vw;
+    height: 90vw;
+  }
+  .options button {
+    width: 100%;
+    font-size: 14px;
+  }
+  .reset-btn, .back-btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+}
+
   </style>
 </head>
 <body>

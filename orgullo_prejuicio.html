@@ -3,153 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <title>Orgullo y Prejuicio - Lector Millonario</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Great+Vibes&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Great+Vibes&display=swap');
 
-    body {
-      font-family: 'Playfair Display', serif;
-      background: linear-gradient(to right, #f7f1e1, #efe5d6, #f7f1e1);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      color: #4b3b2b;
-    }
-    .container {
-      width: 60%;
-      background: #fbf7f0;
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 0 25px rgba(123, 101, 77, 0.3);
-      position: relative;
-      border: 3px solid #a88c5a;
-    }
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(to right, #f7f1e1, #efe5d6, #f7f1e1);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: #4b3b2b;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 700px;
+    background: #fbf7f0;
+    padding: 30px 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(123, 101, 77, 0.3);
+    position: relative;
+    border: 3px solid #a88c5a;
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    color: #7b5e1d;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 4px #c4b091;
+  }
+
+  .book-image {
+    width: 120px;
+    height: 180px;
+    margin: 10px auto 25px;
+    background-color: #d9c9b6;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #a88c5a;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #c9b497;
+    background-image: url('ruta-a-imagen-del-libro.jpg');
+  }
+
+  .question {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .options button {
+    display: block;
+    width: 90%;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #a88c5a;
+    cursor: pointer;
+    background-color: #f3ece1;
+    color: #5c4b3b;
+    box-shadow: 0 3px 6px rgba(168, 140, 90, 0.5);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .options button:hover:not(.correct):not(.incorrect) {
+    background-color: #e9e1cd;
+    box-shadow: 0 0 12px #b49c68;
+  }
+
+  .options button.correct {
+    background-color: #a9cbb7 !important;
+    color: #36513f;
+    animation: pulseGreen 0.5s;
+  }
+
+  .options button.incorrect {
+    background-color: #e69a9a !important;
+    color: #7a3838;
+    animation: shake 0.5s;
+  }
+
+  @keyframes pulseGreen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .reset-btn,
+  .back-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s;
+  }
+
+  .reset-btn {
+    background-color: #a88c5a;
+    color: #f3f1e7;
+    box-shadow: 0 5px 10px rgba(168, 140, 90, 0.7);
+  }
+
+  .reset-btn:hover {
+    background-color: #b4a26e;
+  }
+
+  .back-btn {
+    background-color: #7b5e1d;
+    color: #f3f1e7;
+    box-shadow: 0 5px 10px rgba(123, 94, 29, 0.7);
+  }
+
+  .back-btn:hover {
+    background-color: #9c7c29;
+  }
+
+  .scale {
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 15px;
+    background-color: #a88c5a;
+    transition: height 0.3s;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .scale.left {
+    left: -25px;
+    transform-origin: bottom;
+  }
+
+  .scale.right {
+    right: -25px;
+    transform-origin: bottom;
+  }
+
+  .contador {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #7b5e1d;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px #fff8e1;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
     h1 {
-      font-family: 'Great Vibes', cursive;
-      color: #7b5e1d;
-      font-size: 3rem;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 4px #c4b091;
+      font-size: 2rem;
     }
-    .book-image {
-      width: 160px;
-      height: 230px;
-      margin: 10px auto 30px;
-      background-color: #d9c9b6;
-      background-size: cover;
-      background-position: center;
-      border: 3px solid #a88c5a;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #c9b497;
-      /* Cambia la URL a la portada o imagen que quieras */
-      background-image: url('ruta-a-imagen-del-libro.jpg');
-    }
+
     .question {
-      margin-bottom: 25px;
-      font-size: 22px;
-      font-style: italic;
-      font-weight: 600;
+      font-size: 1.1rem;
     }
+
     .options button {
-      display: block;
-      width: 80%;
-      margin: 12px auto;
-      padding: 14px;
-      font-size: 18px;
-      border-radius: 12px;
-      border: 2px solid #a88c5a;
-      cursor: pointer;
-      background-color: #f3ece1;
-      color: #5c4b3b;
-      box-shadow: 0 3px 6px rgba(168, 140, 90, 0.5);
-      transition: background-color 0.3s, transform 0.3s;
+      font-size: 0.95rem;
     }
-    .options button:hover:not(.correct):not(.incorrect) {
-      background-color: #e9e1cd;
-      box-shadow: 0 0 12px #b49c68;
-    }
-    .options button.correct {
-      background-color: #a9cbb7 !important; /* verde suave */
-      color: #36513f;
-      animation: pulseGreen 0.5s;
-    }
-    .options button.incorrect {
-      background-color: #e69a9a !important; /* rojo suave */
-      color: #7a3838;
-      animation: shake 0.5s;
-    }
-    @keyframes pulseGreen {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-    .reset-btn {
-      margin-top: 25px;
-      background-color: #a88c5a;
-      color: #f3f1e7;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 700;
-      box-shadow: 0 5px 10px rgba(168, 140, 90, 0.7);
-      transition: background-color 0.3s;
-    }
-    .reset-btn:hover {
-      background-color: #b4a26e;
-    }
+
+    .reset-btn,
     .back-btn {
-      margin-top: 12px;
-      background-color: #7b5e1d;
-      color: #f3f1e7;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 700;
-      box-shadow: 0 5px 10px rgba(123, 94, 29, 0.7);
-      transition: background-color 0.3s;
+      font-size: 0.95rem;
+      padding: 10px 20px;
     }
-    .back-btn:hover {
-      background-color: #9c7c29;
+
+    .book-image {
+      width: 100px;
+      height: 150px;
     }
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 15px;
-      background-color: #a88c5a;
-      transition: height 0.3s;
-      border-radius: 0 12px 12px 0;
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.8rem;
     }
-    .scale.left {
-      left: -25px;
-      transform-origin: bottom;
+
+    .question {
+      font-size: 1rem;
     }
-    .scale.right {
-      right: -25px;
-      transform-origin: bottom;
+
+    .book-image {
+      width: 90px;
+      height: 130px;
     }
-    .contador {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #7b5e1d;
-      font-weight: 700;
-      text-shadow: 1px 1px 3px #fff8e1;
+
+    .options button {
+      width: 100%;
+      font-size: 0.9rem;
     }
-  </style>
+
+    .reset-btn,
+    .back-btn {
+      font-size: 0.9rem;
+      width: 100%;
+    }
+
+    .container {
+      padding: 20px 15px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <div class="container">

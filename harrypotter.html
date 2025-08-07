@@ -3,152 +3,211 @@
 <head>
   <meta charset="UTF-8">
   <title>Harry Potter - Lector Millonario</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer&family=Pirata+One&display=swap');
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer&family=Pirata+One&display=swap');
 
-  body {
-    font-family: 'IM Fell Great Primer', serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #4b2e83 50%, #000000 100%);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    color: #f0e6d2;
-  }
-  .container {
-    width: 60%;
-    background: #2b1b3f;
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 0 25px 5px rgba(138,43,226,0.7); /* resplandor mágico violeta */
-    position: relative;
-    border: 3px solid #7b3fbf;
-  }
-  h1 {
-    font-family: 'Pirata One', cursive;
-    color: #e2c044; /* dorado Hogwarts */
-    text-shadow: 2px 2px 8px #a67c00;
-    margin-bottom: 30px;
-    font-size: 3rem;
-  }
-  .book-image {
-    width: 160px;
-    height: 230px;
-    margin: 10px auto 30px;
-    background-color: #3e2c60;
-    background-size: cover;
-    background-position: center;
-    border: 3px solid #bfa84f;
-    box-shadow: 0 0 15px 5px rgba(186, 147, 64, 0.7);
-    border-radius: 12px;
-  }
-  .question {
-    margin-bottom: 25px;
-    font-size: 22px;
-    font-weight: 600;
-    text-shadow: 1px 1px 4px #000;
-  }
-  .options button {
-    display: block;
-    width: 80%;
-    margin: 12px auto;
-    padding: 14px;
-    font-size: 18px;
-    border-radius: 12px;
-    border: 2px solid #bfa84f;
-    cursor: pointer;
-    background-color: #f9f3c5; /* pergamino claro */
-    color: #3b2e1e;
-    box-shadow: 0 3px 6px rgba(191, 168, 79, 0.5);
-    transition: background-color 0.3s, transform 0.3s;
-  }
-  .options button:hover:not(.correct):not(.incorrect) {
-    background-color: #f1e2a6;
-    box-shadow: 0 0 12px #d4c27d;
-  }
-  .options button.correct {
-    background-color: #4caf50 !important; /* verde mágico */
-    color: white;
-    animation: pulseGreen 0.5s;
-  }
-  .options button.incorrect {
-    background-color: #e53935 !important; /* rojo oscuro */
-    color: white;
-    animation: shake 0.5s;
-  }
-  @keyframes pulseGreen {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-  }
-  .reset-btn {
-    margin-top: 25px;
-    background-color: #bfa84f;
-    color: #3b2e1e;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 700;
-    box-shadow: 0 5px 10px rgba(191,168,79,0.7);
-    transition: background-color 0.3s;
-  }
-  .reset-btn:hover {
-    background-color: #d4c27d;
-  }
-  .back-btn {
-    margin-top: 12px;
-    background-color: #7b3fbf;
-    color: #f0e6d2;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 700;
-    box-shadow: 0 5px 10px rgba(123,63,191,0.7);
-    transition: background-color 0.3s;
-  }
-  .back-btn:hover {
-    background-color: #a082d6;
-  }
-  .scale {
-    position: absolute;
-    top: 0;
-    height: 0;
-    width: 15px;
-    background-color: #bfa84f;
-    transition: height 0.3s;
-    border-radius: 0 12px 12px 0;
-  }
-  .scale.left {
-    left: -25px;
-    transform-origin: bottom;
-  }
-  .scale.right {
-    right: -25px;
-    transform-origin: bottom;
-  }
-  .contador {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #d4c27d;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px #000;
-  }
-</style>
+    * {
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'IM Fell Great Primer', serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #4b2e83 50%, #000000 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      color: #f0e6d2;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: #2b1b3f;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 25px 5px rgba(138,43,226,0.7);
+      position: relative;
+      border: 3px solid #7b3fbf;
+    }
+
+    h1 {
+      font-family: 'Pirata One', cursive;
+      color: #e2c044;
+      text-shadow: 2px 2px 8px #a67c00;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    .book-image {
+      width: 140px;
+      height: 200px;
+      margin: 10px auto 30px;
+      background-color: #3e2c60;
+      background-size: cover;
+      background-position: center;
+      border: 3px solid #bfa84f;
+      box-shadow: 0 0 15px 5px rgba(186, 147, 64, 0.7);
+      border-radius: 12px;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #bfa84f;
+      cursor: pointer;
+      background-color: #f9f3c5;
+      color: #3b2e1e;
+      box-shadow: 0 3px 6px rgba(191, 168, 79, 0.5);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .options button:hover:not(.correct):not(.incorrect) {
+      background-color: #f1e2a6;
+      box-shadow: 0 0 12px #d4c27d;
+    }
+
+    .options button.correct {
+      background-color: #4caf50 !important;
+      color: white;
+      animation: pulseGreen 0.5s;
+    }
+
+    .options button.incorrect {
+      background-color: #e53935 !important;
+      color: white;
+      animation: shake 0.5s;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .reset-btn, .back-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .reset-btn {
+      background-color: #bfa84f;
+      color: #3b2e1e;
+      box-shadow: 0 5px 10px rgba(191,168,79,0.7);
+    }
+
+    .reset-btn:hover {
+      background-color: #d4c27d;
+    }
+
+    .back-btn {
+      background-color: #7b3fbf;
+      color: #f0e6d2;
+      box-shadow: 0 5px 10px rgba(123,63,191,0.7);
+    }
+
+    .back-btn:hover {
+      background-color: #a082d6;
+    }
+
+    .scale {
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 15px;
+      background-color: #bfa84f;
+      transition: height 0.3s;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .scale.left {
+      left: -25px;
+      transform-origin: bottom;
+    }
+
+    .scale.right {
+      right: -25px;
+      transform-origin: bottom;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #d4c27d;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    /* Responsive tablets */
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .question {
+        font-size: 18px;
+      }
+      .book-image {
+        width: 120px;
+        height: 180px;
+      }
+    }
+
+    /* Responsive celulares */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.7rem;
+      }
+      .question {
+        font-size: 16px;
+      }
+      .book-image {
+        width: 100px;
+        height: 150px;
+      }
+      .options button, .reset-btn, .back-btn {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .contador {
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">

@@ -3,118 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <title>Alas de Sangre - Lector Millonario</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
-    body {
-      font-family: 'Cinzel', serif;
-      background: linear-gradient(to right, #3a0ca3, #4361ee, #3a0ca3);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-    }
-    .container {
-      width: 65%;
-      background: #1c1c3c;
-      padding: 40px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 0 25px rgba(0,0,0,0.4);
-      position: relative;
-    }
+  body {
+    font-family: 'Cinzel', serif;
+    background: linear-gradient(to right, #3a0ca3, #4361ee, #3a0ca3);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 700px;
+    background: #1c1c3c;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  h1 {
+    color: #ffb703;
+    font-size: 6vw;
+  }
+
+  .book-image {
+    width: 140px;
+    height: 200px;
+    margin: 20px auto 30px;
+    background-color: #333;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #ffb703;
+    border-radius: 10px;
+  }
+
+  .question {
+    margin-bottom: 20px;
+    font-size: 4.5vw;
+  }
+
+  .options button {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    padding: 12px;
+    font-size: 4vw;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #4361ee;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .options button.correct {
+    background-color: #80ed99 !important;
+    animation: pulseGreen 0.4s;
+  }
+
+  .options button.incorrect {
+    background-color: #ef233c !important;
+    animation: shake 0.4s;
+  }
+
+  @keyframes pulseGreen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+
+  .reset-btn, .back-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 4vw;
+    cursor: pointer;
+    color: white;
+  }
+
+  .reset-btn {
+    background-color: #d90429;
+  }
+
+  .back-btn {
+    background-color: #0077b6;
+  }
+
+  .scale {
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 12px;
+    background-color: #ffb703;
+    transition: height 0.3s;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .scale.left {
+    left: -16px;
+    transform-origin: bottom;
+  }
+
+  .scale.right {
+    right: -16px;
+    transform-origin: bottom;
+  }
+
+  .contador {
+    margin-top: 18px;
+    font-size: 4vw;
+    color: #ffb703;
+  }
+
+  /* Media queries para tamaños máximos */
+  @media (min-width: 600px) {
     h1 {
-      color: #ffb703;
       font-size: 28px;
     }
-    .book-image {
-      width: 160px;
-      height: 230px;
-      margin: 20px auto 30px;
-      background-color: #333;
-      background-size: cover;
-      background-position: center;
-      border: 3px solid #ffb703;
-      border-radius: 10px;
-    }
     .question {
-      margin-bottom: 20px;
       font-size: 22px;
     }
-    .options button {
-      display: block;
-      width: 85%;
-      margin: 12px auto;
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      background-color: #4361ee;
-      color: #fff;
-      transition: background-color 0.3s, transform 0.3s;
-    }
-    .options button.correct {
-      background-color: #80ed99 !important;
-      animation: pulseGreen 0.4s;
-    }
-    .options button.incorrect {
-      background-color: #ef233c !important;
-      animation: shake 0.4s;
-    }
-    @keyframes pulseGreen {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
-    }
-    .reset-btn, .back-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      color: white;
-    }
-    .reset-btn {
-      background-color: #d90429;
-    }
+    .options button,
+    .reset-btn,
     .back-btn {
-      background-color: #0077b6;
-    }
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 12px;
-      background-color: #ffb703;
-      transition: height 0.3s;
-      border-radius: 0 6px 6px 0;
-    }
-    .scale.left {
-      left: -16px;
-      transform-origin: bottom;
-    }
-    .scale.right {
-      right: -16px;
-      transform-origin: bottom;
+      font-size: 16px;
     }
     .contador {
-      margin-top: 18px;
       font-size: 18px;
-      color: #ffb703;
     }
-  </style>
+  }
+</style>
+
+
+
 </head>
 <body>
   <div class="container">

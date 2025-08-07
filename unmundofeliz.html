@@ -4,146 +4,211 @@
   <meta charset="UTF-8" />
   <title>Un Mundo Feliz - Lector Millonario</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
-    body {
-      font-family: 'Roboto Slab', serif;
-      background: linear-gradient(135deg, #3e5151, #decba4);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #222;
-    }
-    .container {
-      width: 70%;
-      max-width: 800px;
-      background: #f9f5e3;
-      border-radius: 15px;
-      padding: 40px 30px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      position: relative;
-      text-align: center;
-      color: #222;
-    }
-    h1 {
-      font-size: 32px;
-      color: #004346;
-      margin-bottom: 25px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 1px 1px 3px #bdb76b;
-    }
-    .book-image {
-      width: 140px;
-      height: 210px;
-      margin: 0 auto 30px;
-      background-color: #bdb76b;
-      border-radius: 10px;
-      background-size: cover;
-      background-position: center;
-      border: 3px solid #004346;
-    }
-    .question {
-      font-size: 20px;
-      margin-bottom: 25px;
-      min-height: 80px;
-      font-weight: 600;
-    }
-    .options button {
-      display: block;
-      width: 85%;
-      margin: 10px auto;
-      padding: 14px;
-      font-size: 18px;
-      border-radius: 8px;
-      border: 2px solid #004346;
-      background-color: #e2d9b3;
-      color: #004346;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-    }
-    .options button:hover {
-      background-color: #004346;
-      color: #f9f5e3;
-      transform: scale(1.03);
-    }
-    .options button.correct {
-      background-color: #81b29a !important;
-      border-color: #588157 !important;
-      color: #20453e !important;
-      animation: pulseGreen 0.4s;
-      box-shadow: 0 0 12px #81b29a;
-    }
-    .options button.incorrect {
-      background-color: #e07a5f !important;
-      border-color: #9e3a27 !important;
-      color: #4a1f12 !important;
-      animation: shake 0.4s;
-      box-shadow: 0 0 12px #e07a5f;
-    }
-    @keyframes pulseGreen {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
-    }
-    .reset-btn, .back-btn {
-      margin-top: 20px;
-      padding: 12px 26px;
-      font-size: 17px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #f9f5e3;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease;
-    }
-    .reset-btn {
-      background-color: #9a031e;
-      margin-right: 15px;
-    }
-    .reset-btn:hover {
-      background-color: #6d0216;
-    }
-    .back-btn {
-      background-color: #004346;
-    }
-    .back-btn:hover {
-      background-color: #002822;
-    }
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 14px;
-      background-color: #588157;
-      transition: height 0.3s ease;
-      border-radius: 0 10px 10px 0;
-    }
-    .scale.left {
-      left: -25px;
-      transform-origin: bottom;
-    }
-    .scale.right {
-      right: -25px;
-      transform-origin: bottom;
-    }
-    .contador {
-      margin-top: 22px;
-      font-size: 18px;
-      color: #004346;
-      font-weight: 700;
-    }
+body {
+  font-family: 'Roboto Slab', serif;
+  background: linear-gradient(135deg, #3e5151, #decba4);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #222;
+}
+
+.container {
+  width: 70vw;
+  max-width: 800px;
+  background: #f9f5e3;
+  border-radius: 15px;
+  padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 30px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  position: relative;
+  text-align: center;
+  color: #222;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: #004346;
+  margin-bottom: clamp(15px, 3vw, 25px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 3px #bdb76b;
+}
+
+.book-image {
+  width: clamp(100px, 20vw, 140px);
+  height: clamp(150px, 30vw, 210px);
+  margin: 0 auto clamp(20px, 4vw, 30px);
+  background-color: #bdb76b;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #004346;
+}
+
+.question {
+  font-size: clamp(16px, 3vw, 20px);
+  margin-bottom: clamp(20px, 4vw, 25px);
+  min-height: 80px;
+  font-weight: 600;
+}
+
+.options button {
+  display: block;
+  width: 85%;
+  margin: 10px auto;
+  padding: clamp(10px, 2.5vw, 14px);
+  font-size: clamp(14px, 3vw, 18px);
+  border-radius: 8px;
+  border: 2px solid #004346;
+  background-color: #e2d9b3;
+  color: #004346;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.options button:hover {
+  background-color: #004346;
+  color: #f9f5e3;
+  transform: scale(1.03);
+}
+
+.options button.correct {
+  background-color: #81b29a !important;
+  border-color: #588157 !important;
+  color: #20453e !important;
+  animation: pulseGreen 0.4s;
+  box-shadow: 0 0 12px #81b29a;
+}
+
+.options button.incorrect {
+  background-color: #e07a5f !important;
+  border-color: #9e3a27 !important;
+  color: #4a1f12 !important;
+  animation: shake 0.4s;
+  box-shadow: 0 0 12px #e07a5f;
+}
+
+@keyframes pulseGreen {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.reset-btn, .back-btn {
+  margin-top: 20px;
+  padding: clamp(10px, 2.5vw, 12px) clamp(18px, 4vw, 26px);
+  font-size: clamp(14px, 3vw, 17px);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #f9f5e3;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+}
+
+.reset-btn {
+  background-color: #9a031e;
+  margin-right: 15px;
+}
+
+.reset-btn:hover {
+  background-color: #6d0216;
+}
+
+.back-btn {
+  background-color: #004346;
+}
+
+.back-btn:hover {
+  background-color: #002822;
+}
+
+.scale {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 14px;
+  background-color: #588157;
+  transition: height 0.3s ease;
+  border-radius: 0 10px 10px 0;
+}
+
+.scale.left {
+  left: -5vw;
+  transform-origin: bottom;
+}
+
+.scale.right {
+  right: -5vw;
+  transform-origin: bottom;
+}
+
+.contador {
+  margin-top: 22px;
+  font-size: clamp(14px, 3vw, 18px);
+  color: #004346;
+  font-weight: 700;
+}
+
+/* Media Queries para móviles y tablets */
+@media (max-width: 768px) {
+  .container {
+    width: 90vw;
+    padding: 20px 15px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .book-image {
+    width: 40vw;
+    height: 60vw;
+  }
+  .question {
+    font-size: 18px;
+  }
+  .options button {
+    width: 90%;
+    font-size: 16px;
+  }
+  .reset-btn, .back-btn {
+    width: 48%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  .book-image {
+    width: 60vw;
+    height: 90vw;
+  }
+  .options button {
+    width: 100%;
+    font-size: 14px;
+  }
+  .reset-btn, .back-btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+}
+
   </style>
 </head>
 <body>

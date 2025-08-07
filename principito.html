@@ -3,39 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <title>El Principito - Lector Millonario</title>
-  <style>
+<style>
   body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
     background: linear-gradient(to right, #f6e3b4, #ffe5a1, #f6e3b4);
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
-    color: #5d4037; /* Marrón suave */
+    color: #5d4037;
+    box-sizing: border-box;
   }
+
   .container {
-    width: 60%;
-    background: #fff8e1; /* Color crema claro */
-    padding: 40px;
+    width: 90%;
+    max-width: 600px;
+    background: #fff8e1;
+    padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 0 25px rgba(218, 165, 32, 0.5); /* sombra dorada suave */
+    box-shadow: 0 0 25px rgba(218, 165, 32, 0.5);
     position: relative;
-    border: 2px solid #fdd835; /* Amarillo dorado */
+    border: 2px solid #fdd835;
   }
+
   h1 {
-    color: #fbc02d; /* Amarillo brillante */
+    color: #fbc02d;
     font-family: 'Cursive', 'Lucida Handwriting', cursive;
     text-shadow: 1px 1px 3px #a57c00;
-    margin-bottom: 30px;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
   }
+
   .book-image {
-    width: 160px;
-    height: 240px;
-    margin: 10px auto 35px;
-    background-color: #fff3e0; /* Naranja muy suave */
+    width: 60%;
+    max-width: 180px;
+    aspect-ratio: 2/3;
+    margin: 10px auto 1.5rem;
+    background-color: #fff3e0;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -43,44 +50,51 @@
     border-radius: 10px;
     box-shadow: 0 0 10px #fdd835;
   }
+
   .question {
-    margin-bottom: 25px;
-    font-size: 22px;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
     font-style: italic;
   }
+
   .options button {
     display: block;
-    width: 80%;
-    margin: 12px auto;
-    padding: 14px;
-    font-size: 18px;
+    width: 90%;
+    margin: 0.5rem auto;
+    padding: 0.9rem;
+    font-size: 1rem;
     border-radius: 10px;
     border: 2px solid #fbc02d;
     cursor: pointer;
-    background-color: #fffde7; /* Crema muy claro */
+    background-color: #fffde7;
     color: #5d4037;
     box-shadow: 0 2px 6px rgba(251, 192, 45, 0.5);
     transition: background-color 0.3s, transform 0.3s;
   }
+
   .options button:hover:not(.correct):not(.incorrect) {
-    background-color: #fff9c4; /* Amarillo pálido */
+    background-color: #fff9c4;
     box-shadow: 0 0 12px #fbc02d;
   }
+
   .options button.correct {
-    background-color: #aed581 !important; /* Verde claro */
+    background-color: #aed581 !important;
     animation: pulseGreen 0.5s;
     color: #33691e;
   }
+
   .options button.incorrect {
-    background-color: #ef9a9a !important; /* Rojo suave */
+    background-color: #ef9a9a !important;
     animation: shake 0.5s;
     color: #b71c1c;
   }
+
   @keyframes pulseGreen {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
   }
+
   @keyframes shake {
     0% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
@@ -88,62 +102,104 @@
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
   }
+
+  .reset-btn, .back-btn {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
   .reset-btn {
-    margin-top: 25px;
     background-color: #fbc02d;
     color: #5d4037;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
     box-shadow: 0 4px 8px rgba(251, 192, 45, 0.6);
-    transition: background-color 0.3s;
   }
+
   .reset-btn:hover {
     background-color: #fdd835;
   }
+
   .back-btn {
-    margin-top: 12px;
     background-color: #ffcc80;
     color: #5d4037;
-    padding: 12px 26px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
     box-shadow: 0 4px 8px rgba(255, 204, 128, 0.6);
-    transition: background-color 0.3s;
   }
+
   .back-btn:hover {
     background-color: #ffd54f;
   }
+
   .scale {
     position: absolute;
     top: 0;
     height: 0;
-    width: 15px;
+    width: 10px;
     background-color: #fbc02d;
     transition: height 0.3s;
     border-radius: 0 6px 6px 0;
   }
+
   .scale.left {
-    left: -20px;
+    left: -15px;
     transform-origin: bottom;
   }
+
   .scale.right {
-    right: -20px;
+    right: -15px;
     transform-origin: bottom;
   }
+
   .contador {
-    margin-top: 18px;
-    font-size: 18px;
+    margin-top: 1rem;
+    font-size: 1rem;
     color: #7b5e00;
     font-weight: 600;
   }
+
+  /* MEDIA QUERIES */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    .question {
+      font-size: 1rem;
+    }
+
+    .options button {
+      font-size: 0.95rem;
+      padding: 0.8rem;
+    }
+
+    .reset-btn, .back-btn {
+      font-size: 0.95rem;
+      padding: 0.7rem 1.2rem;
+    }
+
+    .book-image {
+      width: 70%;
+      max-width: 150px;
+    }
+
+    .scale {
+      width: 8px;
+    }
+
+    .scale.left {
+      left: -12px;
+    }
+
+    .scale.right {
+      right: -12px;
+    }
+  }
 </style>
+
 
 </head>
 <body>

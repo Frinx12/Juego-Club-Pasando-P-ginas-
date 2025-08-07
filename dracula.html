@@ -3,151 +3,215 @@
 <head>
   <meta charset="UTF-8" />
   <title>Drácula - Lector Millonario</title>
-  <style>
-    body {
-      font-family: 'Georgia', serif;
-      background: linear-gradient(to right, #1b0000, #440000, #1b0000);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      color: #f0e6d2;
-    }
+<style>
+  body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(to right, #1b0000, #440000, #1b0000);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: #f0e6d2;
+  }
+
+  .container {
+    width: 60%;
+    background: #2c0b0b;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255,0,0,0.8);
+    position: relative;
+    border: 2px solid #6b0f0f;
+  }
+
+  h1 {
+    color: #e02b2b;
+    font-family: 'Gothic A1', sans-serif;
+    text-shadow: 1px 1px 4px #3a0000;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  .book-image {
+    width: 150px;
+    height: 220px;
+    margin: 10px auto 30px;
+    background-color: #3e1f1f;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #6b0f0f;
+    box-shadow: 0 0 10px #8b0000;
+  }
+
+  .question {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000;
+  }
+
+  .options button {
+    display: block;
+    width: 80%;
+    margin: 12px auto;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 2px solid #8b0000;
+    cursor: pointer;
+    background-color: #5a0b0b;
+    color: #f0e6d2;
+    transition: background-color 0.4s, transform 0.3s;
+    box-shadow: 0 0 5px #660000;
+    font-family: 'Georgia', serif;
+  }
+
+  .options button:hover:not(.correct):not(.incorrect) {
+    background-color: #8b0000;
+    box-shadow: 0 0 12px #ff0000;
+    color: #fff0f0;
+  }
+
+  .options button.correct {
+    background-color: #2ecc71 !important;
+    color: #000;
+    animation: pulseGreen 0.6s;
+    box-shadow: 0 0 15px #27ae60;
+    border-color: #27ae60;
+  }
+
+  .options button.incorrect {
+    background-color: #e74c3c !important;
+    color: #000;
+    animation: shake 0.6s;
+    box-shadow: 0 0 15px #c0392b;
+    border-color: #c0392b;
+  }
+
+  @keyframes pulseGreen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+
+  .reset-btn, .back-btn {
+    margin-top: 20px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    transition: background-color 0.3s;
+    box-shadow: 0 0 8px #660000;
+  }
+
+  .reset-btn {
+    background-color: #b22222;
+    color: #f0e6d2;
+    border: 2px solid #8b0000;
+  }
+
+  .reset-btn:hover {
+    background-color: #e74c3c;
+    box-shadow: 0 0 15px #ff3333;
+  }
+
+  .back-btn {
+    background-color: #3d0f0f;
+    color: #f0e6d2;
+    border: 2px solid #660000;
+  }
+
+  .back-btn:hover {
+    background-color: #660000;
+    box-shadow: 0 0 15px #ff0000;
+  }
+
+  .scale {
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 18px;
+    background: linear-gradient(to top, #e74c3c, #8b0000);
+    transition: height 0.3s;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 0 8px #ff0000;
+  }
+
+  .scale.left {
+    left: -24px;
+    transform-origin: bottom;
+  }
+
+  .scale.right {
+    right: -24px;
+    transform-origin: bottom;
+  }
+
+  .contador {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #f0e6d2;
+    text-shadow: 1px 1px 3px #400000;
+    font-weight: bold;
+  }
+
+  /* Media queries para tablets y celulares */
+  @media screen and (max-width: 1024px) {
     .container {
-      width: 60%;
-      background: #2c0b0b;
-      padding: 40px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(255,0,0,0.8);
-      position: relative;
-      border: 2px solid #6b0f0f;
-    }
-    h1 {
-      color: #e02b2b;
-      font-family: 'Gothic A1', sans-serif;
-      text-shadow: 1px 1px 4px #3a0000;
-      margin-bottom: 20px;
-    }
-    .book-image {
-      width: 150px;
-      height: 220px;
-      margin: 10px auto 30px;
-      background-color: #3e1f1f;
-      background-size: cover;
-      background-position: center;
-      border: 2px solid #6b0f0f;
-      box-shadow: 0 0 10px #8b0000;
+      width: 80%;
+      padding: 30px;
     }
     .question {
-      margin-bottom: 20px;
-      font-size: 22px;
-      font-weight: bold;
-      text-shadow: 1px 1px 3px #000;
+      font-size: 20px;
     }
     .options button {
-      display: block;
-      width: 80%;
-      margin: 12px auto;
-      padding: 14px;
+      font-size: 16px;
+      padding: 12px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .container {
+      width: 95%;
+      padding: 25px 20px;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    .question {
       font-size: 18px;
-      border-radius: 6px;
-      border: 2px solid #8b0000;
-      cursor: pointer;
-      background-color: #5a0b0b;
-      color: #f0e6d2;
-      transition: background-color 0.4s, transform 0.3s;
-      box-shadow: 0 0 5px #660000;
-      font-family: 'Georgia', serif;
     }
-    .options button:hover:not(.correct):not(.incorrect) {
-      background-color: #8b0000;
-      box-shadow: 0 0 12px #ff0000;
-      color: #fff0f0;
-    }
-    .options button.correct {
-      background-color: #2ecc71 !important; /* verde */
-      color: #000;
-      animation: pulseGreen 0.6s;
-      box-shadow: 0 0 15px #27ae60;
-      border-color: #27ae60;
-    }
-    .options button.incorrect {
-      background-color: #e74c3c !important; /* rojo */
-      color: #000;
-      animation: shake 0.6s;
-      box-shadow: 0 0 15px #c0392b;
-      border-color: #c0392b;
-    }
-    @keyframes pulseGreen {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.12); }
-      100% { transform: scale(1); }
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-6px); }
-      100% { transform: translateX(0); }
+    .options button {
+      font-size: 15px;
+      padding: 10px;
     }
     .reset-btn, .back-btn {
-      margin-top: 20px;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      font-family: 'Georgia', serif;
-      transition: background-color 0.3s;
-      box-shadow: 0 0 8px #660000;
+      font-size: 14px;
+      padding: 10px 20px;
     }
-    .reset-btn {
-      background-color: #b22222;
-      color: #f0e6d2;
-      border: 2px solid #8b0000;
-    }
-    .reset-btn:hover {
-      background-color: #e74c3c;
-      box-shadow: 0 0 15px #ff3333;
-    }
-    .back-btn {
-      background-color: #3d0f0f;
-      color: #f0e6d2;
-      border: 2px solid #660000;
-    }
-    .back-btn:hover {
-      background-color: #660000;
-      box-shadow: 0 0 15px #ff0000;
-    }
-    .scale {
-      position: absolute;
-      top: 0;
-      height: 0;
-      width: 18px;
-      background: linear-gradient(to top, #e74c3c, #8b0000);
-      transition: height 0.3s;
-      border-radius: 0 8px 8px 0;
-      box-shadow: 0 0 8px #ff0000;
-    }
-    .scale.left {
-      left: -24px;
-      transform-origin: bottom;
-    }
-    .scale.right {
-      right: -24px;
-      transform-origin: bottom;
+    .book-image {
+      width: 120px;
+      height: 180px;
     }
     .contador {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #f0e6d2;
-      text-shadow: 1px 1px 3px #400000;
-      font-weight: bold;
+      font-size: 18px;
     }
-  </style>
+  }
+</style>
+
 </head>
 <body>
   <div class="container">
@@ -173,297 +237,297 @@
 
   <script>
     const preguntas = [
-      {
-        pregunta: "¿Quién es el autor de 'Drácula'?",
-        opciones: {
-          A: "Bram Stoker",
-          B: "Mary Shelley",
-          C: "Edgar Allan Poe",
-          D: "Stephen King"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿De dónde es originario el Conde Drácula?",
-        opciones: {
-          A: "Transilvania",
-          B: "Inglaterra",
-          C: "Hungría",
-          D: "Rusia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué profesión tiene Jonathan Harker?",
-        opciones: {
-          A: "Abogado",
-          B: "Detective",
-          C: "Escritor",
-          D: "Doctor"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Dónde se hospeda Jonathan Harker al inicio del libro?",
-        opciones: {
-          A: "En el castillo de Drácula",
-          B: "En Londres",
-          C: "En Budapest",
-          D: "En París"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Quién es Mina Murray en la historia?",
-        opciones: {
-          A: "La prometida de Jonathan Harker",
-          B: "Una vampira",
-          C: "La hermana de Drácula",
-          D: "Una cazavampiros"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué objeto protege a los personajes del vampiro?",
-        opciones: {
-          A: "Ajo",
-          B: "Cruz de plata",
-          C: "Agua bendita",
-          D: "Todas las anteriores"
-        },
-        correcta: "D"
-      },
-      {
-        pregunta: "¿Qué poder tiene Drácula para transformarse?",
-        opciones: {
-          A: "Puede convertirse en murciélago y niebla",
-          B: "Puede cambiar de color",
-          C: "Puede convertirse en lobo",
-          D: "Puede volverse invisible"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué ciudad visita Drácula en Inglaterra?",
-        opciones: {
-          A: "Whitby",
-          B: "Londres",
-          C: "Manchester",
-          D: "Bristol"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Quién es Van Helsing?",
-        opciones: {
-          A: "Un profesor y cazador de vampiros",
-          B: "Un sirviente de Drácula",
-          C: "Un detective",
-          D: "El mejor amigo de Jonathan"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué simboliza la luz en el libro?",
-        opciones: {
-          A: "La esperanza y la pureza",
-          B: "El poder de Drácula",
-          C: "El misterio",
-          D: "La muerte"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Quién es Lucy Westenra?",
-        opciones: {
-          A: "Amiga de Mina y víctima de Drácula",
-          B: "Esposa de Jonathan",
-          C: "Hermana de Van Helsing",
-          D: "Una vampira enemiga"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué le pasa a Lucy durante la novela?",
-        opciones: {
-          A: "Se convierte en vampira y muere",
-          B: "Se muda a Transilvania",
-          C: "Se casa con Van Helsing",
-          D: "Desaparece misteriosamente"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué objeto usa Van Helsing para controlar a Lucy vampira?",
-        opciones: {
-          A: "Estaca",
-          B: "Cruz",
-          C: "Agua bendita",
-          D: "Magia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué representa el castillo de Drácula?",
-        opciones: {
-          A: "El misterio y el mal",
-          B: "La libertad",
-          C: "La esperanza",
-          D: "La inocencia"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Quién ayuda a cazar a Drácula junto con Jonathan y Van Helsing?",
-        opciones: {
-          A: "Arthur Holmwood y Quincy Morris",
-          B: "Mina y Lucy",
-          C: "El conde y su sirviente",
-          D: "Nadie más"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué animal es asociado con Drácula?",
-        opciones: {
-          A: "Murciélago",
-          B: "Lobo",
-          C: "Gato negro",
-          D: "Serpiente"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué efecto tiene la mordida de Drácula?",
-        opciones: {
-          A: "Convierte a la víctima en vampiro",
-          B: "La cura de enfermedades",
-          C: "La hace invencible",
-          D: "La vuelve humana"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué rol juega Mina en la historia?",
-        opciones: {
-          A: "Esposa y apoyo crucial para detener a Drácula",
-          B: "Antagonista principal",
-          C: "Sirvienta del conde",
-          D: "Detective"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cómo es descrito Drácula físicamente?",
-        opciones: {
-          A: "Pálido, elegante y con colmillos afilados",
-          B: "Robusto y de cabello rubio",
-          C: "Joven y alto",
-          D: "Viejo y de barba blanca"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué sucede al final con Drácula?",
-        opciones: {
-          A: "Es derrotado y destruido por el grupo",
-          B: "Escapa y sigue su reinado",
-          C: "Se convierte en humano",
-          D: "Muere de viejo"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué documento es la base narrativa del libro?",
-        opciones: {
-          A: "Diarios y cartas de los personajes",
-          B: "Una novela tradicional",
-          C: "Un poema",
-          D: "Un cuento oral"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cuál es el principal tema del libro?",
-        opciones: {
-          A: "El bien contra el mal",
-          B: "La amistad",
-          C: "La aventura espacial",
-          D: "La historia de amor"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué elemento gótico predomina en la novela?",
-        opciones: {
-          A: "Castillos, oscuridad y misterio",
-          B: "Tecnología avanzada",
-          C: "Comedia",
-          D: "Fantasía infantil"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Cuál es la profesión de Van Helsing?",
-        opciones: {
-          A: "Doctor y profesor",
-          B: "Detective privado",
-          C: "Escritor",
-          D: "Militar"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué representa el vampiro Drácula en la cultura popular?",
-        opciones: {
-          A: "El miedo a lo desconocido y la muerte",
-          B: "La alegría",
-          C: "La amistad",
-          D: "La riqueza"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué objeto utiliza Drácula para entrar a las casas?",
-        opciones: {
-          A: "Invitación",
-          B: "Llaves",
-          C: "Magia",
-          D: "Puertas abiertas"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Quién es Renfield en la novela?",
-        opciones: {
-          A: "Un sirviente loco que sigue a Drácula",
-          B: "Un vampiro rival",
-          C: "Un detective",
-          D: "Un científico"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué teme Drácula más que nada?",
-        opciones: {
-          A: "La luz del sol y la cruz",
-          B: "Los perros",
-          C: "Los espejos",
-          D: "El agua"
-        },
-        correcta: "A"
-      },
-      {
-        pregunta: "¿Qué tipo de narración usa el libro?",
-        opciones: {
-          A: "Epistolar (diarios y cartas)",
-          B: "Narración en primera persona única",
-          C: "Narración omnisciente",
-          D: "Narración en tercera persona limitada"
-        },
-        correcta: "A"
-      }
-    ];
+  {
+    pregunta: "¿Quién es el autor de 'Drácula'?",
+    opciones: {
+      A: "Edgar Allan Poe",
+      B: "Mary Shelley",
+      C: "Stephen King",
+      D: "Bram Stoker"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿De dónde es originario el Conde Drácula?",
+    opciones: {
+      A: "Rusia",
+      B: "Hungría",
+      C: "Inglaterra",
+      D: "Transilvania"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué profesión tiene Jonathan Harker?",
+    opciones: {
+      A: "Doctor",
+      B: "Detective",
+      C: "Escritor",
+      D: "Abogado"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Dónde se hospeda Jonathan Harker al inicio del libro?",
+    opciones: {
+      A: "En París",
+      B: "En Londres",
+      C: "En Budapest",
+      D: "En el castillo de Drácula"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién es Mina Murray en la historia?",
+    opciones: {
+      A: "Una vampira",
+      B: "La hermana de Drácula",
+      C: "Una cazavampiros",
+      D: "La prometida de Jonathan Harker"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué objeto protege a los personajes del vampiro?",
+    opciones: {
+      A: "Agua bendita",
+      B: "Cruz de plata",
+      C: "Ajo",
+      D: "Todas las anteriores"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué poder tiene Drácula para transformarse?",
+    opciones: {
+      A: "Puede cambiar de color",
+      B: "Puede convertirse en murciélago y niebla",
+      C: "Puede convertirse en lobo",
+      D: "Puede volverse invisible"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué ciudad visita Drácula en Inglaterra?",
+    opciones: {
+      A: "Manchester",
+      B: "Whitby",
+      C: "Londres",
+      D: "Bristol"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Quién es Van Helsing?",
+    opciones: {
+      A: "Un sirviente de Drácula",
+      B: "El mejor amigo de Jonathan",
+      C: "Un detective",
+      D: "Un profesor y cazador de vampiros"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué simboliza la luz en el libro?",
+    opciones: {
+      A: "El poder de Drácula",
+      B: "La muerte",
+      C: "El misterio",
+      D: "La esperanza y la pureza"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Quién es Lucy Westenra?",
+    opciones: {
+      A: "Una vampira enemiga",
+      B: "Esposa de Jonathan",
+      C: "Hermana de Van Helsing",
+      D: "Amiga de Mina y víctima de Drácula"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué le pasa a Lucy durante la novela?",
+    opciones: {
+      A: "Se convierte en vampira y muere",
+      B: "Se casa con Van Helsing",
+      C: "Se muda a Transilvania",
+      D: "Desaparece misteriosamente"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Qué objeto usa Van Helsing para controlar a Lucy vampira?",
+    opciones: {
+      A: "Cruz",
+      B: "Estaca",
+      C: "Agua bendita",
+      D: "Magia"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué representa el castillo de Drácula?",
+    opciones: {
+      A: "La esperanza",
+      B: "La inocencia",
+      C: "El misterio y el mal",
+      D: "La libertad"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Quién ayuda a cazar a Drácula junto con Jonathan y Van Helsing?",
+    opciones: {
+      A: "Mina y Lucy",
+      B: "El conde y su sirviente",
+      C: "Arthur Holmwood y Quincy Morris",
+      D: "Nadie más"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué animal es asociado con Drácula?",
+    opciones: {
+      A: "Serpiente",
+      B: "Murciélago",
+      C: "Lobo",
+      D: "Gato negro"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué efecto tiene la mordida de Drácula?",
+    opciones: {
+      A: "La hace invencible",
+      B: "La cura de enfermedades",
+      C: "Convierte a la víctima en vampiro",
+      D: "La vuelve humana"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué rol juega Mina en la historia?",
+    opciones: {
+      A: "Sirvienta del conde",
+      B: "Esposa y apoyo crucial para detener a Drácula",
+      C: "Detective",
+      D: "Antagonista principal"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Cómo es descrito Drácula físicamente?",
+    opciones: {
+      A: "Viejo y de barba blanca",
+      B: "Pálido, elegante y con colmillos afilados",
+      C: "Joven y alto",
+      D: "Robusto y de cabello rubio"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué sucede al final con Drácula?",
+    opciones: {
+      A: "Muere de viejo",
+      B: "Es derrotado y destruido por el grupo",
+      C: "Se convierte en humano",
+      D: "Escapa y sigue su reinado"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué documento es la base narrativa del libro?",
+    opciones: {
+      A: "Una novela tradicional",
+      B: "Un cuento oral",
+      C: "Diarios y cartas de los personajes",
+      D: "Un poema"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Cuál es el principal tema del libro?",
+    opciones: {
+      A: "La amistad",
+      B: "El bien contra el mal",
+      C: "La historia de amor",
+      D: "La aventura espacial"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué elemento gótico predomina en la novela?",
+    opciones: {
+      A: "Comedia",
+      B: "Tecnología avanzada",
+      C: "Fantasía infantil",
+      D: "Castillos, oscuridad y misterio"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Cuál es la profesión de Van Helsing?",
+    opciones: {
+      A: "Detective privado",
+      B: "Doctor y profesor",
+      C: "Militar",
+      D: "Escritor"
+    },
+    correcta: "B"
+  },
+  {
+    pregunta: "¿Qué representa el vampiro Drácula en la cultura popular?",
+    opciones: {
+      A: "La alegría",
+      B: "La amistad",
+      C: "La riqueza",
+      D: "El miedo a lo desconocido y la muerte"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué objeto utiliza Drácula para entrar a las casas?",
+    opciones: {
+      A: "Invitación",
+      B: "Puertas abiertas",
+      C: "Magia",
+      D: "Llaves"
+    },
+    correcta: "A"
+  },
+  {
+    pregunta: "¿Quién es Renfield en la novela?",
+    opciones: {
+      A: "Un científico",
+      B: "Un detective",
+      C: "Un vampiro rival",
+      D: "Un sirviente loco que sigue a Drácula"
+    },
+    correcta: "D"
+  },
+  {
+    pregunta: "¿Qué teme Drácula más que nada?",
+    opciones: {
+      A: "El agua",
+      B: "Los perros",
+      C: "La luz del sol y la cruz",
+      D: "Los espejos"
+    },
+    correcta: "C"
+  },
+  {
+    pregunta: "¿Qué tipo de narración usa el libro?",
+    opciones: {
+      A: "Narración en tercera persona limitada",
+      B: "Narración en primera persona única",
+      C: "Narración omnisciente",
+      D: "Epistolar (diarios y cartas)"
+    },
+    correcta: "D"
+  }
+];
 
     let current = 0;
     let correctas = 0;
